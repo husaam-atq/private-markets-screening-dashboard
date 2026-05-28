@@ -155,15 +155,21 @@ Local Ollama generation is optional and model-dependent. On this machine, Ollama
 
 ## Dashboard Preview
 
-Screenshots are saved in `outputs/screenshots/`:
+The Streamlit dashboard includes:
 
-![Overview](outputs/screenshots/overview.png)
-![Rankings](outputs/screenshots/rankings.png)
-![Comps](outputs/screenshots/comps.png)
-![Target](outputs/screenshots/target.png)
-![Filings](outputs/screenshots/filings.png)
-![LLM RAG](outputs/screenshots/llm_rag.png)
-![Eval](outputs/screenshots/eval.png)
+- **Overview:** coverage, data mode, RAG evaluation metrics and screening summary.
+- **Rankings:** company-level screening scores, categories and scorecard outputs.
+- **Comps:** peer benchmarking, valuation/growth/margin/leverage comparisons.
+- **Target:** selected-company deep dive with classification rationale and risks.
+- **Filings:** source-backed SEC filing evidence retrieval with section labels and snippets.
+- **LLM RAG:** optional local-Ollama summaries with deterministic fallback and groundedness checks.
+- **Eval:** retrieval and grounded-generation evaluation metrics.
+
+Dashboard is best viewed locally:
+
+```bash
+py -m streamlit run dashboard/app.py
+```
 
 ## Example Outputs
 

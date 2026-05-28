@@ -11,6 +11,8 @@ from src.utils import read_csv_if_exists, write_csv
 
 CATEGORY_ORDER = [
     "Public Market Quality Compounder",
+    "Benchmark Quality Comp",
+    "High Priority for Further Diligence",
     "PE Platform Candidate",
     "Public-to-Private Candidate",
     "Value / Re-rating Candidate",
@@ -56,8 +58,17 @@ def categorize_company(row: pd.Series) -> tuple[str, list[str], str]:
         category = "Distressed / Special Situations Watchlist"
     elif row["investment_screening_score"] <= thresholds["low_priority_max_investment_score"] and row["red_flag_score"] >= 65:
         category = "Low Priority / Reject"
+    elif row.get("public_quality_score", 0) >= 68 and mega_or_strategic:
+        category = "Benchmark Quality Comp"
     elif row.get("public_quality_score", 0) >= 68 and (mega_or_strategic or row.get("public_to_private_feasibility_score", 0) < 45):
         category = "Public Market Quality Compounder"
+    elif (
+        row.get("investment_screening_score", 0) >= 68
+        and row.get("public_to_private_feasibility_score", 0) >= 62
+        and row.get("red_flag_score", 0) < 55
+        and not mega_or_strategic
+    ):
+        category = "High Priority for Further Diligence"
     elif row.get("public_to_private_feasibility_score", 0) >= 62 and row["investment_screening_score"] >= 58 and row["red_flag_score"] < 65:
         category = "Public-to-Private Candidate"
     elif row["platform_candidate_score"] >= 60 and row.get("platform_size_feasibility_score", 0) >= 50 and row["red_flag_score"] < 62:

@@ -1,81 +1,81 @@
-ticker,company_name,question_id,question,evidence_strength,no_answer_flag,summary_answer
-HUBS,"HubSpot, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.07428615207565638,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-HUBS,"HubSpot, Inc.",customer_concentration,What does the company say about customer concentration?,0.07661776982386764,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-HUBS,"HubSpot, Inc.",liquidity_risks,What are the main liquidity risks?,0.049898855352685456,False,Retrieved filing passages discuss md&a themes relevant to the question.
-HUBS,"HubSpot, Inc.",debt_obligations,What does management say about debt obligations?,0.0,True,insufficient filing evidence found
-HUBS,"HubSpot, Inc.",margin_pressure,What risks could pressure margins?,0.049901554496365276,False,Retrieved filing passages discuss md&a themes relevant to the question.
-HUBS,"HubSpot, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.05877006141781634,False,Retrieved filing passages discuss md&a themes relevant to the question.
-HUBS,"HubSpot, Inc.",competition,What does management say about competition?,0.04629044545972882,False,Retrieved filing passages discuss md&a themes relevant to the question.
-HUBS,"HubSpot, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.04609000152595878,False,Retrieved filing passages discuss md&a themes relevant to the question.
-HUBS,"HubSpot, Inc.",key_risk_factors,What are the key risk factors?,0.0873768614462748,False,Retrieved filing passages discuss md&a themes relevant to the question.
-HUBS,"HubSpot, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.07642167140549519,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-FSLR,"First Solar, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.0,True,insufficient filing evidence found
-FSLR,"First Solar, Inc.",customer_concentration,What does the company say about customer concentration?,0.09672455748166633,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-FSLR,"First Solar, Inc.",liquidity_risks,What are the main liquidity risks?,0.0,True,insufficient filing evidence found
-FSLR,"First Solar, Inc.",debt_obligations,What does management say about debt obligations?,0.04567467956523437,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-FSLR,"First Solar, Inc.",margin_pressure,What risks could pressure margins?,0.0677457242338562,False,Retrieved filing passages discuss md&a themes relevant to the question.
-FSLR,"First Solar, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.07118381133890989,False,Retrieved filing passages discuss md&a themes relevant to the question.
-FSLR,"First Solar, Inc.",competition,What does management say about competition?,0.06298480643888665,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-FSLR,"First Solar, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.05206092717463568,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-FSLR,"First Solar, Inc.",key_risk_factors,What are the key risk factors?,0.07923476913391891,False,Retrieved filing passages discuss risk factors themes relevant to the question.
-FSLR,"First Solar, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.09112881438656804,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-DPZ,"Domino's Pizza, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.0,True,insufficient filing evidence found
-DPZ,"Domino's Pizza, Inc.",customer_concentration,What does the company say about customer concentration?,0.0,True,insufficient filing evidence found
-DPZ,"Domino's Pizza, Inc.",liquidity_risks,What are the main liquidity risks?,0.0,True,insufficient filing evidence found
-DPZ,"Domino's Pizza, Inc.",debt_obligations,What does management say about debt obligations?,0.06126042887792213,False,Retrieved filing passages discuss md&a themes relevant to the question.
-DPZ,"Domino's Pizza, Inc.",margin_pressure,What risks could pressure margins?,0.04874766651134904,False,Retrieved filing passages discuss md&a themes relevant to the question.
-DPZ,"Domino's Pizza, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
-DPZ,"Domino's Pizza, Inc.",competition,What does management say about competition?,0.07286028884306879,False,Retrieved filing passages discuss md&a themes relevant to the question.
-DPZ,"Domino's Pizza, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.0,True,insufficient filing evidence found
-DPZ,"Domino's Pizza, Inc.",key_risk_factors,What are the key risk factors?,0.09985521997969232,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-DPZ,"Domino's Pizza, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.09847068283432361,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,revenue_drivers,What are the company's main revenue drivers?,0.0,True,insufficient filing evidence found
-TEAM,Atlassian Corporation,customer_concentration,What does the company say about customer concentration?,0.12323394305505637,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,liquidity_risks,What are the main liquidity risks?,0.09422037997055649,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,debt_obligations,What does management say about debt obligations?,0.13036516892763383,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,margin_pressure,What risks could pressure margins?,0.08909175101643226,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,capex_requirements,What capex or investment requirements are disclosed?,0.05876833981425969,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,competition,What does management say about competition?,0.14417612262608648,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,regulatory_litigation,Are there regulatory or litigation risks?,0.08421509397465399,False,Retrieved filing passages discuss md&a themes relevant to the question.
-TEAM,Atlassian Corporation,key_risk_factors,What are the key risk factors?,0.07951576046328254,False,Retrieved filing passages discuss risk factors themes relevant to the question.
-TEAM,Atlassian Corporation,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.11465538103564088,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,revenue_drivers,What are the company's main revenue drivers?,0.06365478723816924,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,customer_concentration,What does the company say about customer concentration?,0.046503174577440784,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-CNC,Centene Corporation,liquidity_risks,What are the main liquidity risks?,0.07693588334570492,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,debt_obligations,What does management say about debt obligations?,0.054337242923759285,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,margin_pressure,What risks could pressure margins?,0.04692837069894135,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
-CNC,Centene Corporation,competition,What does management say about competition?,0.07525614123083721,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,regulatory_litigation,Are there regulatory or litigation risks?,0.0,True,insufficient filing evidence found
-CNC,Centene Corporation,key_risk_factors,What are the key risk factors?,0.08131820736205703,False,Retrieved filing passages discuss md&a themes relevant to the question.
-CNC,Centene Corporation,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.1336220068732637,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-ZS,"Zscaler, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.06831949309862091,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-ZS,"Zscaler, Inc.",customer_concentration,What does the company say about customer concentration?,0.055365063204007775,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-ZS,"Zscaler, Inc.",liquidity_risks,What are the main liquidity risks?,0.0,True,insufficient filing evidence found
-ZS,"Zscaler, Inc.",debt_obligations,What does management say about debt obligations?,0.0,True,insufficient filing evidence found
-ZS,"Zscaler, Inc.",margin_pressure,What risks could pressure margins?,0.0,True,insufficient filing evidence found
-ZS,"Zscaler, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.07082017772843494,False,Retrieved filing passages discuss segment information themes relevant to the question.
-ZS,"Zscaler, Inc.",competition,What does management say about competition?,0.0,True,insufficient filing evidence found
-ZS,"Zscaler, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.07842995388902813,False,Retrieved filing passages discuss segment information themes relevant to the question.
-ZS,"Zscaler, Inc.",key_risk_factors,What are the key risk factors?,0.09184706473688714,False,Retrieved filing passages discuss md&a themes relevant to the question.
-ZS,"Zscaler, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.07665726300293926,False,Retrieved filing passages discuss segment information themes relevant to the question.
-LYV,"Live Nation Entertainment, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.0,True,insufficient filing evidence found
-LYV,"Live Nation Entertainment, Inc.",customer_concentration,What does the company say about customer concentration?,0.0,True,insufficient filing evidence found
-LYV,"Live Nation Entertainment, Inc.",liquidity_risks,What are the main liquidity risks?,0.05237607866597957,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-LYV,"Live Nation Entertainment, Inc.",debt_obligations,What does management say about debt obligations?,0.0861722475258384,False,Retrieved filing passages discuss md&a themes relevant to the question.
-LYV,"Live Nation Entertainment, Inc.",margin_pressure,What risks could pressure margins?,0.0,True,insufficient filing evidence found
-LYV,"Live Nation Entertainment, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
-LYV,"Live Nation Entertainment, Inc.",competition,What does management say about competition?,0.07197339203862155,False,Retrieved filing passages discuss md&a themes relevant to the question.
-LYV,"Live Nation Entertainment, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.06233041315100162,False,Retrieved filing passages discuss md&a themes relevant to the question.
-LYV,"Live Nation Entertainment, Inc.",key_risk_factors,What are the key risk factors?,0.0590804612140359,False,Retrieved filing passages discuss risk factors themes relevant to the question.
-LYV,"Live Nation Entertainment, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.09044975273741906,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-IR,Ingersoll Rand Inc.,revenue_drivers,What are the company's main revenue drivers?,0.05328871411318743,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-IR,Ingersoll Rand Inc.,customer_concentration,What does the company say about customer concentration?,0.0,True,insufficient filing evidence found
-IR,Ingersoll Rand Inc.,liquidity_risks,What are the main liquidity risks?,0.08825934399724922,False,Retrieved filing passages discuss md&a themes relevant to the question.
-IR,Ingersoll Rand Inc.,debt_obligations,What does management say about debt obligations?,0.08396621306803573,False,Retrieved filing passages discuss md&a themes relevant to the question.
-IR,Ingersoll Rand Inc.,margin_pressure,What risks could pressure margins?,0.057648472954436814,False,Retrieved filing passages discuss md&a themes relevant to the question.
-IR,Ingersoll Rand Inc.,capex_requirements,What capex or investment requirements are disclosed?,0.04747957830866066,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
-IR,Ingersoll Rand Inc.,competition,What does management say about competition?,0.0,True,insufficient filing evidence found
-IR,Ingersoll Rand Inc.,regulatory_litigation,Are there regulatory or litigation risks?,0.050525163556743045,False,Retrieved filing passages discuss md&a themes relevant to the question.
-IR,Ingersoll Rand Inc.,key_risk_factors,What are the key risk factors?,0.16283554324707583,False,Retrieved filing passages discuss md&a themes relevant to the question.
-IR,Ingersoll Rand Inc.,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.12640756148159146,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+ticker,company_name,question_id,question,expected_question_type,evidence_strength,no_answer_flag,summary_answer
+HUBS,"HubSpot, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.12958067784331462,False,Retrieved filing passages discuss md&a themes relevant to the question.
+HUBS,"HubSpot, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.14391777039559756,False,Retrieved filing passages discuss md&a themes relevant to the question.
+HUBS,"HubSpot, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.13252598638272273,False,Retrieved filing passages discuss md&a themes relevant to the question.
+HUBS,"HubSpot, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.1147864063956072,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+HUBS,"HubSpot, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.12255607890729929,False,Retrieved filing passages discuss md&a themes relevant to the question.
+HUBS,"HubSpot, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.1560349769024345,False,Retrieved filing passages discuss md&a themes relevant to the question.
+HUBS,"HubSpot, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss business themes relevant to the question.
+HUBS,"HubSpot, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08501574416930724,False,Retrieved filing passages discuss md&a themes relevant to the question.
+HUBS,"HubSpot, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.15499124388461974,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+HUBS,"HubSpot, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.14206951313257263,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+ROKU,"Roku, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.1308828807503851,False,Retrieved filing passages discuss segment information themes relevant to the question.
+ROKU,"Roku, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.1256152654835674,False,Retrieved filing passages discuss segment information themes relevant to the question.
+ROKU,"Roku, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.152245439510803,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+ROKU,"Roku, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.1047375888632275,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+ROKU,"Roku, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.12592158605611337,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ROKU,"Roku, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.12642151156416848,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+ROKU,"Roku, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08123316365961873,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ROKU,"Roku, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss business themes relevant to the question.
+ROKU,"Roku, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.15820886477410784,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+ROKU,"Roku, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.19507297750050134,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+FSLR,"First Solar, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.11415470906896427,False,Retrieved filing passages discuss md&a themes relevant to the question.
+FSLR,"First Solar, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.14425342027074584,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+FSLR,"First Solar, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.12335153271927674,False,Retrieved filing passages discuss md&a themes relevant to the question.
+FSLR,"First Solar, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.12025555841927787,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+FSLR,"First Solar, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.1433938538708606,False,Retrieved filing passages discuss md&a themes relevant to the question.
+FSLR,"First Solar, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.16902899258822385,False,Retrieved filing passages discuss md&a themes relevant to the question.
+FSLR,"First Solar, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss business themes relevant to the question.
+FSLR,"First Solar, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08802671778372698,False,Retrieved filing passages discuss md&a themes relevant to the question.
+FSLR,"First Solar, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.1553056545479271,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+FSLR,"First Solar, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.1540111339631025,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+OKTA,"Okta, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.12405015735710805,False,Retrieved filing passages discuss md&a themes relevant to the question.
+OKTA,"Okta, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.11519994096452879,False,Retrieved filing passages discuss md&a themes relevant to the question.
+OKTA,"Okta, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.12712596259276038,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+OKTA,"Okta, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.16559545408996168,False,Retrieved filing passages discuss md&a themes relevant to the question.
+OKTA,"Okta, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.11607841251732662,False,Retrieved filing passages discuss md&a themes relevant to the question.
+OKTA,"Okta, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.10362603930428378,False,Retrieved filing passages discuss md&a themes relevant to the question.
+OKTA,"Okta, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08504871570280742,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+OKTA,"Okta, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+OKTA,"Okta, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.13022054878999684,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+OKTA,"Okta, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.15372618953531997,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+TOST,"Toast, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.11102862619137027,False,Retrieved filing passages discuss segment information themes relevant to the question.
+TOST,"Toast, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.11846550655102692,False,Retrieved filing passages discuss md&a themes relevant to the question.
+TOST,"Toast, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.13531299105922107,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+TOST,"Toast, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.11830472299449571,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+TOST,"Toast, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.11688792611871804,False,Retrieved filing passages discuss md&a themes relevant to the question.
+TOST,"Toast, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.2565627750499932,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+TOST,"Toast, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss business themes relevant to the question.
+TOST,"Toast, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss business themes relevant to the question.
+TOST,"Toast, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.15437458137267399,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+TOST,"Toast, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.13951578755612987,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+ETSY,"Etsy, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.13137855832825848,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.12145612064926674,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.15940479816796005,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.1861545302681974,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.1548646262005128,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.17404117574047123,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08060884664765297,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.10511147248980829,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.1825051913984725,False,Retrieved filing passages discuss md&a themes relevant to the question.
+ETSY,"Etsy, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.15459473582821853,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+DOCU,"DocuSign, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.13701948896916355,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.1693420754401357,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.1362672149167199,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+DOCU,"DocuSign, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.12021395021461898,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.12565436583736908,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.12724337919523965,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08383642832128141,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08828749072079609,False,Retrieved filing passages discuss md&a themes relevant to the question.
+DOCU,"DocuSign, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.15996523854458616,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+DOCU,"DocuSign, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.14706150366062368,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+BILL,"BILL Holdings, Inc.",revenue_drivers,What are the company's main revenue drivers?,revenue_drivers,0.13504078267034525,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",customer_concentration,What does the company say about customer concentration?,revenue_drivers,0.11379597009575725,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",liquidity_risks,What are the main liquidity risks?,liquidity_debt,0.2526877723078904,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",debt_obligations,What does management say about debt obligations?,liquidity_debt,0.1658478176094581,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",margin_pressure,What risks could pressure margins?,margin_pressure,0.11739949202986609,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",capex_requirements,What capex or investment requirements are disclosed?,capex_investment,0.14107652058523085,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",competition,What does management say about competition?,risk_competition_regulation,0.08,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+BILL,"BILL Holdings, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,risk_competition_regulation,0.08239387223518606,False,Retrieved filing passages discuss md&a themes relevant to the question.
+BILL,"BILL Holdings, Inc.",key_risk_factors,What are the key risk factors?,risk_competition_regulation,0.15433555987791137,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+BILL,"BILL Holdings, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,liquidity_debt,0.1380705421616757,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.

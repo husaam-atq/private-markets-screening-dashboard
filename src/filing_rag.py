@@ -21,6 +21,59 @@ class RetrievalResult:
     evidence: pd.DataFrame
 
 
+QUESTION_INTENTS = {
+    "revenue_drivers": {
+        "keywords": ["revenue", "driver", "business model", "product", "service", "customer", "segment", "growth"],
+        "preferred_sections": {"Business", "MD&A", "Segment Information"},
+        "adjacent_sections": {"Liquidity and Capital Resources"},
+    },
+    "liquidity_debt": {
+        "keywords": ["liquidity", "debt", "cash flow", "cash flows", "borrowings", "maturity", "obligations"],
+        "preferred_sections": {"Liquidity and Capital Resources", "Debt / Contractual Obligations", "MD&A"},
+        "adjacent_sections": {"Risk Factors"},
+    },
+    "risk_competition_regulation": {
+        "keywords": ["risk", "competition", "competitive", "regulation", "regulatory", "litigation", "legal"],
+        "preferred_sections": {"Risk Factors", "Legal / Regulatory Matters", "Business"},
+        "adjacent_sections": {"MD&A", "Segment Information"},
+    },
+    "margin_pressure": {
+        "keywords": ["margin", "cost", "expense", "inflation", "profitability", "operations", "pressure"],
+        "preferred_sections": {"MD&A", "Risk Factors"},
+        "adjacent_sections": {"Business", "Liquidity and Capital Resources"},
+    },
+    "capex_investment": {
+        "keywords": ["capex", "capital expenditure", "investment", "capital allocation", "capital requirements"],
+        "preferred_sections": {"MD&A", "Liquidity and Capital Resources", "Debt / Contractual Obligations"},
+        "adjacent_sections": {"Business", "Segment Information"},
+    },
+}
+
+
+def classify_question_type(query: str, question_id: str | None = None) -> str:
+    lookup = f"{question_id or ''} {query}".lower()
+    best_type = "general"
+    best_hits = 0
+    for intent, config in QUESTION_INTENTS.items():
+        hits = sum(1 for keyword in config["keywords"] if keyword in lookup)
+        if hits > best_hits:
+            best_type = intent
+            best_hits = hits
+    return best_type
+
+
+def section_boost_for(question_type: str, section_label: str) -> tuple[float, bool]:
+    config = load_config("rag_config.yaml")["retrieval"]
+    intent = QUESTION_INTENTS.get(question_type, {})
+    preferred = intent.get("preferred_sections", set())
+    adjacent = intent.get("adjacent_sections", set())
+    if section_label in preferred:
+        return float(config.get("strong_section_boost", 0.08)), True
+    if section_label in adjacent:
+        return float(config.get("adjacent_section_boost", 0.04)), True
+    return 0.0, False
+
+
 class FilingRetriever:
     def __init__(self, chunks: pd.DataFrame, mode: str = "keyword") -> None:
         self.chunks = chunks.copy().reset_index(drop=True)
@@ -28,7 +81,14 @@ class FilingRetriever:
         self.vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2), min_df=1)
         self.matrix = self.vectorizer.fit_transform(self.chunks["text"].fillna("").map(clean_text))
 
-    def search(self, query: str, ticker: str | None = None, top_k: int = 5, min_score: float | None = None) -> pd.DataFrame:
+    def search(
+        self,
+        query: str,
+        ticker: str | None = None,
+        top_k: int = 5,
+        min_score: float | None = None,
+        question_id: str | None = None,
+    ) -> pd.DataFrame:
         config = load_config("rag_config.yaml")["retrieval"]
         min_score = float(config["min_keyword_score"] if min_score is None else min_score)
         candidate = self.chunks
@@ -41,18 +101,29 @@ class FilingRetriever:
             return pd.DataFrame()
         query_vec = self.vectorizer.transform([query])
         scores = cosine_similarity(query_vec, matrix).flatten()
-        ranked = np.argsort(scores)[::-1][:top_k]
+        question_type = classify_question_type(query, question_id)
+        boosts_and_flags = [section_boost_for(question_type, str(section)) for section in candidate["section_label"].fillna("")]
+        section_boosts = np.array([item[0] for item in boosts_and_flags])
+        section_flags = np.array([item[1] for item in boosts_and_flags])
+        combined_scores = scores + section_boosts
+        ranked = np.argsort(combined_scores)[::-1][:top_k]
         result = candidate.iloc[ranked].copy()
         result["keyword_score"] = scores[ranked]
         result["semantic_score"] = np.nan
-        result["combined_score"] = result["keyword_score"]
+        result["section_boost"] = section_boosts[ranked]
+        result["combined_score"] = combined_scores[ranked]
         result["retrieval_mode"] = self.mode
         result["retrieved_at"] = utc_timestamp()
+        result["query"] = query
+        result["expected_question_type"] = question_type
+        result["section_match_flag"] = section_flags[ranked]
+        result["evidence_snippet"] = result["text"].fillna("").astype(str).str.slice(0, 650)
+        result["evidence_strength"] = result["combined_score"].clip(0, 1)
         result = result[result["combined_score"] >= min_score].reset_index(drop=True)
         return result
 
-    def answer_question(self, question: str, ticker: str, top_k: int = 5) -> RetrievalResult:
-        evidence = self.search(question, ticker=ticker, top_k=top_k)
+    def answer_question(self, question: str, ticker: str, top_k: int = 5, question_id: str | None = None) -> RetrievalResult:
+        evidence = self.search(question, ticker=ticker, top_k=top_k, question_id=question_id)
         no_answer = evidence.empty
         return RetrievalResult(question=question, no_answer=no_answer, evidence=evidence)
 
@@ -105,14 +176,16 @@ def run_retrieval_for_companies(tickers: list[str] | None = None, top_k: int = 5
     for ticker in tickers:
         company = chunks[chunks["ticker"] == ticker]["company_name"].iloc[0]
         for _, question in question_frame.iterrows():
-            result = retriever.answer_question(question["question"], ticker=ticker, top_k=top_k)
+            result = retriever.answer_question(question["question"], ticker=ticker, top_k=top_k, question_id=question["question_id"])
             strength = float(result.evidence["combined_score"].max()) if not result.evidence.empty else 0.0
+            question_type = classify_question_type(question["question"], question["question_id"])
             question_rows.append(
                 {
                     "ticker": ticker,
                     "company_name": company,
                     "question_id": question["question_id"],
                     "question": question["question"],
+                    "expected_question_type": question_type,
                     "evidence_strength": strength,
                     "no_answer_flag": result.no_answer,
                     "summary_answer": "insufficient filing evidence found"

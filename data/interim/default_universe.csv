@@ -1,109 +1,289 @@
 ticker,company_name,sector_theme,sector,industry,universe_type,universe_refresh_timestamp
-ADP,"Automatic Data Processing, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-CTAS,Cintas Corporation,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-FIS,"Fidelity National Information Services, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-GPN,Global Payments Inc.,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-MCO,Moody's Corporation,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-PAYX,"Paychex, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-ROP,"Roper Technologies, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-RSG,"Republic Services, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-SPGI,S&P Global Inc.,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-TRI,Thomson Reuters Corporation,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-VRSK,"Verisk Analytics, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-WM,"Waste Management, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T12:06:48+00:00
-BKNG,Booking Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-CCL,Carnival Corporation,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-CMG,"Chipotle Mexican Grill, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-DPZ,"Domino's Pizza, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-HLT,Hilton Worldwide Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-LYV,"Live Nation Entertainment, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-MAR,"Marriott International, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-MCD,McDonald's Corporation,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-RCL,Royal Caribbean Cruises Ltd.,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-ROST,"Ross Stores, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-SBUX,Starbucks Corporation,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-YUM,"Yum! Brands, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T12:06:48+00:00
-AMT,American Tower Corporation,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-CCI,Crown Castle Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-DLR,"Digital Realty Trust, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-EQIX,"Equinix, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-FYBR,"Frontier Communications Parent, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-IRM,Iron Mountain Incorporated,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-LUMN,"Lumen Technologies, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-SBAC,SBA Communications Corporation,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-T,AT&T Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-TMUS,"T-Mobile US, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-UNIT,Uniti Group Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-VZ,Verizon Communications Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T12:06:48+00:00
-AES,The AES Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-ALB,Albemarle Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-BE,Bloom Energy Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-CSIQ,Canadian Solar Inc.,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-ENPH,"Enphase Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-FSLR,"First Solar, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-NEE,"NextEra Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-ORA,"Ormat Technologies, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-PLUG,Plug Power Inc.,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-RUN,Sunrun Inc.,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-SEDG,"SolarEdge Technologies, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-TSLA,"Tesla, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T12:06:48+00:00
-AFRM,"Affirm Holdings, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-AXP,American Express Company,Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-COF,Capital One Financial Corporation,Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-COIN,"Coinbase Global, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-HOOD,"Robinhood Markets, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-MA,Mastercard Incorporated,Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-MQ,"Marqeta, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-PYPL,"PayPal Holdings, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-SOFI,"SoFi Technologies, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-UPST,"Upstart Holdings, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-V,Visa Inc.,Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-XYZ,"Block, Inc.",Financial Technology,Financials,Payments and Financial Technology,default_online,2026-05-28T12:06:48+00:00
-CI,The Cigna Group,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-CNC,Centene Corporation,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-CVS,CVS Health Corporation,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-DGX,Quest Diagnostics Incorporated,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-DVA,DaVita Inc.,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-ELV,"Elevance Health, Inc.",Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-HCA,"HCA Healthcare, Inc.",Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-HUM,Humana Inc.,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-LH,Labcorp Holdings Inc.,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-MOH,"Molina Healthcare, Inc.",Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-THC,Tenet Healthcare Corporation,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-UNH,UnitedHealth Group Incorporated,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T12:06:48+00:00
-CARR,Carrier Global Corporation,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-CAT,Caterpillar Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-DE,Deere & Company,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-EMR,Emerson Electric Co.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-ETN,Eaton Corporation plc,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-GE,GE Aerospace,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-HON,Honeywell International Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-IR,Ingersoll Rand Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-ITW,Illinois Tool Works Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-MMM,3M Company,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-PH,Parker-Hannifin Corporation,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-TT,Trane Technologies plc,Industrials,Industrials,Industrial Products,default_online,2026-05-28T12:06:48+00:00
-AEP,"American Electric Power Company, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-AWK,"American Water Works Company, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-CNP,"CenterPoint Energy, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-DUK,Duke Energy Corporation,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-ETR,Entergy Corporation,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-EXC,Exelon Corporation,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-NRG,"NRG Energy, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-PEG,Public Service Enterprise Group Incorporated,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-SO,The Southern Company,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-SRE,Sempra,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-WEC,"WEC Energy Group, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-XEL,Xcel Energy Inc.,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T12:06:48+00:00
-ADBE,Adobe Inc.,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-CRM,"Salesforce, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-DDOG,"Datadog, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-HUBS,"HubSpot, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-INTU,Intuit Inc.,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-MDB,"MongoDB, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-MSFT,Microsoft Corporation,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-NET,"Cloudflare, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-NOW,"ServiceNow, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-SNOW,Snowflake Inc.,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-TEAM,Atlassian Corporation,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
-ZS,"Zscaler, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T12:06:48+00:00
+AMP,AMP,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+APO,APO,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ARES,ARES,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+BEN,BEN,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+BK,BK,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+BLK,BLK,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+BX,BX,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CBOE,CBOE,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CME,CME,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+EVR,EVR,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+IBKR,IBKR,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ICE,ICE,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+JHG,JHG,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+KKR,KKR,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+LAZ,LAZ,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+MKTX,MKTX,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+MSCI,MSCI,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+NDAQ,NDAQ,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+PIPR,PIPR,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+RJF,RJF,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+SCHW,SCHW,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+SEIC,SEIC,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+STT,STT,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+TROW,TROW,Alternative Asset Managers / Market Infrastructure,Financials,Asset Management and Market Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ADP,"Automatic Data Processing, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+ASGN,ASGN,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+BAH,BAH,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+CPRT,CPRT,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+CTAS,Cintas Corporation,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+EXPO,EXPO,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+FCN,FCN,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+FDS,FDS,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+G,G,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+HRI,HRI,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+MAN,MAN,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+MCO,Moody's Corporation,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+MMS,MMS,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+NSP,NSP,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+PAYX,"Paychex, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+ROL,ROL,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+ROP,"Roper Technologies, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+RSG,"Republic Services, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+SPGI,S&P Global Inc.,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+TNET,TNET,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+TRI,Thomson Reuters Corporation,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+VRSK,"Verisk Analytics, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+WEX,WEX,Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+WM,"Waste Management, Inc.",Business Services,Industrials,Professional and Commercial Services,default_online,2026-05-28T16:56:05+00:00
+BKNG,Booking Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+BURL,BURL,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+CAKE,CAKE,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+CHH,CHH,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+CHUY,CHUY,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+CMG,"Chipotle Mexican Grill, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+DPZ,"Domino's Pizza, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+DRI,DRI,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+FIVE,FIVE,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+HLT,Hilton Worldwide Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+MAR,"Marriott International, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+MCD,McDonald's Corporation,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+MTN,MTN,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+PLAY,PLAY,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+ROST,"Ross Stores, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+SBUX,Starbucks Corporation,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+SHAK,SHAK,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+TJX,TJX,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+TNL,TNL,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+TXRH,TXRH,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+ULTA,ULTA,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+WH,WH,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+WING,WING,Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+YUM,"Yum! Brands, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,default_online,2026-05-28T16:56:05+00:00
+AKAM,AKAM,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+AMT,American Tower Corporation,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ATUS,ATUS,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CCI,Crown Castle Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CCOI,CCOI,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CHTR,CHTR,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CIEN,CIEN,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CMCSA,CMCSA,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+COMM,COMM,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+DBRG,DBRG,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+DLR,"Digital Realty Trust, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+EQIX,"Equinix, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+FFIV,FFIV,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+GLW,GLW,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+GTN,GTN,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+IIPR,IIPR,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+IRM,Iron Mountain Incorporated,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+LBRDK,LBRDK,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+LUMN,"Lumen Technologies, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+SBAC,SBA Communications Corporation,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+T,AT&T Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+TMUS,"T-Mobile US, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+UNIT,Uniti Group Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+VZ,Verizon Communications Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,default_online,2026-05-28T16:56:05+00:00
+AES,The AES Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+ALB,Albemarle Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+AMRC,AMRC,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+ARRY,ARRY,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+BE,Bloom Energy Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+CHPT,CHPT,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+CSIQ,Canadian Solar Inc.,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+CWEN,CWEN,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+ENPH,"Enphase Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+FLNC,FLNC,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+FSLR,"First Solar, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+HASI,HASI,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+NEE,"NextEra Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+NOVA,NOVA,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+NRG,"NRG Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+NXT,NXT,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+ORA,"Ormat Technologies, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+PLUG,Plug Power Inc.,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+QS,QS,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+RUN,Sunrun Inc.,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+SEDG,"SolarEdge Technologies, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+SHLS,SHLS,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+STEM,STEM,Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+TSLA,"Tesla, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,default_online,2026-05-28T16:56:05+00:00
+ACHC,ACHC,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+AMN,AMN,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+CHE,CHE,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+CI,The Cigna Group,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+CNC,Centene Corporation,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+CVS,CVS Health Corporation,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+DGX,Quest Diagnostics Incorporated,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+DVA,DaVita Inc.,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+EHC,EHC,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+ELV,"Elevance Health, Inc.",Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+ENSG,ENSG,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+HCA,"HCA Healthcare, Inc.",Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+HQY,HQY,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+HUM,Humana Inc.,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+LH,Labcorp Holdings Inc.,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+MOH,"Molina Healthcare, Inc.",Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+OPCH,OPCH,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+PINC,PINC,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+RDNT,RDNT,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+SEM,SEM,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+THC,Tenet Healthcare Corporation,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+UHS,UHS,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+UNH,UnitedHealth Group Incorporated,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+USPH,USPH,Healthcare Services,Health Care,Managed Care and Services,default_online,2026-05-28T16:56:05+00:00
+CARR,Carrier Global Corporation,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+CAT,Caterpillar Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+DE,Deere & Company,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+DOV,DOV,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+EMR,Emerson Electric Co.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+ETN,Eaton Corporation plc,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+FAST,FAST,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+GE,GE Aerospace,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+GWW,GWW,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+HON,Honeywell International Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+HUBB,HUBB,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+IR,Ingersoll Rand Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+ITW,Illinois Tool Works Inc.,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+JCI,JCI,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+MMM,3M Company,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+PH,Parker-Hannifin Corporation,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+PNR,PNR,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+ROK,ROK,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+TEX,TEX,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+TT,Trane Technologies plc,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+URI,URI,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+WAB,WAB,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+WSO,WSO,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+XYL,XYL,Industrials,Industrials,Industrial Products,default_online,2026-05-28T16:56:05+00:00
+AEP,"American Electric Power Company, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+AGR,AGR,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ATO,ATO,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+AWK,"American Water Works Company, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CMS,CMS,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+CNP,"CenterPoint Energy, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+D,D,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+DTE,DTE,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+DUK,Duke Energy Corporation,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ED,ED,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ES,ES,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+ETR,Entergy Corporation,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+EVRG,EVRG,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+EXC,Exelon Corporation,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+FE,FE,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+LNT,LNT,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+NI,NI,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+PEG,Public Service Enterprise Group Incorporated,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+PPL,PPL,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+SO,The Southern Company,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+SRE,Sempra,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+WEC,"WEC Energy Group, Inc.",Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+WTRG,WTRG,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+XEL,Xcel Energy Inc.,Infrastructure / Utilities-Like Assets,Utilities,Regulated and Contracted Infrastructure,default_online,2026-05-28T16:56:05+00:00
+AFRM,"Affirm Holdings, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+AXP,American Express Company,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+BAC,BAC,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+C,C,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+COF,Capital One Financial Corporation,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+COIN,"Coinbase Global, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+FICO,FICO,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+FIS,"Fidelity National Information Services, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+FOUR,FOUR,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+GPN,Global Payments Inc.,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+GS,GS,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+HOOD,"Robinhood Markets, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+JPM,JPM,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+MA,Mastercard Incorporated,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+MQ,"Marqeta, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+MS,MS,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+PAYO,PAYO,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+PYPL,"PayPal Holdings, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+SOFI,"SoFi Technologies, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+TOST,TOST,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+UPST,"Upstart Holdings, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+V,Visa Inc.,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+WFC,WFC,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+XYZ,"Block, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",default_online,2026-05-28T16:56:05+00:00
+AMH,AMH,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+ARE,ARE,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+AVB,AVB,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+BXP,BXP,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+COLD,COLD,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+CPT,CPT,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+CUBE,CUBE,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+EQR,EQR,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+ESS,ESS,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+EXR,EXR,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+FR,FR,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+INVH,INVH,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+KIM,KIM,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+MAA,MAA,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+NNN,NNN,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+O,O,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+PLD,PLD,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+PSA,PSA,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+REG,REG,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+REXR,REXR,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+SPG,SPG,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+STAG,STAG,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+VICI,VICI,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+WELL,WELL,Real Estate / REITs,Real Estate,Listed Real Estate and REITs,default_online,2026-05-28T16:56:05+00:00
+ADBE,Adobe Inc.,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+ADSK,ADSK,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+APP,APP,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+ASAN,ASAN,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+BILL,BILL,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+CRM,"Salesforce, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+DDOG,"Datadog, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+DOCU,DOCU,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+ESTC,ESTC,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+GTLB,GTLB,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+HUBS,"HubSpot, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+INTU,Intuit Inc.,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+MDB,"MongoDB, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+MSFT,Microsoft Corporation,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+NET,"Cloudflare, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+NOW,"ServiceNow, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+OKTA,OKTA,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+PATH,PATH,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+PCOR,PCOR,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+SNOW,Snowflake Inc.,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+TEAM,Atlassian Corporation,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+TWLO,TWLO,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+WDAY,WDAY,Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+ZS,"Zscaler, Inc.",Software / SaaS,Information Technology,Application Software,default_online,2026-05-28T16:56:05+00:00
+ABNB,ABNB,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+CCL,Carnival Corporation,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+CHWY,CHWY,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+CZR,CZR,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+DASH,DASH,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+DKNG,DKNG,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+EBAY,EBAY,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+ETSY,ETSY,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+EXPE,EXPE,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+LVS,LVS,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+LYFT,LYFT,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+MGM,MGM,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+MTCH,MTCH,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+NCLH,NCLH,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+NFLX,NFLX,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+PENN,PENN,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+PINS,PINS,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+RCL,Royal Caribbean Cruises Ltd.,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+ROKU,ROKU,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+SEAT,SEAT,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+SNAP,SNAP,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+TRIP,TRIP,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+UBER,UBER,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00
+WYNN,WYNN,Travel / Leisure / Consumer Platforms,Consumer Discretionary,"Travel, Leisure and Consumer Platforms",default_online,2026-05-28T16:56:05+00:00

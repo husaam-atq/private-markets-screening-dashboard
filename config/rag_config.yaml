@@ -3,8 +3,20 @@ retrieval:
   min_keyword_score: 0.045
   keyword_weight: 0.75
   semantic_weight: 0.25
+  section_boost_weight: 0.18
+  strong_section_boost: 0.08
+  adjacent_section_boost: 0.04
   max_chunk_words: 180
   overlap_words: 35
+generation:
+  llm_enabled: false
+  llm_provider: ollama
+  ollama_base_url: "http://localhost:11434"
+  ollama_model: qwen3
+  supported_models: [qwen3, qwen2.5, llama3.1, llama3.2, mistral]
+  temperature: 0.0
+  max_tokens: 700
+  request_timeout_seconds: 45
 diligence_questions:
   - question_id: revenue_drivers
     question: "What are the company's main revenue drivers?"

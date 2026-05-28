@@ -5,7 +5,7 @@ import argparse
 import numpy as np
 import pandas as pd
 
-from src.config import PROCESSED_DIR, ensure_project_dirs, load_config
+from src.config import INTERIM_DIR, PROCESSED_DIR, ensure_project_dirs, load_config
 from src.feature_engineering import run_feature_engineering
 from src.peer_benchmarking import build_peer_benchmarks, run_peer_benchmarking
 from src.utils import clip_score, percentile_score, read_csv_if_exists, safe_divide, weighted_sum, write_csv
@@ -126,6 +126,54 @@ def _peer_adjustment_scores(scored: pd.DataFrame, benchmarks: pd.DataFrame) -> p
     return merged
 
 
+def _filing_source_scores(scored: pd.DataFrame) -> pd.DataFrame:
+    chunks = read_csv_if_exists(INTERIM_DIR / "filing_chunks.csv")
+    scored = scored.copy()
+    scored["filing_chunk_count"] = 0
+    scored["real_filing_chunk_count"] = 0
+    scored["sample_fallback_chunk_count"] = 0
+    scored["filing_source_score"] = 35.0
+    if chunks.empty or "ticker" not in chunks.columns:
+        return scored
+    source_counts = chunks.pivot_table(
+        index="ticker",
+        columns="source_type",
+        values="chunk_id",
+        aggfunc="count",
+        fill_value=0,
+    ).reset_index()
+    for column in ["real_sec_filing", "sample_fallback", "cached_sec_snapshot"]:
+        if column not in source_counts.columns:
+            source_counts[column] = 0
+    source_counts["filing_chunk_count"] = source_counts[["real_sec_filing", "sample_fallback", "cached_sec_snapshot"]].sum(axis=1)
+    source_counts["real_filing_chunk_count"] = source_counts["real_sec_filing"]
+    source_counts["sample_fallback_chunk_count"] = source_counts["sample_fallback"]
+    source_counts["filing_source_score"] = np.select(
+        [
+            source_counts["real_sec_filing"] >= 25,
+            source_counts["cached_sec_snapshot"] >= 10,
+            source_counts["sample_fallback"] >= 5,
+        ],
+        [100, 82, 64],
+        default=35,
+    )
+    keep = [
+        "ticker",
+        "filing_chunk_count",
+        "real_filing_chunk_count",
+        "sample_fallback_chunk_count",
+        "filing_source_score",
+    ]
+    scored = scored.merge(source_counts[keep], on="ticker", how="left", suffixes=("", "_filing"))
+    for column in keep[1:]:
+        duplicate = f"{column}_filing"
+        if duplicate in scored.columns:
+            scored[column] = scored[duplicate].combine_first(scored[column])
+            scored = scored.drop(columns=[duplicate])
+        scored[column] = pd.to_numeric(scored[column], errors="coerce").fillna(0)
+    return scored
+
+
 def _data_quality_scores(scored: pd.DataFrame) -> pd.DataFrame:
     scored = scored.copy()
     yfin = pd.to_numeric(scored.get("yfinance_field_completeness_ratio", 0), errors="coerce").fillna(0)
@@ -146,15 +194,21 @@ def _data_quality_scores(scored: pd.DataFrame) -> pd.DataFrame:
     )
     proxy_penalty = pd.to_numeric(scored.get("proxy_usage_penalty", 0), errors="coerce").fillna(0)
     missing_cik_penalty = np.where(pd.to_numeric(scored.get("cik", np.nan), errors="coerce").isna(), 12, 0)
+    filing_source = pd.to_numeric(scored.get("filing_source_score", 35), errors="coerce").fillna(35)
+    fallback_penalty = np.where(pd.to_numeric(scored.get("sample_fallback_chunk_count", 0), errors="coerce").fillna(0) > 0, 5, 0)
+    no_real_filing_penalty = np.where(pd.to_numeric(scored.get("real_filing_chunk_count", 0), errors="coerce").fillna(0) == 0, 6, 0)
     quality = (
         yfin * 100 * 0.24
-        + sec * 100 * 0.34
-        + staleness * 0.14
+        + sec * 100 * 0.30
+        + staleness * 0.12
         + peer_score * 0.10
-        + source_score * 0.10
-        + 100 * 0.08
+        + source_score * 0.08
+        + filing_source * 0.10
+        + 100 * 0.06
         - proxy_penalty
         - missing_cik_penalty
+        - fallback_penalty
+        - no_real_filing_penalty
     )
     scored["data_quality_score"] = pd.Series(quality, index=scored.index).clip(0, 100)
     scored["data_gap_risk_score"] = 100 - scored["data_quality_score"]
@@ -164,6 +218,7 @@ def _data_quality_scores(scored: pd.DataFrame) -> pd.DataFrame:
             f"SEC fields {row.get('sec_field_completeness_ratio', 0):.0%}; "
             f"filing age {row.get('filing_staleness_days', np.nan):.0f} days; "
             f"peer count {row.get('peer_count', 0)}; source {row.get('source_type', 'unknown')}; "
+            f"real filing chunks {row.get('real_filing_chunk_count', 0):.0f}; "
             "EBIT proxy used instead of EBITDA."
         ),
         axis=1,
@@ -197,6 +252,7 @@ def calculate_scores(screening: pd.DataFrame, benchmarks: pd.DataFrame | None = 
         benchmarks = build_peer_benchmarks(screening)
     scored = _base_metric_scores(screening)
     scored = _peer_adjustment_scores(scored, benchmarks)
+    scored = _filing_source_scores(scored)
     scored = _data_quality_scores(scored)
     scored = _risk_scores(scored)
     scored["credit_risk_score"] = weighted_sum(scored, cfg["credit_risk_score"])

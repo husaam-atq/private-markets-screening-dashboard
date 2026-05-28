@@ -28,12 +28,12 @@ def build_target_deep_dive(scores: pd.DataFrame, categories: pd.DataFrame, bench
     return merged
 
 
-def run_pipeline(mode: str = "online") -> dict[str, pd.DataFrame]:
+def run_pipeline(mode: str = "online", runtime_mode: str | None = None) -> dict[str, pd.DataFrame]:
     ensure_project_dirs()
     write_universe_outputs()
-    market = load_market_data(mode=mode)
-    fundamentals = load_sec_fundamentals(mode=mode)
-    screening = run_feature_engineering(mode=mode)
+    market = load_market_data(mode=mode, runtime_mode=runtime_mode)
+    fundamentals = load_sec_fundamentals(mode=mode, runtime_mode=runtime_mode)
+    screening = run_feature_engineering(mode=mode, runtime_mode=runtime_mode)
     benchmarks = run_peer_benchmarking()
     scores = run_scoring()
     categories = run_categorisation()
@@ -62,8 +62,9 @@ def load_pipeline_outputs() -> dict[str, pd.DataFrame]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the private markets screening pipeline.")
     parser.add_argument("--mode", choices=["sample", "online"], default="online")
+    parser.add_argument("--runtime-mode", choices=["demo", "portfolio", "extended"], default=None)
     args = parser.parse_args()
-    outputs = run_pipeline(mode=args.mode)
+    outputs = run_pipeline(mode=args.mode, runtime_mode=args.runtime_mode)
     print(f"companies_screened={len(outputs['screening'])}")
     print(f"sectors_covered={outputs['screening']['sector_theme'].nunique()}")
     print(f"top_target={outputs['target']['ticker'].iloc[0] if not outputs['target'].empty else 'none'}")

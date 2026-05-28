@@ -8,13 +8,17 @@ import pandas as pd
 from src.charts import generate_all_charts
 from src.config import EXCEL_DIR, INTERIM_DIR, PROCESSED_DIR, REPORT_DIR, SAMPLE_DIR, ensure_project_dirs
 from src.feature_engineering import METRIC_COLUMNS
+from src.grounded_generation_eval import run_grounded_generation_evaluation
 from src.memo_generator import generate_memo
+from src.rag_generator import run_generation
 from src.retrieval_eval import run_retrieval_evaluation
 from src.screening_pipeline import run_pipeline
 from src.utils import format_pct, read_csv_if_exists
 
 
 def _metric(eval_results: pd.DataFrame, name: str, default: float = 0.0) -> float:
+    if eval_results.empty or "metric" not in eval_results.columns or "value" not in eval_results.columns:
+        return default
     row = eval_results[eval_results["metric"] == name]
     return float(row["value"].iloc[0]) if not row.empty else default
 
@@ -22,10 +26,12 @@ def _metric(eval_results: pd.DataFrame, name: str, default: float = 0.0) -> floa
 def generate_filing_evidence_report() -> str:
     evidence = read_csv_if_exists(PROCESSED_DIR / "retrieved_evidence.csv")
     questions = read_csv_if_exists(PROCESSED_DIR / "diligence_questions.csv")
+    generated = read_csv_if_exists(PROCESSED_DIR / "generated_rag_answers.csv")
     lines = [
         "# Filing Evidence Report",
         "",
         "Evidence rows are labelled by `source_type`. Real SEC filing chunks are preferred; sample fallback chunks are used only where real filing text was not indexed.",
+        "Generated answers are deterministic by default. Optional local Ollama answers are shown only when available and remain constrained to retrieved evidence.",
         "",
     ]
     if questions.empty:
@@ -33,6 +39,16 @@ def generate_filing_evidence_report() -> str:
     for _, question in questions.iterrows():
         lines.append(f"## {question['company_name']} ({question['ticker']}) - {question['question']}")
         lines.append(f"Summary: {question['summary_answer']}")
+        generated_row = generated[
+            (generated.get("ticker", pd.Series(dtype=str)) == question["ticker"])
+            & (generated.get("question_id", pd.Series(dtype=str)) == question["question_id"])
+        ]
+        if not generated_row.empty:
+            row = generated_row.iloc[0]
+            lines.append(
+                f"Generated answer ({row.get('generation_mode', 'deterministic')}): {row.get('answer', '')} "
+                f"Cited chunks: {row.get('cited_chunks', '')}. Unsupported warning: {row.get('unsupported_claim_warning', False)}."
+            )
         subset = evidence[
             (evidence["ticker"] == question["ticker"]) & (evidence["question_id"] == question["question_id"])
         ].sort_values("rank")
@@ -41,9 +57,9 @@ def generate_filing_evidence_report() -> str:
         else:
             for _, row in subset.head(3).iterrows():
                 lines.append(
-                    f"- {str(row['text'])[:360]} Source: {row['company_name']} | {row['filing_type']} | "
+                    f"- {str(row.get('evidence_snippet', row['text']))[:420]} Source: {row['company_name']} | {row['filing_type']} | "
                     f"{row['filing_date']} | {row['section_label']} | {row['chunk_id']} | "
-                    f"{row.get('source_type', 'unknown')}."
+                    f"{row.get('source_type', 'unknown')} | section boost {float(row.get('section_boost', 0)):.3f}."
                 )
         lines.append("")
     report = "\n".join(lines)
@@ -55,12 +71,14 @@ def generate_rag_evaluation_report() -> str:
     eval_results = read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv")
     details = read_csv_if_exists(PROCESSED_DIR / "rag_eval_details.csv")
     examples = read_csv_if_exists(PROCESSED_DIR / "rag_eval_examples.csv")
+    grounded = read_csv_if_exists(PROCESSED_DIR / "grounded_generation_eval.csv")
     if eval_results.empty:
         eval_results, details = run_retrieval_evaluation()
     lines = [
         "# RAG Evaluation Report",
         "",
         "This report evaluates whether the filing retrieval layer returns source-backed evidence for diligence-style questions. The gold set includes section-confuser and no-answer questions, so perfect-looking metrics should not be assumed in live refreshes.",
+        "Retrieval metrics are separate from optional local language-model generation metrics.",
         "",
         "## Summary Metrics",
         "",
@@ -86,6 +104,23 @@ def generate_rag_evaluation_report() -> str:
     else:
         for _, row in weak.iterrows():
             lines.append(f"- {row['ticker']} {row['question_id']} missed at top 5; top score {row['top_score']:.3f}.")
+    lines.extend(["", "## Grounded Generation Context", ""])
+    if grounded.empty:
+        lines.append("Grounded generation evaluation has not been run yet.")
+    else:
+        for _, row in grounded.iterrows():
+            lines.append(f"- {row['metric']}: {row['value']:.3f}")
+    lines.extend(
+        [
+            "",
+            "## Limitations and Roadmap",
+            "",
+            "- Hit@5 measures whether at least one relevant passage appears; Precision@5 is more important for user-facing evidence quality.",
+            "- Section-confuser questions can retrieve adjacent sections where the filing discusses the same economic issue in different wording.",
+            "- Real filing coverage is intentionally capped for commit-safe outputs and can be expanded locally.",
+            "- The retrieval benchmark is not a substitute for legal, financial or investment diligence.",
+        ]
+    )
     report = "\n".join(lines)
     (REPORT_DIR / "rag_evaluation_report.md").write_text(report, encoding="utf-8")
     return report
@@ -107,6 +142,9 @@ def generate_excel_workbook() -> Path:
         "RAG Evaluation": read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv"),
         "RAG Eval Details": read_csv_if_exists(PROCESSED_DIR / "rag_eval_details.csv"),
         "RAG Eval Examples": read_csv_if_exists(PROCESSED_DIR / "rag_eval_examples.csv"),
+        "Generated RAG Answers": read_csv_if_exists(PROCESSED_DIR / "generated_rag_answers.csv"),
+        "Grounded Gen Eval": read_csv_if_exists(PROCESSED_DIR / "grounded_generation_eval.csv"),
+        "Grounded Gen Details": read_csv_if_exists(PROCESSED_DIR / "grounded_generation_eval_details.csv"),
         "Skipped Tickers": read_csv_if_exists(PROCESSED_DIR / "skipped_tickers.csv"),
         "Real Filing Docs": read_csv_if_exists(PROCESSED_DIR / "real_filing_documents.csv"),
         "Methodology": pd.DataFrame(
@@ -137,6 +175,7 @@ def summary_metrics() -> dict:
     market = read_csv_if_exists(INTERIM_DIR / "market_data_snapshot.csv")
     skipped = read_csv_if_exists(PROCESSED_DIR / "skipped_tickers.csv")
     real_filings = read_csv_if_exists(PROCESSED_DIR / "real_filing_documents.csv")
+    grounded = read_csv_if_exists(PROCESSED_DIR / "grounded_generation_eval.csv")
     return {
         "companies_screened": len(screening),
         "sectors_covered": screening["sector_theme"].nunique() if not screening.empty else 0,
@@ -156,6 +195,8 @@ def summary_metrics() -> dict:
         "rag_precision_at_5": _metric(eval_results, "precision_at_5"),
         "citation_coverage": _metric(eval_results, "citation_coverage"),
         "unsupported_claim_rate": _metric(eval_results, "unsupported_claim_rate"),
+        "grounded_generation_score": _metric(grounded, "groundedness_score"),
+        "grounded_generation_citation_coverage": _metric(grounded, "citation_coverage"),
     }
 
 
@@ -165,6 +206,9 @@ def run_reporting() -> dict[str, Path | str]:
         run_pipeline(mode="online")
     if read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv").empty:
         run_retrieval_evaluation()
+    if read_csv_if_exists(PROCESSED_DIR / "generated_rag_answers.csv").empty:
+        run_generation()
+    run_grounded_generation_evaluation()
     generate_memo()
     filing_report = generate_filing_evidence_report()
     rag_report = generate_rag_evaluation_report()

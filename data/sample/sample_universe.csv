@@ -1,41 +1,41 @@
 ticker,company_name,sector_theme,sector,industry,universe_type,universe_refresh_timestamp
-ADP,"Automatic Data Processing, Inc.",Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T12:06:48+00:00
-CTAS,Cintas Corporation,Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T12:06:48+00:00
-FIS,"Fidelity National Information Services, Inc.",Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T12:06:48+00:00
-GPN,Global Payments Inc.,Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T12:06:48+00:00
-PAYX,"Paychex, Inc.",Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T12:06:48+00:00
-BKNG,Booking Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T12:06:48+00:00
-HLT,Hilton Worldwide Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T12:06:48+00:00
-MAR,"Marriott International, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T12:06:48+00:00
-MCD,McDonald's Corporation,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T12:06:48+00:00
-SBUX,Starbucks Corporation,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T12:06:48+00:00
-AMT,American Tower Corporation,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T12:06:48+00:00
-DLR,"Digital Realty Trust, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T12:06:48+00:00
-EQIX,"Equinix, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T12:06:48+00:00
-TMUS,"T-Mobile US, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T12:06:48+00:00
-VZ,Verizon Communications Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T12:06:48+00:00
-AES,The AES Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T12:06:48+00:00
-ALB,Albemarle Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T12:06:48+00:00
-FSLR,"First Solar, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T12:06:48+00:00
-NEE,"NextEra Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T12:06:48+00:00
-TSLA,"Tesla, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T12:06:48+00:00
-COIN,"Coinbase Global, Inc.",Financial Technology,Financials,Payments and Financial Technology,cached_sample,2026-05-28T12:06:48+00:00
-MA,Mastercard Incorporated,Financial Technology,Financials,Payments and Financial Technology,cached_sample,2026-05-28T12:06:48+00:00
-PYPL,"PayPal Holdings, Inc.",Financial Technology,Financials,Payments and Financial Technology,cached_sample,2026-05-28T12:06:48+00:00
-SOFI,"SoFi Technologies, Inc.",Financial Technology,Financials,Payments and Financial Technology,cached_sample,2026-05-28T12:06:48+00:00
-V,Visa Inc.,Financial Technology,Financials,Payments and Financial Technology,cached_sample,2026-05-28T12:06:48+00:00
-CVS,CVS Health Corporation,Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T12:06:48+00:00
-DVA,DaVita Inc.,Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T12:06:48+00:00
-ELV,"Elevance Health, Inc.",Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T12:06:48+00:00
-HCA,"HCA Healthcare, Inc.",Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T12:06:48+00:00
-UNH,UnitedHealth Group Incorporated,Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T12:06:48+00:00
-CARR,Carrier Global Corporation,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T12:06:48+00:00
-CAT,Caterpillar Inc.,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T12:06:48+00:00
-ETN,Eaton Corporation plc,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T12:06:48+00:00
-HON,Honeywell International Inc.,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T12:06:48+00:00
-PH,Parker-Hannifin Corporation,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T12:06:48+00:00
-ADBE,Adobe Inc.,Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T12:06:48+00:00
-CRM,"Salesforce, Inc.",Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T12:06:48+00:00
-INTU,Intuit Inc.,Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T12:06:48+00:00
-MSFT,Microsoft Corporation,Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T12:06:48+00:00
-NOW,"ServiceNow, Inc.",Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T12:06:48+00:00
+ADP,"Automatic Data Processing, Inc.",Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T16:56:05+00:00
+CTAS,Cintas Corporation,Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T16:56:05+00:00
+PAYX,"Paychex, Inc.",Business Services,Industrials,Professional and Commercial Services,cached_sample,2026-05-28T16:56:05+00:00
+BKNG,Booking Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T16:56:05+00:00
+HLT,Hilton Worldwide Holdings Inc.,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T16:56:05+00:00
+MAR,"Marriott International, Inc.",Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T16:56:05+00:00
+MCD,McDonald's Corporation,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T16:56:05+00:00
+SBUX,Starbucks Corporation,Consumer Services,Consumer Discretionary,Consumer Services,cached_sample,2026-05-28T16:56:05+00:00
+AMT,American Tower Corporation,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T16:56:05+00:00
+DLR,"Digital Realty Trust, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T16:56:05+00:00
+EQIX,"Equinix, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T16:56:05+00:00
+TMUS,"T-Mobile US, Inc.",Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T16:56:05+00:00
+VZ,Verizon Communications Inc.,Digital Infrastructure / Telecom Infrastructure,Real Estate / Communications,Digital Infrastructure,cached_sample,2026-05-28T16:56:05+00:00
+AES,The AES Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T16:56:05+00:00
+ALB,Albemarle Corporation,Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T16:56:05+00:00
+FSLR,"First Solar, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T16:56:05+00:00
+NEE,"NextEra Energy, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T16:56:05+00:00
+TSLA,"Tesla, Inc.",Energy Transition,Utilities / Energy,Renewables and Electrification,cached_sample,2026-05-28T16:56:05+00:00
+CVS,CVS Health Corporation,Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T16:56:05+00:00
+DVA,DaVita Inc.,Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T16:56:05+00:00
+ELV,"Elevance Health, Inc.",Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T16:56:05+00:00
+HCA,"HCA Healthcare, Inc.",Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T16:56:05+00:00
+UNH,UnitedHealth Group Incorporated,Healthcare Services,Health Care,Managed Care and Services,cached_sample,2026-05-28T16:56:05+00:00
+CARR,Carrier Global Corporation,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T16:56:05+00:00
+CAT,Caterpillar Inc.,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T16:56:05+00:00
+ETN,Eaton Corporation plc,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T16:56:05+00:00
+HON,Honeywell International Inc.,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T16:56:05+00:00
+PH,Parker-Hannifin Corporation,Industrials,Industrials,Industrial Products,cached_sample,2026-05-28T16:56:05+00:00
+COIN,"Coinbase Global, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+FIS,"Fidelity National Information Services, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+GPN,Global Payments Inc.,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+MA,Mastercard Incorporated,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+PYPL,"PayPal Holdings, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+SOFI,"SoFi Technologies, Inc.",Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+V,Visa Inc.,Payments / Financial Services,Financials,"Payments, Banks and Specialty Finance",cached_sample,2026-05-28T16:56:05+00:00
+ADBE,Adobe Inc.,Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T16:56:05+00:00
+CRM,"Salesforce, Inc.",Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T16:56:05+00:00
+INTU,Intuit Inc.,Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T16:56:05+00:00
+MSFT,Microsoft Corporation,Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T16:56:05+00:00
+NOW,"ServiceNow, Inc.",Software / SaaS,Information Technology,Application Software,cached_sample,2026-05-28T16:56:05+00:00

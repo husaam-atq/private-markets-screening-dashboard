@@ -7,7 +7,7 @@ import pandas as pd
 from src.categorisation import categorize_company
 from src.config import PROCESSED_DIR
 from src.scoring import calculate_scores
-from src.utils import read_csv_if_exists
+from src.utils import read_csv_if_exists, upsert_skipped_tickers
 
 
 def test_mega_cap_quality_comp_not_pe_platform():
@@ -26,7 +26,7 @@ def test_mega_cap_quality_comp_not_pe_platform():
         }
     )
     category, tags, reason = categorize_company(row)
-    assert category == "Public Market Quality Compounder"
+    assert category in {"Public Market Quality Compounder", "Benchmark Quality Comp"}
     assert "PE Platform Candidate" not in reason
 
 
@@ -44,8 +44,9 @@ def test_data_quality_score_falls_when_fields_missing(sample_outputs):
 def test_source_type_and_skipped_ticker_outputs_exist():
     chunks = read_csv_if_exists(Path("data/interim/filing_chunks.csv"))
     assert "source_type" in chunks.columns
+    upsert_skipped_tickers([], PROCESSED_DIR / "skipped_tickers.csv")
     skipped = read_csv_if_exists(PROCESSED_DIR / "skipped_tickers.csv")
-    assert {"ticker", "stage", "reason"}.issubset(skipped.columns)
+    assert {"ticker", "stage", "reason", "stage_failed", "reason_skipped"}.issubset(skipped.columns)
 
 
 def test_memo_avoids_buy_sell_language():

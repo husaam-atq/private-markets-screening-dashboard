@@ -187,14 +187,14 @@ def build_screening_universe(market_data: pd.DataFrame, fundamentals: pd.DataFra
     return combined
 
 
-def run_feature_engineering(mode: str = "sample") -> pd.DataFrame:
+def run_feature_engineering(mode: str = "sample", runtime_mode: str | None = None) -> pd.DataFrame:
     ensure_project_dirs()
     market = read_csv_if_exists(INTERIM_DIR / "market_data_snapshot.csv")
     if market.empty:
-        market = load_market_data(mode=mode)
+        market = load_market_data(mode=mode, runtime_mode=runtime_mode)
     fundamentals = read_csv_if_exists(INTERIM_DIR / "normalized_fundamentals.csv")
     if fundamentals.empty:
-        fundamentals = load_sec_fundamentals(mode=mode)
+        fundamentals = load_sec_fundamentals(mode=mode, runtime_mode=runtime_mode)
     frame = build_screening_universe(market, fundamentals)
     write_csv(frame, PROCESSED_DIR / "screening_universe.csv")
     return frame
@@ -203,8 +203,9 @@ def run_feature_engineering(mode: str = "sample") -> pd.DataFrame:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build structured screening metrics.")
     parser.add_argument("--mode", choices=["sample", "online"], default="online")
+    parser.add_argument("--runtime-mode", choices=["demo", "portfolio", "extended"], default=None)
     args = parser.parse_args()
-    frame = run_feature_engineering(mode=args.mode)
+    frame = run_feature_engineering(mode=args.mode, runtime_mode=args.runtime_mode)
     print(f"screening_universe_rows={len(frame)}")
     print(f"metrics_calculated={len(METRIC_COLUMNS)}")
 

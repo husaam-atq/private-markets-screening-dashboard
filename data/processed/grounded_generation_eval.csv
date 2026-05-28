@@ -1,0 +1,9 @@
+metric,value,metric_type
+answers_evaluated,80.0,coverage
+citation_coverage,1.0,groundedness
+unsupported_claim_rate,0.0,groundedness
+evidence_overlap_score,0.7744673080641222,groundedness
+banned_language_count,0.0,guardrail
+no_answer_accuracy,1.0,groundedness
+numeric_consistency_pass_rate,1.0,groundedness
+groundedness_score,0.9999999999999998,groundedness

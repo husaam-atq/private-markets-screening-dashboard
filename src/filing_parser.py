@@ -11,7 +11,7 @@ from src.config import INTERIM_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_di
 from src.filing_downloader import download_filing, filing_url, latest_filing_metadata
 from src.sec_client import SAMPLE_CIKS
 from src.sec_client import SECClient
-from src.universe import configured_universe, sample_universe
+from src.universe import configured_universe, runtime_mode_config, sample_universe
 from src.utils import clean_text, upsert_skipped_tickers, utc_timestamp, write_csv
 
 
@@ -47,6 +47,10 @@ SECTOR_CONTEXT = {
     "Energy Transition": "Project demand, manufacturing scale, commodity exposure, incentives, grid investment and capital intensity are central diligence themes.",
     "Digital Infrastructure / Telecom Infrastructure": "Leasing activity, utilization, network investment, churn, tenant quality and capital intensity are central diligence themes.",
     "Financial Technology": "Transaction volumes, take rate, credit exposure, compliance, fraud losses and network effects are central diligence themes.",
+    "Payments / Financial Services": "Transaction volumes, interchange economics, credit quality, funding costs, compliance and network effects are central diligence themes.",
+    "Alternative Asset Managers / Market Infrastructure": "Assets under management, fee-related earnings, market volumes, fundraising, realizations and operating leverage are central diligence themes.",
+    "Real Estate / REITs": "Occupancy, lease spreads, tenant quality, refinancing needs, cap rates and capital expenditure requirements are central diligence themes.",
+    "Travel / Leisure / Consumer Platforms": "Travel demand, utilization, loyalty, take rate, labor cost, customer acquisition and platform scale are central diligence themes.",
 }
 
 
@@ -194,14 +198,18 @@ def build_real_sec_filing_chunks(
         ticker = str(company["ticker"])
         if ticker not in mapping_lookup.index:
             skipped.append(
-                {
-                    "ticker": ticker,
-                    "stage": "sec_filing_text",
-                    "reason": "missing_cik_mapping",
-                    "detail": "Ticker not found in SEC mapping for filing download.",
-                    "logged_at": utc_timestamp(),
-                }
-            )
+                    {
+                        "ticker": ticker,
+                        "company_name": company.get("company_name", ""),
+                        "stage": "sec_filing_text",
+                        "stage_failed": "sec_filing_text",
+                        "reason": "missing_cik_mapping",
+                        "reason_skipped": "missing_cik_mapping",
+                        "detail": "Ticker not found in SEC mapping for filing download.",
+                        "logged_at": utc_timestamp(),
+                        "timestamp": utc_timestamp(),
+                    }
+                )
             continue
         cik = int(mapping_lookup.loc[ticker]["cik"])
         try:
@@ -209,14 +217,18 @@ def build_real_sec_filing_chunks(
             metadata = latest_filing_metadata(submissions, forms=forms).head(1)
             if metadata.empty:
                 skipped.append(
-                    {
-                        "ticker": ticker,
-                        "stage": "sec_filing_text",
-                        "reason": "no_recent_10k",
-                        "detail": f"CIK {cik} had no recent filing for {forms}.",
-                        "logged_at": utc_timestamp(),
-                    }
-                )
+                        {
+                            "ticker": ticker,
+                            "company_name": company.get("company_name", ""),
+                            "stage": "sec_filing_text",
+                            "stage_failed": "sec_filing_text",
+                            "reason": "no_recent_10k",
+                            "reason_skipped": "no_recent_10k",
+                            "detail": f"CIK {cik} had no recent filing for {forms}.",
+                            "logged_at": utc_timestamp(),
+                            "timestamp": utc_timestamp(),
+                        }
+                    )
                 continue
             filing = metadata.iloc[0]
             raw = download_filing(cik, filing["accession_number"], filing["primary_document"])
@@ -236,10 +248,14 @@ def build_real_sec_filing_chunks(
                 skipped.append(
                     {
                         "ticker": ticker,
+                        "company_name": company.get("company_name", ""),
                         "stage": "sec_filing_text",
+                        "stage_failed": "sec_filing_text",
                         "reason": "empty_parsed_filing",
+                        "reason_skipped": "empty_parsed_filing",
                         "detail": url,
                         "logged_at": utc_timestamp(),
+                        "timestamp": utc_timestamp(),
                     }
                 )
                 continue
@@ -262,10 +278,14 @@ def build_real_sec_filing_chunks(
             skipped.append(
                 {
                     "ticker": ticker,
+                    "company_name": company.get("company_name", ""),
                     "stage": "sec_filing_text",
+                    "stage_failed": "sec_filing_text",
                     "reason": type(exc).__name__,
+                    "reason_skipped": type(exc).__name__,
                     "detail": f"CIK {cik}",
                     "logged_at": utc_timestamp(),
+                    "timestamp": utc_timestamp(),
                 }
             )
     upsert_skipped_tickers(skipped, PROCESSED_DIR / "skipped_tickers.csv")
@@ -304,12 +324,15 @@ def build_hybrid_filing_chunks(limit_real_companies: int = 20) -> pd.DataFrame:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Parse filings or build cached filing chunks.")
     parser.add_argument("--mode", choices=["sample", "online", "hybrid"], default="sample")
-    parser.add_argument("--limit", type=int, default=20)
+    parser.add_argument("--runtime-mode", choices=["demo", "portfolio", "extended"], default=None)
+    parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
+    mode_config = runtime_mode_config(args.runtime_mode)
+    limit = args.limit if args.limit is not None else int(mode_config.get("max_real_filings", 20))
     if args.mode == "online":
-        frame = build_hybrid_filing_chunks(limit_real_companies=args.limit)
+        frame = build_hybrid_filing_chunks(limit_real_companies=limit)
     elif args.mode == "hybrid":
-        frame = build_hybrid_filing_chunks(limit_real_companies=args.limit)
+        frame = build_hybrid_filing_chunks(limit_real_companies=limit)
     else:
         frame = build_sample_filing_chunks()
     print(f"filing_chunks={len(frame)}")

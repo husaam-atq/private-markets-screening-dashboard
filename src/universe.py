@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from src.config import INTERIM_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
-from src.utils import utc_timestamp, write_csv
+from src.config import INTERIM_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
+from src.utils import reset_skipped_tickers, utc_timestamp, write_csv
 
 
 SECTOR_METADATA = {
@@ -19,6 +19,10 @@ SECTOR_METADATA = {
     "Digital Infrastructure / Telecom Infrastructure": ("Real Estate / Communications", "Digital Infrastructure"),
     "Financial Technology": ("Financials", "Payments and Financial Technology"),
     "Infrastructure / Utilities-Like Assets": ("Utilities", "Regulated and Contracted Infrastructure"),
+    "Real Estate / REITs": ("Real Estate", "Listed Real Estate and REITs"),
+    "Payments / Financial Services": ("Financials", "Payments, Banks and Specialty Finance"),
+    "Alternative Asset Managers / Market Infrastructure": ("Financials", "Asset Management and Market Infrastructure"),
+    "Travel / Leisure / Consumer Platforms": ("Consumer Discretionary", "Travel, Leisure and Consumer Platforms"),
 }
 
 
@@ -147,6 +151,13 @@ def load_universe_config() -> dict:
     return load_config("universe_config.yaml")
 
 
+def runtime_mode_config(runtime_mode: str | None = None) -> dict:
+    cfg = load_universe_config()
+    mode = runtime_mode or cfg.get("default_mode", "portfolio")
+    runtime_modes = cfg.get("runtime_modes", {})
+    return {"name": mode} | runtime_modes.get(mode, runtime_modes.get("portfolio", {}))
+
+
 def configured_universe() -> pd.DataFrame:
     cfg = load_universe_config()
     rows: list[dict[str, str]] = []
@@ -163,7 +174,8 @@ def configured_universe() -> pd.DataFrame:
                     "universe_type": "default_online",
                 }
             )
-    return pd.DataFrame(rows).drop_duplicates("ticker").sort_values(["sector_theme", "ticker"])
+    frame = pd.DataFrame(rows).drop_duplicates("ticker").sort_values(["sector_theme", "ticker"])
+    return frame.reset_index(drop=True)
 
 
 def sample_universe() -> pd.DataFrame:
@@ -177,6 +189,7 @@ def sample_universe() -> pd.DataFrame:
 
 def write_universe_outputs() -> tuple[pd.DataFrame, pd.DataFrame]:
     ensure_project_dirs()
+    reset_skipped_tickers(PROCESSED_DIR / "skipped_tickers.csv")
     default = configured_universe()
     sample = sample_universe()
     default["universe_refresh_timestamp"] = utc_timestamp()

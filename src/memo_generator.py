@@ -36,6 +36,7 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
     benchmarks = read_csv_if_exists(PROCESSED_DIR / "peer_benchmarks.csv")
     questions = read_csv_if_exists(PROCESSED_DIR / "diligence_questions.csv")
     evidence = read_csv_if_exists(PROCESSED_DIR / "retrieved_evidence.csv")
+    generated = read_csv_if_exists(PROCESSED_DIR / "generated_rag_answers.csv")
     if scores.empty or categories.empty or benchmarks.empty:
         run_pipeline(mode="online")
         scores = read_csv_if_exists(PROCESSED_DIR / "investment_scores.csv")
@@ -52,6 +53,7 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
     peer = benchmarks[benchmarks["ticker"] == target_ticker].iloc[0]
     company_questions = questions[questions["ticker"] == target_ticker]
     company_evidence = evidence[evidence["ticker"] == target_ticker] if not evidence.empty else pd.DataFrame()
+    company_generated = generated[generated["ticker"] == target_ticker] if not generated.empty and "ticker" in generated.columns else pd.DataFrame()
 
     lines = [
         f"# Investment Screening Memo: {company['company_name']} ({company['ticker']})",
@@ -135,6 +137,15 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
         question_row = company_questions[company_questions["question_id"] == question_id]
         question_text = question_row["question"].iloc[0] if not question_row.empty else question_id
         lines.append(f"**{question_text}**")
+        generated_row = company_generated[company_generated["question_id"] == question_id] if not company_generated.empty else pd.DataFrame()
+        if not generated_row.empty:
+            row = generated_row.iloc[0]
+            lines.append(
+                f"Generated answer mode: {row.get('generation_mode', 'deterministic')}; "
+                f"model: {row.get('model_name', '') or 'not used'}; "
+                f"unsupported-claim warning: {row.get('unsupported_claim_warning', False)}."
+            )
+            lines.append(f"- {row.get('answer', '')}")
         lines.extend(_evidence_lines(company_evidence, question_id))
         lines.append("")
     lines.extend(
@@ -166,9 +177,9 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
             "",
             "## 13. Data and Methodology Limitations",
             (
-                "This memo uses public market data, SEC filing fundamentals and source-backed filing retrieval. "
-                "Rows labelled sample_fallback are included only where real filing chunks were not available. "
-                "It is a screening workflow demonstration, not investment advice or a substitute "
+            "This memo uses public market data, SEC filing fundamentals, source-backed filing retrieval and optional local language-model summaries where enabled. "
+            "Rows labelled sample_fallback are included only where real filing chunks were not available. "
+            "It is a screening workflow demonstration, not investment advice or a substitute "
                 "for confidential diligence, legal review, management meetings or full quality-of-earnings analysis."
             ),
         ]

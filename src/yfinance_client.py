@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs
-from src.universe import configured_universe, sample_universe
+from src.universe import configured_universe, runtime_mode_config, sample_universe
 from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
 
 
@@ -50,7 +50,11 @@ SECTOR_PROFILES = {
         "draw": 0.16,
     },
     "Financial Technology": {"mc": 92, "evs": 6.3, "vol": 0.39, "beta": 1.25, "draw": 0.25},
+    "Payments / Financial Services": {"mc": 92, "evs": 5.8, "vol": 0.34, "beta": 1.15, "draw": 0.20},
+    "Alternative Asset Managers / Market Infrastructure": {"mc": 80, "evs": 4.6, "vol": 0.29, "beta": 1.05, "draw": 0.17},
     "Infrastructure / Utilities-Like Assets": {"mc": 40, "evs": 4.4, "vol": 0.18, "beta": 0.62, "draw": 0.10},
+    "Real Estate / REITs": {"mc": 36, "evs": 7.5, "vol": 0.23, "beta": 0.78, "draw": 0.15},
+    "Travel / Leisure / Consumer Platforms": {"mc": 48, "evs": 4.8, "vol": 0.35, "beta": 1.18, "draw": 0.22},
 }
 
 TICKER_ADJUSTMENTS = {
@@ -194,11 +198,20 @@ class YFinanceClient:
         return result[MARKET_COLUMNS]
 
 
-def load_market_data(mode: str = "sample", limit: int | None = None) -> pd.DataFrame:
+def _runtime_limit(runtime_mode: str | None, explicit_limit: int | None) -> int | None:
+    if explicit_limit is not None:
+        return explicit_limit
+    config = runtime_mode_config(runtime_mode)
+    max_companies = config.get("max_companies")
+    return int(max_companies) if max_companies else None
+
+
+def load_market_data(mode: str = "sample", limit: int | None = None, runtime_mode: str | None = None) -> pd.DataFrame:
     ensure_project_dirs()
     sample_path = SAMPLE_DIR / "sample_market_data.csv"
     if mode == "online":
         universe = configured_universe()
+        limit = _runtime_limit(runtime_mode, limit)
         online = YFinanceClient().fetch_universe(universe, limit=limit)
         required = ["market_cap", "enterprise_value", "latest_price", "price_52w_high", "price_52w_low"]
         valid_mask = online[required].notna().sum(axis=1) >= 3
@@ -207,10 +220,14 @@ def load_market_data(mode: str = "sample", limit: int | None = None) -> pd.DataF
             skipped_rows.append(
                 {
                     "ticker": row["ticker"],
+                    "company_name": row.get("company_name", ""),
                     "stage": "yfinance",
+                    "stage_failed": "yfinance",
                     "reason": row.get("skip_reason") or "missing_market_fields",
+                    "reason_skipped": row.get("skip_reason") or "missing_market_fields",
                     "detail": row.get("data_source", ""),
                     "logged_at": utc_timestamp(),
+                    "timestamp": utc_timestamp(),
                 }
             )
         upsert_skipped_tickers(skipped_rows, PROCESSED_DIR / "skipped_tickers.csv")
@@ -233,9 +250,10 @@ def load_market_data(mode: str = "sample", limit: int | None = None) -> pd.DataF
 def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch or build market data snapshots.")
     parser.add_argument("--mode", choices=["sample", "online"], default="online")
+    parser.add_argument("--runtime-mode", choices=["demo", "portfolio", "extended"], default=None)
     parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
-    frame = load_market_data(mode=args.mode, limit=args.limit)
+    frame = load_market_data(mode=args.mode, limit=args.limit, runtime_mode=args.runtime_mode)
     print(f"market_data_rows={len(frame)}")
     print(f"market_data_source={frame['data_source'].mode().iloc[0] if not frame.empty else 'none'}")
 

@@ -1,21 +1,36 @@
 ticker,company_name,cik,filing_type,filing_date,accession_number,primary_document,source_type,source_url,chunk_count
 HUBS,"HubSpot, Inc.",1404655,10-K,2026-02-11,0001193125-26-046646,hubs-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1404655/000119312526046646/hubs-20251231.htm,388
+ROKU,"Roku, Inc.",1428439,10-K,2026-02-13,0001628280-26-008114,roku-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm,441
+OKTA,"Okta, Inc.",1660134,10-K,2026-03-05,0001660134-26-000020,okta-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm,369
 FSLR,"First Solar, Inc.",1274494,10-K,2026-02-24,0001274494-26-000021,fslr-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm,491
+TOST,"Toast, Inc.",1650164,10-K,2026-02-18,0001650164-26-000057,tost-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1650164/000165016426000057/tost-20251231.htm,444
+ETSY,"Etsy, Inc.",1370637,10-K,2026-02-19,0001370637-26-000019,etsy-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1370637/000137063726000019/etsy-20251231.htm,425
+DOCU,"DocuSign, Inc.",1261333,10-K,2026-03-18,0001261333-26-000021,docu-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1261333/000126133326000021/docu-20260131.htm,379
+BILL,"BILL Holdings, Inc.",1786352,10-K,2025-08-28,0001786352-25-000037,bill-20250630.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1786352/000178635225000037/bill-20250630.htm,520
+EVR,Evercore Inc.,1360901,10-K,2026-02-20,0001628280-26-010273,evr-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1360901/000162828026010273/evr-20251231.htm,535
+NI,NiSource Inc.,1111711,10-K,2026-02-11,0001111711-26-000027,nix-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/nix-20251231.htm,603
+FFIV,"F5, Inc.",1048695,10-K,2025-11-25,0001048695-25-000157,ffiv-20250930.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1048695/000104869525000157/ffiv-20250930.htm,295
+BURL,"Burlington Stores, Inc.",1579298,10-K,2026-03-19,0001193125-26-116001,burl-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1579298/000119312526116001/burl-20260131.htm,358
 DPZ,"Domino's Pizza, Inc.",1286681,10-K,2026-02-23,0001193125-26-062321,dpz-20251228.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1286681/000119312526062321/dpz-20251228.htm,397
-TEAM,Atlassian Corporation,1650372,10-K,2025-08-15,0001650372-25-000036,team-20250630.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1650372/000165037225000036/team-20250630.htm,377
 CNC,Centene Corporation,1071739,10-K,2026-02-17,0001071739-26-000049,cnc-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1071739/000107173926000049/cnc-20251231.htm,505
-ZS,"Zscaler, Inc.",1713683,10-K,2025-09-11,0001713683-25-000158,zs-20250731.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1713683/000171368325000158/zs-20250731.htm,464
-LYV,"Live Nation Entertainment, Inc.",1335258,10-K,2026-02-19,0001335258-26-000009,lyv-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm,417
+G,Genpact Limited,1398659,10-K,2026-02-26,0001398659-26-000004,g-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1398659/000139865926000004/g-20251231.htm,529
+KIM,Kimco Realty Corporation,879101,10-K,2026-02-20,0001193125-26-060760,kim-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/879101/000119312526060760/kim-20251231.htm,658
+PINS,"Pinterest, Inc.",1506293,10-K,2026-02-12,0001506293-26-000021,pins-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm,327
+FIVE,"Five Below, Inc.",1177609,10-K,2026-03-19,0001177609-26-000010,five-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1177609/000117760926000010/five-20260131.htm,315
+TXRH,"Texas Roadhouse, Inc.",1289460,10-K,2026-02-27,0001104659-26-021292,txrh-20251230x10k.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1289460/000110465926021292/txrh-20251230x10k.htm,336
+TEAM,Atlassian Corporation,1650372,10-K,2025-08-15,0001650372-25-000036,team-20250630.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1650372/000165037225000036/team-20250630.htm,377
+PIPR,Piper Sandler Companies,1230245,10-K,2026-02-26,0001230245-26-000013,pipr-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1230245/000123024526000013/pipr-20251231.htm,414
+CHWY,"Chewy, Inc.",1766502,10-K,2026-03-25,0001766502-26-000034,chwy-20260201.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1766502/000176650226000034/chwy-20260201.htm,381
+HQY,"HealthEquity, Inc.",1428336,10-K,2026-03-17,0001428336-26-000010,hqy-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1428336/000142833626000010/hqy-20260131.htm,328
+PATH,"UiPath, Inc.",1734722,10-K,2026-03-25,0001734722-26-000012,path-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1734722/000173472226000012/path-20260131.htm,420
+ULTA,"Ulta Beauty, Inc.",1403568,10-K,2026-03-26,0001104659-26-035243,ulta-20260131x10k.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1403568/000110465926035243/ulta-20260131x10k.htm,331
+SEM,Select Medical Holdings Corporation,1320414,10-K,2026-02-19,0001320414-26-000007,sem-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1320414/000132041426000007/sem-20251231.htm,548
+SEIC,SEI Investments Company,350894,10-K,2026-02-23,0000350894-26-000013,seic-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/350894/000035089426000013/seic-20251231.htm,368
+FOUR,"Shift4 Payments, Inc.",1794669,10-K,2026-02-27,0001794669-26-000010,four-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1794669/000179466926000010/four-20251231.htm,614
 IR,Ingersoll Rand Inc.,1699150,10-K,2026-02-17,0001628280-26-008617,iri-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm,429
+SNAP,Snap Inc.,1564408,10-K,2026-02-05,0001564408-26-000013,snap-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm,649
 AWK,"American Water Works Company, Inc.",1410636,10-K,2026-02-18,0001410636-26-000034,awk-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm,768
 XYZ,"Block, Inc.",1512673,10-K,2026-02-26,0001628280-26-012254,xyz-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1512673/000162828026012254/xyz-20251231.htm,580
-AFRM,"Affirm Holdings, Inc.",1820953,10-K,2025-08-28,0001820953-25-000080,afrm-20250630.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1820953/000182095325000080/afrm-20250630.htm,601
-SBAC,SBA Communications Corporation,1034054,10-K,2026-02-27,0001034054-26-000002,sbac-20251231x10k.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1034054/000103405426000002/sbac-20251231x10k.htm,428
-PYPL,"PayPal Holdings, Inc.",1633917,10-K,2026-02-03,0001633917-26-000024,pypl-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1633917/000163391726000024/pypl-20251231.htm,501
-ADBE,Adobe Inc.,796343,10-K,2026-01-15,0000796343-26-000003,adbe-20251128.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/796343/000079634326000003/adbe-20251128.htm,302
-MDB,"MongoDB, Inc.",1441816,10-K,2026-03-11,0001628280-26-016799,mdb-20260131.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm,457
-SOFI,"SoFi Technologies, Inc.",1818874,10-K,2026-02-17,0001818874-26-000013,sofi-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm,1127
-COF,Capital One Financial Corporation,927628,10-K,2026-02-19,0000927628-26-000024,cof-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm,930
-EXC,Exelon Corporation,1109357,10-K,2026-02-12,0001109357-26-000018,exc-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1109357/000110935726000018/exc-20251231.htm,1045
-DDOG,"Datadog, Inc.",1561550,10-K,2026-02-18,0001628280-26-008819,ddog-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm,394
-GPN,Global Payments Inc.,1123360,10-K,2026-02-20,0001123360-26-000008,gpn-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1123360/000112336026000008/gpn-20251231.htm,514
+FCN,"FTI Consulting, Inc.",887936,10-K,2026-02-26,0000887936-26-000013,fcn-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/887936/000088793626000013/fcn-20251231.htm,321
+TEX,Terex Corporation,97216,10-K,2026-02-13,0000097216-26-000035,tex-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/97216/000009721626000035/tex-20251231.htm,398
+PCOR,"Procore Technologies, Inc.",1611052,10-K,2026-02-24,0001628280-26-011055,pcor-20251231.htm,real_sec_filing,https://www.sec.gov/Archives/edgar/data/1611052/000162828026011055/pcor-20251231.htm,451

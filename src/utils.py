@@ -73,21 +73,61 @@ def read_csv_if_exists(path: Path) -> pd.DataFrame:
 
 
 def upsert_skipped_tickers(rows: list[dict], path: Path) -> pd.DataFrame:
-    columns = ["ticker", "stage", "reason", "detail", "logged_at"]
+    columns = [
+        "ticker",
+        "company_name",
+        "stage",
+        "stage_failed",
+        "reason",
+        "reason_skipped",
+        "detail",
+        "logged_at",
+        "timestamp",
+    ]
     existing = read_csv_if_exists(path)
     new_rows = pd.DataFrame(rows)
     if new_rows.empty:
+        for column in columns:
+            if column not in existing.columns:
+                existing[column] = ""
+        if not existing.empty:
+            existing["stage_failed"] = existing["stage_failed"].where(existing["stage_failed"].astype(str).str.len() > 0, existing.get("stage", ""))
+            existing["reason_skipped"] = existing["reason_skipped"].where(existing["reason_skipped"].astype(str).str.len() > 0, existing.get("reason", ""))
+            existing["timestamp"] = existing["timestamp"].where(existing["timestamp"].astype(str).str.len() > 0, existing.get("logged_at", ""))
         if existing.empty:
             existing = pd.DataFrame(columns=columns)
-            write_csv(existing, path)
+        write_csv(existing[columns], path)
         return existing
     for column in columns:
         if column not in new_rows.columns:
             new_rows[column] = ""
+    new_rows["stage_failed"] = new_rows["stage_failed"].where(new_rows["stage_failed"].astype(str).str.len() > 0, new_rows["stage"])
+    new_rows["reason_skipped"] = new_rows["reason_skipped"].where(new_rows["reason_skipped"].astype(str).str.len() > 0, new_rows["reason"])
+    new_rows["timestamp"] = new_rows["timestamp"].where(new_rows["timestamp"].astype(str).str.len() > 0, new_rows["logged_at"])
     combined = pd.concat([existing, new_rows[columns]], ignore_index=True) if not existing.empty else new_rows[columns]
-    combined = combined.drop_duplicates(["ticker", "stage", "reason"], keep="last").sort_values(["stage", "ticker"])
+    for column in columns:
+        if column not in combined.columns:
+            combined[column] = ""
+    combined = combined.drop_duplicates(["ticker", "stage_failed", "reason_skipped"], keep="last").sort_values(["stage_failed", "ticker"])
     write_csv(combined, path)
     return combined
+
+
+def reset_skipped_tickers(path: Path) -> pd.DataFrame:
+    columns = [
+        "ticker",
+        "company_name",
+        "stage",
+        "stage_failed",
+        "reason",
+        "reason_skipped",
+        "detail",
+        "logged_at",
+        "timestamp",
+    ]
+    frame = pd.DataFrame(columns=columns)
+    write_csv(frame, path)
+    return frame
 
 
 def non_null_ratio(row: pd.Series, columns: Iterable[str]) -> float:

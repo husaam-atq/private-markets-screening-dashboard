@@ -1,25 +1,68 @@
-default_mode: online
-online_target_company_count: 96
-sample_target_company_count: 40
+default_mode: portfolio
+
+runtime_modes:
+  demo:
+    description: "Fast recruiter demo snapshot."
+    max_companies: 108
+    max_real_filings: 20
+    cache_only: false
+    refresh_data: false
+    commit_safe_outputs_only: true
+    use_sample_fallback: true
+    min_market_cap: 0
+    max_market_cap: null
+    sectors_included: all
+  portfolio:
+    description: "Main GitHub headline mode."
+    max_companies: 300
+    max_real_filings: 35
+    cache_only: false
+    refresh_data: true
+    commit_safe_outputs_only: true
+    use_sample_fallback: true
+    min_market_cap: 0
+    max_market_cap: null
+    sectors_included: all
+  extended:
+    description: "Optional local scalability mode; do not commit huge raw outputs."
+    max_companies: 750
+    max_real_filings: 50
+    cache_only: false
+    refresh_data: true
+    commit_safe_outputs_only: false
+    use_sample_fallback: true
+    min_market_cap: 0
+    max_market_cap: null
+    sectors_included: all
+
+sec_rate_limit_per_second: 8
+
 themes:
   - name: Software / SaaS
-    tickers: [MSFT, CRM, ADBE, NOW, INTU, SNOW, DDOG, ZS, MDB, TEAM, NET, HUBS]
+    tickers: [MSFT, CRM, ADBE, NOW, INTU, SNOW, DDOG, ZS, MDB, TEAM, NET, HUBS, OKTA, BILL, DOCU, TWLO, ESTC, PATH, PCOR, APP, GTLB, ASAN, WDAY, ADSK]
   - name: Healthcare Services
-    tickers: [UNH, ELV, CI, HUM, HCA, THC, DVA, CVS, LH, DGX, CNC, MOH]
+    tickers: [UNH, ELV, CI, HUM, HCA, THC, DVA, CVS, LH, DGX, CNC, MOH, ACHC, UHS, EHC, SEM, OPCH, CHE, USPH, AMN, ENSG, PINC, HQY, RDNT]
   - name: Business Services
-    tickers: [ADP, PAYX, FIS, GPN, CTAS, ROP, WM, RSG, SPGI, MCO, VRSK, TRI]
+    tickers: [ADP, PAYX, CTAS, ROP, WM, RSG, SPGI, MCO, VRSK, TRI, FDS, EXPO, BAH, TNET, NSP, ROL, CPRT, G, WEX, MMS, FCN, HRI, ASGN, MAN]
   - name: Industrials
-    tickers: [HON, ETN, EMR, PH, ITW, MMM, GE, CARR, TT, IR, DE, CAT]
+    tickers: [HON, ETN, EMR, PH, ITW, MMM, GE, CARR, TT, IR, DE, CAT, URI, GWW, FAST, DOV, ROK, JCI, XYL, PNR, WSO, HUBB, TEX, WAB]
   - name: Consumer Services
-    tickers: [MCD, SBUX, BKNG, MAR, HLT, CMG, YUM, RCL, CCL, LYV, DPZ, ROST]
+    tickers: [MCD, SBUX, BKNG, MAR, HLT, CMG, YUM, DRI, WING, TXRH, PLAY, MTN, CHH, WH, TNL, DPZ, ROST, BURL, TJX, ULTA, FIVE, CHUY, SHAK, CAKE]
   - name: Energy Transition
-    tickers: [NEE, ENPH, FSLR, SEDG, BE, PLUG, TSLA, AES, RUN, CSIQ, ALB, ORA]
+    tickers: [NEE, ENPH, FSLR, SEDG, BE, PLUG, TSLA, AES, RUN, CSIQ, ALB, ORA, FLNC, NRG, CWEN, HASI, SHLS, ARRY, NXT, AMRC, QS, CHPT, NOVA, STEM]
   - name: Digital Infrastructure / Telecom Infrastructure
-    tickers: [AMT, CCI, EQIX, DLR, SBAC, VZ, T, TMUS, LUMN, FYBR, UNIT, IRM]
-  - name: Financial Technology
-    tickers: [V, MA, PYPL, XYZ, AXP, COF, AFRM, SOFI, HOOD, COIN, MQ, UPST]
+    tickers: [AMT, CCI, EQIX, DLR, SBAC, VZ, T, TMUS, LUMN, UNIT, IRM, CCOI, AKAM, FFIV, COMM, GLW, CIEN, DBRG, IIPR, GTN, ATUS, CHTR, CMCSA, LBRDK]
   - name: Infrastructure / Utilities-Like Assets
-    tickers: [DUK, SO, AEP, EXC, XEL, SRE, PEG, WEC, AWK, CNP, NRG, ETR]
+    tickers: [DUK, SO, AEP, EXC, XEL, SRE, PEG, WEC, AWK, CNP, ETR, ED, D, DTE, PPL, FE, ES, ATO, NI, LNT, CMS, EVRG, AGR, WTRG]
+  - name: Real Estate / REITs
+    tickers: [PLD, WELL, PSA, O, SPG, VICI, EQR, AVB, ESS, MAA, CPT, ARE, BXP, KIM, REG, CUBE, EXR, INVH, AMH, REXR, FR, COLD, STAG, NNN]
+  - name: Payments / Financial Services
+    tickers: [V, MA, PYPL, XYZ, AXP, COF, AFRM, SOFI, HOOD, COIN, MQ, UPST, FIS, GPN, FICO, FOUR, TOST, PAYO, JPM, BAC, WFC, C, GS, MS]
+  - name: Alternative Asset Managers / Market Infrastructure
+    tickers: [BLK, SCHW, ICE, CME, NDAQ, MSCI, CBOE, TROW, RJF, AMP, BK, STT, ARES, APO, KKR, BX, IBKR, MKTX, SEIC, BEN, JHG, LAZ, EVR, PIPR]
+  - name: Travel / Leisure / Consumer Platforms
+    tickers: [UBER, DASH, ABNB, EXPE, TRIP, LYFT, RCL, CCL, NCLH, WYNN, LVS, MGM, CZR, PENN, DKNG, SEAT, MTCH, ROKU, NFLX, PINS, SNAP, ETSY, EBAY, CHWY]
+
 sample_tickers:
   - MSFT
   - CRM

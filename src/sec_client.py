@@ -12,7 +12,7 @@ import requests
 
 from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs, load_config, sec_user_agent
 from src.sec_xbrl_mapper import normalize_companyfacts_payload
-from src.universe import configured_universe, sample_universe
+from src.universe import configured_universe, runtime_mode_config, sample_universe
 from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
 from src.yfinance_client import build_sample_market_data
 
@@ -69,6 +69,10 @@ FUNDAMENTAL_PROFILES = {
     "Energy Transition": {"growth": 0.11, "gross": 0.30, "op": 0.09, "ocf": 0.10, "debt": 3.0, "capex": 0.12},
     "Digital Infrastructure / Telecom Infrastructure": {"growth": 0.06, "gross": 0.52, "op": 0.17, "ocf": 0.28, "debt": 4.4, "capex": 0.18},
     "Financial Technology": {"growth": 0.10, "gross": 0.58, "op": 0.24, "ocf": 0.27, "debt": 1.2, "capex": 0.035},
+    "Payments / Financial Services": {"growth": 0.08, "gross": 0.54, "op": 0.22, "ocf": 0.25, "debt": 1.4, "capex": 0.035},
+    "Alternative Asset Managers / Market Infrastructure": {"growth": 0.07, "gross": 0.50, "op": 0.25, "ocf": 0.27, "debt": 1.6, "capex": 0.025},
+    "Real Estate / REITs": {"growth": 0.05, "gross": 0.62, "op": 0.23, "ocf": 0.34, "debt": 4.0, "capex": 0.11},
+    "Travel / Leisure / Consumer Platforms": {"growth": 0.08, "gross": 0.42, "op": 0.16, "ocf": 0.20, "debt": 2.5, "capex": 0.06},
 }
 
 TICKER_FUNDAMENTAL_ADJUSTMENTS = {
@@ -174,13 +178,16 @@ def build_sample_sec_fundamentals(universe: pd.DataFrame | None = None) -> pd.Da
 class SECClient:
     def __init__(self, cache_dir: Path | None = None) -> None:
         self.config = load_config("sec_config.yaml")
+        universe_cfg = load_config("universe_config.yaml")
         self.cache_dir = cache_dir or RAW_DIR
         self.headers = {
             "User-Agent": sec_user_agent(),
             "Accept-Encoding": "gzip, deflate",
         }
         self.timeout = int(self.config.get("request_timeout_seconds", 20))
-        self.sleep_seconds = float(self.config.get("request_sleep_seconds", 0.12))
+        rate_limit = float(universe_cfg.get("sec_rate_limit_per_second", 8) or 8)
+        configured_sleep = float(self.config.get("request_sleep_seconds", 0.12))
+        self.sleep_seconds = max(configured_sleep, 1 / max(rate_limit, 1))
 
     @staticmethod
     def cik_padded(cik: int | str) -> str:
@@ -243,10 +250,14 @@ class SECClient:
                 skipped.append(
                     {
                         "ticker": ticker,
+                        "company_name": company.get("company_name", ""),
                         "stage": "sec_companyfacts",
+                        "stage_failed": "sec_companyfacts",
                         "reason": "missing_cik_mapping",
+                        "reason_skipped": "missing_cik_mapping",
                         "detail": "Ticker not found in SEC company_tickers mapping.",
                         "logged_at": utc_timestamp(),
+                        "timestamp": utc_timestamp(),
                     }
                 )
                 continue
@@ -264,20 +275,28 @@ class SECClient:
                     skipped.append(
                         {
                             "ticker": ticker,
+                            "company_name": company.get("company_name", ""),
                             "stage": "sec_companyfacts",
+                            "stage_failed": "sec_companyfacts",
                             "reason": "no_mappable_xbrl_facts",
+                            "reason_skipped": "no_mappable_xbrl_facts",
                             "detail": f"CIK {cik} returned no mappable annual companyfacts.",
                             "logged_at": utc_timestamp(),
+                            "timestamp": utc_timestamp(),
                         }
                     )
             except Exception:
                 skipped.append(
                     {
                         "ticker": ticker,
+                        "company_name": company.get("company_name", ""),
                         "stage": "sec_companyfacts",
+                        "stage_failed": "sec_companyfacts",
                         "reason": "companyfacts_request_failed",
+                        "reason_skipped": "companyfacts_request_failed",
                         "detail": f"CIK {cik}",
                         "logged_at": utc_timestamp(),
+                        "timestamp": utc_timestamp(),
                     }
                 )
                 continue
@@ -285,10 +304,19 @@ class SECClient:
         return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
 
 
-def load_sec_fundamentals(mode: str = "sample", limit: int | None = None) -> pd.DataFrame:
+def _runtime_limit(runtime_mode: str | None, explicit_limit: int | None) -> int | None:
+    if explicit_limit is not None:
+        return explicit_limit
+    config = runtime_mode_config(runtime_mode)
+    max_companies = config.get("max_companies")
+    return int(max_companies) if max_companies else None
+
+
+def load_sec_fundamentals(mode: str = "sample", limit: int | None = None, runtime_mode: str | None = None) -> pd.DataFrame:
     ensure_project_dirs()
     sample_path = SAMPLE_DIR / "sample_sec_fundamentals.csv"
     if mode == "online":
+        limit = _runtime_limit(runtime_mode, limit)
         online = SECClient().fetch_fundamentals(configured_universe(), limit=limit)
         if not online.empty and online["ticker"].nunique() >= 5:
             write_csv(online, INTERIM_DIR / "normalized_fundamentals.csv")
@@ -309,9 +337,10 @@ def load_sec_fundamentals(mode: str = "sample", limit: int | None = None) -> pd.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch or build SEC fundamentals snapshots.")
     parser.add_argument("--mode", choices=["sample", "online"], default="online")
+    parser.add_argument("--runtime-mode", choices=["demo", "portfolio", "extended"], default=None)
     parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
-    frame = load_sec_fundamentals(mode=args.mode, limit=args.limit)
+    frame = load_sec_fundamentals(mode=args.mode, limit=args.limit, runtime_mode=args.runtime_mode)
     companies = frame["ticker"].nunique() if not frame.empty else 0
     print(f"sec_fundamental_rows={len(frame)}")
     print(f"sec_fundamental_companies={companies}")

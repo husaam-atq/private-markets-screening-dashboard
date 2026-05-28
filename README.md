@@ -2,79 +2,57 @@
 
 ## Overview
 
-This project is a public-data private markets screening and SEC filing intelligence workflow built with Python, pandas, yfinance, SEC EDGAR APIs, scikit-learn TF-IDF retrieval and Streamlit.
+This project is a public-data investment screening and SEC filing intelligence workflow for private-markets-style diligence. It screens listed-company comparables across configurable sectors, calculates transparent scorecards, benchmarks companies against peers, retrieves source-backed filing evidence, and produces a recruiter-facing Streamlit dashboard, Excel workbook, charts and diligence-style reports.
 
-It screens listed-company comparables for further diligence. It does not make buy/sell calls, does not use private confidential deal materials and does not present an acquisition recommendation.
+The project does **not** provide investment advice, buy/sell recommendations, price targets or confidential deal analysis. Companies are ranked as candidates for further diligence based on transparent public-data criteria.
 
 ## Why I Built This
 
-Private equity, co-investment, secondaries, infrastructure, real assets and private credit teams often start with public comparables before moving into proprietary diligence. This project mirrors that early workflow:
-
-1. Define a sector or theme universe.
-2. Pull public market data and SEC fundamentals.
-3. Calculate growth, margin, leverage, valuation, cash-conversion and risk metrics.
-4. Separate public-market quality from private-markets feasibility.
-5. Rank companies using transparent scorecards.
-6. Retrieve filing evidence for diligence questions.
-7. Generate a memo, evidence report, evaluation report, Excel workbook, charts and dashboard.
+Private equity, co-investment, secondaries, infrastructure, private credit and portfolio-monitoring teams often need to screen large public comparable universes before deeper diligence. This project demonstrates that workflow in Python: public market data, SEC XBRL fundamentals, filing text retrieval, peer benchmarking, risk flags and source-backed memo output.
 
 ## What Makes This Distinct
 
-- It is not a stock backtest.
-- It is not a generic stock screener.
-- It is not a standalone LBO model.
-- It separates "excellent public company" from "realistic private-markets diligence candidate."
-- It includes live API mode, cached real-data snapshot mode and sample fallback mode.
-- It evaluates the filing retrieval layer with labelled questions, no-answer checks and weak retrieval examples.
-
-## Data Modes
-
-### Live API Mode
-
-The online pipeline attempts to refresh:
-
-- yfinance market data, price history, valuation fields and volatility
-- SEC CIK mapping
-- SEC submissions metadata
-- SEC XBRL companyfacts
-- latest 10-K filing text for a selected subset
-
-### Cached Real-Data Snapshot Mode
-
-The committed outputs include a cached public-data snapshot generated from live API calls on May 28, 2026. This is the dashboard default for recruiter review because it is reproducible and does not depend on API availability at viewing time.
-
-### Sample Fallback Mode
-
-Sample fallback data remains available so the repo still runs if Yahoo Finance or SEC endpoints are unavailable. Rows and chunks include source labels, so fallback usage is visible.
+- Combines yfinance market data with SEC EDGAR/XBRL fundamentals and filing text.
+- Separates public-market quality from private-markets feasibility.
+- Penalises mega-cap benchmark comps for PE platform/public-to-private suitability.
+- Uses deterministic scorecards, not black-box recommendations.
+- Adds query-intent section routing for filing evidence retrieval.
+- Supports optional local Ollama language-model summaries while running fully without any model.
+- Evaluates retrieval quality and generated-answer groundedness separately.
 
 ## Data Sources
 
-- yfinance provides unofficial Yahoo Finance market data. It should be treated as research and educational data.
-- SEC EDGAR provides official filing metadata and companyfacts data, but XBRL tags vary by issuer and require mapping.
-- SEC filing text is retrieved from public filing documents where available.
-- `.env.example` includes a configurable SEC user agent.
+- **yfinance:** market cap, enterprise value-style fields, price history, valuation metadata, volatility and drawdown. yfinance is an unofficial open-source library using Yahoo Finance publicly available interfaces and should be treated as research/educational data.
+- **SEC EDGAR/XBRL:** company ticker/CIK mapping, companyfacts fundamentals, filing metadata and real 10-K filing text. SEC XBRL tags vary by company and require careful mapping.
+- **Cached snapshots and sample fallback:** included so the project remains reproducible if external data calls fail. Fallback rows are explicitly labelled with `source_type`.
+
+## Runtime Modes
+
+Configured in `config/universe_config.yaml`:
+
+- `demo`: around 100 companies and 20 real filing downloads for fast dashboard demos.
+- `portfolio`: main GitHub headline mode; attempts up to 300 companies and 35 real filing downloads.
+- `extended`: optional local scalability mode for larger universes; raw caches and large local outputs should not be committed.
+
+Current committed outputs use **portfolio mode**.
 
 ## Screening Methodology
 
-The current pipeline calculates 27 structured metrics, including:
+The pipeline loads a configured universe, fetches public market data, maps tickers to SEC CIKs, normalises SEC companyfacts and calculates peer-relative metrics:
 
-- revenue growth and 3-year revenue CAGR
-- gross margin, EBIT margin proxy and net margin
-- operating cash flow conversion and free cash flow proxy
-- capex intensity and cash / revenue
-- debt / EBIT proxy and net debt / EBIT proxy
-- EV / sales and EV / EBIT proxy
-- 52-week drawdown and realised volatility
-- margin, revenue and leverage trend
-- yfinance and SEC field completeness
-- filing staleness and proxy-usage penalties
-- market-cap / enterprise-value feasibility band
+- growth: latest revenue growth and 3-year revenue CAGR
+- margins: gross, EBIT proxy and net margin
+- cash conversion: operating cash flow conversion, FCF proxy and capex intensity
+- leverage/liquidity: debt/EBIT proxy, net debt/EBIT proxy and cash/revenue
+- valuation: EV/sales and EV/EBIT proxy
+- market risk: drawdown from 52-week high, realised volatility and beta
+- data reliability: field completeness, filing staleness, peer count and source type
 
-EBIT is labelled as an EBIT proxy. The project does not silently call EBIT EBITDA.
+EBIT is labelled as an EBIT proxy and is not silently called EBITDA.
 
 ## Scorecards
 
-The scorecards are deterministic and configurable:
+The dashboard maintains these transparent 0-100 scorecards:
 
 - Public Quality Score
 - Investment Screening Score
@@ -85,13 +63,15 @@ The scorecards are deterministic and configurable:
 - Red Flag Score
 - Data Quality Score
 
-Weights are stored in `config/scoring_config.yaml`.
+Weights live in `config/scoring_config.yaml`.
 
 ## Company Categories
 
-The taxonomy is designed for diligence triage, not transaction recommendations:
+Companies are categorised into:
 
 - Public Market Quality Compounder
+- Benchmark Quality Comp
+- High Priority for Further Diligence
 - PE Platform Candidate
 - Public-to-Private Candidate
 - Value / Re-rating Candidate
@@ -101,225 +81,205 @@ The taxonomy is designed for diligence triage, not transaction recommendations:
 - Low Priority / Reject
 - Insufficient Data
 
-## Why MSFT/NOW/INTU May Rank Highly
+These categories are screening archetypes, not recommendations.
 
-Mega-cap companies can score well on public quality because they often have strong growth, margins, cash conversion, data coverage and filing quality. That does not make them realistic PE targets.
+## Public Quality vs Private Markets Suitability
 
-The dashboard separates:
+Mega-cap companies such as MSFT, CRM or ADBE can rank highly on public quality, but they are not automatically treated as PE platform or public-to-private targets. Market-cap and enterprise-value bands are used to separate benchmark quality comps from smaller or mid-cap companies that may be more plausible private-markets diligence screens.
 
-- Public Quality Score: useful for benchmark quality comps.
-- Platform Candidate Score: penalises enterprise values that are too large for most PE platform strategies.
-- Public-to-Private Feasibility Score: rewards more realistic EV bands and penalises mega-cap scale.
-- Market-cap band: labels mega-cap benchmark comps, large-cap strategic names, mid-cap public-to-private screens and small/mid-cap platform candidates.
+## Peer Benchmarking
 
-## Screening Output Is Not an Investment Recommendation
-
-The project uses language such as:
-
-- benchmark quality comp
-- high priority for further diligence
-- public-to-private feasibility
-- platform candidate
-- watchlist
-
-It does not use buy/sell/invest recommendation language.
+For each sector/theme, the project calculates peer medians, quartiles, percentile ranks and gaps versus peers for growth, margin, valuation, leverage, cash conversion and volatility. The dashboard includes peer tables, scatter plots and a selected-company radar view.
 
 ## SEC Filing Intelligence / RAG Layer
 
-The filing layer:
+The filing layer downloads and parses real SEC filings where available, chunks filing text by section, and retrieves evidence using TF-IDF search with transparent section boosts. Query-intent routing improves evidence quality:
 
-- downloads and parses real SEC filing text for a selected subset
-- keeps fallback filing chunks for uncovered companies
-- labels every chunk with `source_type`
-- uses TF-IDF retrieval by default
-- returns ticker, company, CIK, filing type, filing date, section label, chunk ID and evidence score
-- flags missing evidence as `insufficient filing evidence found`
+- revenue/business model questions boost Business, MD&A and Segment sections
+- liquidity/debt questions boost Liquidity, Debt and MD&A
+- risk/regulation questions boost Risk Factors, Legal and Regulatory sections
+- margin pressure questions boost MD&A and Risk Factors
+- capex/investment questions boost MD&A, Liquidity and investment-related sections
+
+Retrieved rows include query type, source type, filing type/date, section, chunk ID, keyword score, section boost, combined score, snippet, source URL and section-match flag.
+
+## Optional Local LLM RAG Layer
+
+The project runs without any language model by default. Deterministic/template-based answers are used for reproducible committed outputs.
+
+Optional local generation is supported through Ollama:
+
+- provider: `ollama`
+- base URL: `http://localhost:11434`
+- model configurable via `OLLAMA_MODEL`
+- default model setting: `qwen3`
+- no paid API required
+- no external cloud key required
+
+If Ollama is unavailable, the app falls back to deterministic output and shows a warning. Local model output is constrained to retrieved filing evidence and is evaluated for citations, evidence overlap, banned recommendation language and unsupported-claim warnings.
 
 ## RAG Evaluation
 
-The gold set includes harder, less templated questions:
+The gold set includes 96 diligence questions across answerable, section-confuser and no-answer cases. Retrieval evaluation distinguishes Hit@K from Precision@K because finding one useful passage is different from returning a clean evidence set.
 
-- multi-section liquidity and debt questions
-- margin pressure questions that can appear in MD&A or Risk Factors
-- competition / regulatory section-confuser questions
-- no-answer questions designed to test refusal to overclaim
+Current portfolio-mode retrieval results:
 
-Current cached snapshot results:
-
-- Questions evaluated: 96
-- Answerable questions: 72
 - Hit@3: 100.0%
 - Hit@5: 100.0%
-- Precision@3: 86.6%
-- Precision@5: 82.5%
-- MRR: 99.3%
-- nDCG@5: 96.7%
-- Section match rate: 95.8%
+- Precision@3: 98.1%
+- Precision@5: 89.4%
+- MRR: 100.0%
+- Section match rate: 100.0%
 - Citation coverage: 100.0%
 - Unsupported-claim rate: 0.0%
 - No-answer accuracy: 100.0%
 
-These results are strong, but not proof of legal or investment completeness. The evaluation checks retrieval behavior on a labelled public-data test set.
+These are retrieval-benchmark results, not a legal or investment diligence completeness guarantee.
 
-## Headline Results
+## Grounded Generation Evaluation
 
-Current cached public-data snapshot:
+Current committed generated answers use deterministic mode:
 
-- Live companies attempted: 108
-- Companies successfully screened: 107
-- Companies with yfinance market data: 107
-- Companies with SEC companyfacts rows: 106
-- Companies with usable revenue fundamentals: 101
-- Sectors/themes covered: 9
-- Metrics calculated: 27
-- Real SEC filing documents parsed: 20
-- Filing chunks indexed: 11,360
-- Real SEC filing chunks: 11,115
-- Sample fallback chunks: 245
-- Average Data Quality Score: 85.2
-- Skipped ticker records: FYBR yfinance/companyfacts, TRI companyfacts/10-K text
+- Answers evaluated: 80
+- Citation coverage: 100.0%
+- Unsupported-claim rate: 0.0%
+- Evidence overlap score: 77.4%
+- Banned-language count: 0
+- No-answer accuracy: 100.0%
+- Numeric consistency pass rate: 100.0%
+- Groundedness score: 100.0%
 
-Top private-markets-style Investment Screening Score names include HUBS, FSLR, DPZ, TEAM, CNC, ZS, LYV, IR, XYZ and AWK.
-
-Top Public Quality Score names include CRM, MSFT, SBAC, FSLR, ADBE, NOW, COF, DDOG, AMT and GE.
-
-Category mix:
-
-- Value / Re-rating Candidate: 53
-- Low Priority / Reject: 20
-- Public-to-Private Candidate: 10
-- Leveraged Credit Watchlist: 8
-- Operational Improvement Candidate: 6
-- PE Platform Candidate: 4
-- Public Market Quality Compounder: 3
-- Distressed / Special Situations Watchlist: 2
-- Insufficient Data: 1
+Local Ollama generation is optional and model-dependent. On this machine, Ollama was reachable and `qwen3` was available, but committed headline outputs remain deterministic for reproducibility.
 
 ## Dashboard Preview
 
-Run:
-
-```bash
-streamlit run dashboard/app.py
-```
-
 Screenshots are saved in `outputs/screenshots/`:
 
-- `overview.png`
-- `rankings.png`
-- `target_deep_dive.png`
-- `rag_evidence.png`
-- `rag_eval.png`
+![Overview](outputs/screenshots/overview.png)
+![Rankings](outputs/screenshots/rankings.png)
+![Comps](outputs/screenshots/comps.png)
+![Target](outputs/screenshots/target.png)
+![Filings](outputs/screenshots/filings.png)
+![LLM RAG](outputs/screenshots/llm_rag.png)
+![Eval](outputs/screenshots/eval.png)
 
 ## Example Outputs
 
-- `outputs/excel/private_markets_screening_outputs.xlsx`
-- `outputs/reports/investment_screening_memo.md`
-- `outputs/reports/filing_evidence_report.md`
-- `outputs/reports/rag_evaluation_report.md`
-- `outputs/charts/top_screened_companies.png`
-- `outputs/charts/valuation_vs_growth.png`
-- `outputs/charts/peer_percentile_radar.png`
-- `outputs/charts/rag_eval_summary.png`
+- Excel workbook: `outputs/excel/private_markets_screening_outputs.xlsx`
+- Investment screening memo: `outputs/reports/investment_screening_memo.md`
+- Filing evidence report: `outputs/reports/filing_evidence_report.md`
+- RAG evaluation report: `outputs/reports/rag_evaluation_report.md`
+- Grounded generation evaluation report: `outputs/reports/grounded_generation_eval_report.md`
+- Charts: `outputs/charts/`
 
-## How to Run
+## Headline Results
 
-Install dependencies:
+Portfolio mode generated the following committed snapshot:
+
+- 288 companies attempted across 12 sectors/themes
+- 283 companies successfully screened
+- 283 companies with yfinance market data
+- 280 companies with SEC fundamentals
+- 259 companies with usable revenue fundamentals
+- 35 companies with real SEC filing chunks
+- 35 real SEC filing documents parsed
+- 15,965 filing chunks indexed
+- 15,692 real SEC filing chunks and 273 sample fallback chunks
+- Average Data Quality Score: 72.6
+- Top Investment Screening Score companies: HUBS, ROKU, FSLR, OKTA, TOST, ETSY, DOCU, BILL, EVR, NI
+- RAG Precision@5: 89.4%
+- Grounded generation score: 100.0%
+- Tests: 23 passed
+
+## Project Structure
+
+```text
+config/          runtime, scoring, SEC and RAG configuration
+data/            raw cache folders, interim snapshots, processed outputs and samples
+dashboard/       Streamlit dashboard
+eval/            gold retrieval question set
+notebooks/       walkthrough notebook
+outputs/         charts, screenshots, Excel workbook and reports
+src/             ingestion, scoring, retrieval, generation, evaluation and reporting modules
+tests/           pytest coverage for data, scoring, retrieval, generation and outputs
+```
+
+## How To Run
 
 ```bash
 pip install -r requirements.txt
-```
-
-Run the default online-refresh workflow with fallback:
-
-```bash
-python -m src.universe
-python -m src.yfinance_client
-python -m src.sec_client
-python -m src.screening_pipeline
-python -m src.filing_parser --mode online --limit 20
-python -m src.filing_rag
-python -m src.retrieval_eval
-python -m src.reporting
-pytest
-streamlit run dashboard/app.py
-```
-
-Windows launcher fallback:
-
-```powershell
 py -m src.universe
 py -m src.yfinance_client
 py -m src.sec_client
 py -m src.screening_pipeline
-py -m src.filing_parser --mode online --limit 20
+py -m src.filing_parser --mode hybrid
 py -m src.filing_rag
+py -m src.rag_generator
 py -m src.retrieval_eval
+py -m src.grounded_generation_eval
 py -m src.reporting
 py -m pytest
 py -m streamlit run dashboard/app.py
 ```
 
-Sample-only fallback:
+Use `--runtime-mode demo`, `--runtime-mode portfolio` or `--runtime-mode extended` where supported.
+
+## Optional Ollama Setup
+
+Install Ollama separately, then pull a local model:
 
 ```bash
-python -m src.screening_pipeline --mode sample
-python -m src.filing_parser --mode sample
-python -m src.filing_rag
-python -m src.retrieval_eval
-python -m src.reporting
+ollama pull qwen3
+ollama pull llama3.1
+ollama serve
 ```
+
+Configure:
+
+```bash
+set LLM_ENABLED=true
+set OLLAMA_MODEL=qwen3
+```
+
+Then run:
+
+```bash
+py -m src.rag_generator --llm
+py -m src.grounded_generation_eval
+py -m streamlit run dashboard/app.py
+```
+
+Ollama is optional. If the server or model is unavailable, deterministic outputs are used.
 
 ## Tests
 
-The test suite covers:
+The test suite covers universe loading, ticker failure logging, SEC mapping and XBRL fallbacks, scoring bounds, mega-cap category handling, data-quality penalties, filing source types, section-boosted retrieval, no-answer handling, local Ollama fallback, generation guardrails, groundedness metrics, chart/report/workbook output and dashboard import safety.
 
-- universe loading
-- yfinance fallback behavior
-- SEC CIK mapping
-- SEC XBRL mapping
-- feature engineering
-- score bounds
-- market-cap-band category rules
-- mega-cap quality comp handling
-- data quality penalties
-- skipped ticker logging
-- source-type coverage
-- filing chunking
-- retrieval metadata
-- no-answer handling
-- RAG evaluation
-- memo, chart, Excel and report outputs
-- dashboard module compilation
-
-Latest local run: `18 passed`.
+Current result: `23 passed`.
 
 ## Data Limitations
 
-- yfinance is unofficial and may fail, change fields or return stale values.
-- SEC XBRL concepts vary by company and some fields may be missing or mapped imperfectly.
-- EBIT proxy is used when EBITDA is unavailable.
-- Filing section parsing is imperfect because SEC filing formats vary.
-- Retrieval evidence is not a legal, accounting or investment diligence substitute.
-- Cached outputs are reproducible snapshots, not continuously refreshed monitoring.
+- yfinance is unofficial and can fail, change fields or return stale/missing data.
+- SEC companyfacts are official public data, but tags vary across issuers and require mapping.
+- Filing section parsing is imperfect because filing formats vary.
+- Real filing coverage is intentionally capped for commit-safe outputs.
+- Sample fallback rows support offline reproducibility and are clearly labelled.
+- Retrieval and generation outputs support workflow demonstration and require human review.
+
+## Investment Advice Disclaimer
+
+This project is not a stock-picking system, buy/sell engine, price-target model or investment recommendation tool. Outputs identify public companies that screen for further diligence under configurable criteria. Any real investment decision would require full professional diligence, source filing review, legal analysis, financial analysis and investment committee judgment.
 
 ## Future Enhancements
 
-- Add more robust item-level SEC filing section extraction.
-- Expand real filing parsing beyond 20 issuers.
-- Add issuer-level XBRL mapping confidence diagnostics.
-- Expand the gold set with human-labelled filing passages.
-- Add historical refresh comparison and portfolio monitoring mode.
-- Add role-specific workflows for co-investments, secondaries, infrastructure and private credit.
+- Add more real SEC filings in extended local mode.
+- Add richer section parsing for 10-Q filings and footnotes.
+- Add local embedding retrieval as an optional second-stage reranker.
+- Add historical refresh tracking and sector-specific scoring presets.
+- Add richer evidence-level labelling for gold retrieval examples.
 
 ## CV Bullet
 
-Detailed version:
+Private Markets Investment Screening & Filing Intelligence Dashboard | Python, SEC EDGAR, yfinance, Streamlit, RAG
 
-**Private Markets Investment Screening & Filing Intelligence Dashboard | Python, pandas, SEC EDGAR, yfinance, Streamlit, RAG**
-
-- Built a Python/Streamlit public-data investment screening and filing intelligence workflow to rank listed-company comparables across selectable sectors using market data, SEC companyfacts and filing text. Created explainable public-quality, investment-screening, platform-candidate, public-to-private-feasibility, value-creation, credit-risk, red-flag and data-quality scorecards, with peer benchmarking, target categorisation and source-backed diligence memo outputs.
-
-Metrics version:
-
-- Screened 107 public companies across 9 sectors, calculating 27 financial, valuation and risk metrics; parsed 20 real SEC filing documents into 11,115 real filing chunks; generated target categories, peer benchmarking and source-backed filing evidence, with retrieval evaluation achieving Hit@5 of 100.0%, Precision@5 of 82.5% and citation coverage of 100.0%.
+- Built a Python/Streamlit public-data investment screening and SEC filing intelligence dashboard, screening 283 listed companies across 12 sectors using yfinance market data, SEC fundamentals and 15,965 filing chunks. Created explainable investment screening, platform candidate, public-to-private feasibility, value creation, credit risk and red-flag scorecards, with peer benchmarking, target categorisation, source-backed SEC filing retrieval and optional local-LLM RAG summaries evaluated for 100.0% citation coverage and 0.0% unsupported-claim rate.

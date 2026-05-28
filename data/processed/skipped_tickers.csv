@@ -1,5 +1,14 @@
-ticker,stage,reason,detail,logged_at
-FYBR,sec_companyfacts,missing_cik_mapping,Ticker not found in SEC company_tickers mapping.,2026-05-28T12:07:54+00:00
-TRI,sec_companyfacts,no_mappable_xbrl_facts,CIK 1075124 returned no mappable annual companyfacts.,2026-05-28T12:07:54+00:00
-TRI,sec_filing_text,no_recent_10k,"CIK 1075124 had no recent filing for ('10-K',).",2026-05-28T11:55:30+00:00
-FYBR,yfinance,missing_market_fields,yfinance_failed: ValueError,2026-05-28T12:07:53+00:00
+ticker,company_name,stage,stage_failed,reason,reason_skipped,detail,logged_at,timestamp
+AGR,AGR,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+ASGN,ASGN,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+ATUS,ATUS,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+CHUY,CHUY,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+COMM,COMM,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+NOVA,NOVA,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+PINC,PINC,sec_companyfacts,sec_companyfacts,missing_cik_mapping,missing_cik_mapping,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+TRI,Thomson Reuters Corporation,sec_companyfacts,sec_companyfacts,no_mappable_xbrl_facts,no_mappable_xbrl_facts,No usable SEC companyfacts row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+AGR,AGR,yfinance,yfinance,missing_market_fields,missing_market_fields,No usable market snapshot row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+ATUS,ATUS,yfinance,yfinance,missing_market_fields,missing_market_fields,No usable market snapshot row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+CHUY,CHUY,yfinance,yfinance,missing_market_fields,missing_market_fields,No usable market snapshot row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+COMM,COMM,yfinance,yfinance,missing_market_fields,missing_market_fields,No usable market snapshot row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00
+NOVA,NOVA,yfinance,yfinance,missing_market_fields,missing_market_fields,No usable market snapshot row in portfolio refresh.,2026-05-28T16:56:05+00:00,2026-05-28T16:56:05+00:00

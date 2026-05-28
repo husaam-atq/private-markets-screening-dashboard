@@ -125,6 +125,7 @@ def evaluate_retrieval(gold: pd.DataFrame, chunks: pd.DataFrame, top_k: int = 5)
             ticker=question["ticker"],
             top_k=top_k,
             min_score=0.0,
+            question_id=question["question_id"],
         )
         top_score = float(retrieved["combined_score"].max()) if not retrieved.empty else 0.0
         if expected_no_answer:

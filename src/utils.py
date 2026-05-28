@@ -72,6 +72,24 @@ def read_csv_if_exists(path: Path) -> pd.DataFrame:
     return pd.DataFrame()
 
 
+def upsert_skipped_tickers(rows: list[dict], path: Path) -> pd.DataFrame:
+    columns = ["ticker", "stage", "reason", "detail", "logged_at"]
+    existing = read_csv_if_exists(path)
+    new_rows = pd.DataFrame(rows)
+    if new_rows.empty:
+        if existing.empty:
+            existing = pd.DataFrame(columns=columns)
+            write_csv(existing, path)
+        return existing
+    for column in columns:
+        if column not in new_rows.columns:
+            new_rows[column] = ""
+    combined = pd.concat([existing, new_rows[columns]], ignore_index=True) if not existing.empty else new_rows[columns]
+    combined = combined.drop_duplicates(["ticker", "stage", "reason"], keep="last").sort_values(["stage", "ticker"])
+    write_csv(combined, path)
+    return combined
+
+
 def non_null_ratio(row: pd.Series, columns: Iterable[str]) -> float:
     cols = [col for col in columns if col in row.index]
     if not cols:

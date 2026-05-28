@@ -34,6 +34,11 @@ METRIC_COLUMNS = [
     "revenue_trend",
     "leverage_trend",
     "data_completeness_ratio",
+    "yfinance_field_completeness_ratio",
+    "sec_field_completeness_ratio",
+    "filing_staleness_days",
+    "proxy_usage_penalty",
+    "market_cap_band",
 ]
 
 
@@ -97,7 +102,28 @@ def _company_metrics(row: pd.Series, history: pd.DataFrame) -> dict:
         "margin_trend": latest_op_margin - oldest_op_margin if not pd.isna(latest_op_margin) and not pd.isna(oldest_op_margin) else np.nan,
         "revenue_trend": revenue_cagr,
         "leverage_trend": latest_leverage - oldest_leverage if not pd.isna(latest_leverage) and not pd.isna(oldest_leverage) else np.nan,
+        "fundamentals_source_type": latest.get("source_type", "unknown"),
+        "fundamentals_data_mode": latest.get("data_mode", "unknown"),
+        "uses_ebit_proxy": True,
+        "ebitda_available": False,
     }
+
+
+def market_cap_band(enterprise_value: float | int | None, red_flag_score: float | int | None = None) -> str:
+    if enterprise_value is None or pd.isna(enterprise_value):
+        return "Insufficient Data"
+    ev = float(enterprise_value)
+    if red_flag_score is not None and not pd.isna(red_flag_score) and float(red_flag_score) >= 75:
+        return "Distressed/special situations watchlist"
+    if ev >= 150_000_000_000:
+        return "Mega-cap benchmark / public quality comp"
+    if ev >= 50_000_000_000:
+        return "Large-cap strategic / unlikely PE target"
+    if ev >= 10_000_000_000:
+        return "Mid-cap possible public-to-private screen"
+    if ev >= 1_000_000_000:
+        return "Small/mid-cap platform candidate"
+    return "Distressed/special situations watchlist"
 
 
 def build_screening_universe(market_data: pd.DataFrame, fundamentals: pd.DataFrame) -> pd.DataFrame:
@@ -107,10 +133,26 @@ def build_screening_universe(market_data: pd.DataFrame, fundamentals: pd.DataFra
     combined = market_data.merge(metrics, on="ticker", how="left", suffixes=("", "_sec"))
     combined["ev_to_sales"] = combined.apply(lambda row: safe_divide(row["enterprise_value"], row["revenue"]), axis=1)
     combined["ev_to_ebit_proxy"] = combined.apply(lambda row: safe_divide(row["enterprise_value"], row["operating_income"]), axis=1)
-    completeness_cols = [
+    market_cols = [
         "market_cap",
         "enterprise_value",
+        "latest_price",
+        "price_52w_high",
+        "price_52w_low",
+        "realised_volatility",
+        "beta",
+        "ev_to_sales_yfinance",
+        "trailing_pe",
+    ]
+    sec_cols = [
         "revenue",
+        "gross_profit",
+        "operating_income",
+        "net_income",
+        "cash_and_equivalents",
+        "total_debt",
+        "operating_cash_flow",
+        "capex",
         "revenue_growth_yoy",
         "gross_margin",
         "operating_margin",
@@ -118,10 +160,29 @@ def build_screening_universe(market_data: pd.DataFrame, fundamentals: pd.DataFra
         "fcf_conversion",
         "debt_to_ebit_proxy",
         "ev_to_sales",
-        "realised_volatility",
-        "drawdown_from_52w_high",
     ]
-    combined["data_completeness_ratio"] = combined.apply(lambda row: non_null_ratio(row, completeness_cols), axis=1)
+    combined["yfinance_field_completeness_ratio"] = combined.apply(lambda row: non_null_ratio(row, market_cols), axis=1)
+    combined["sec_field_completeness_ratio"] = combined.apply(lambda row: non_null_ratio(row, sec_cols), axis=1)
+    combined["data_completeness_ratio"] = (
+        combined["yfinance_field_completeness_ratio"] * 0.40
+        + combined["sec_field_completeness_ratio"] * 0.60
+    )
+    filing_dates = pd.to_datetime(combined["filing_date"], errors="coerce", utc=True)
+    combined["filing_staleness_days"] = (pd.Timestamp.now(tz="UTC") - filing_dates).dt.days
+    combined["proxy_usage_penalty"] = np.where(combined.get("uses_ebit_proxy", True), 8.0, 0.0)
+    combined["market_cap_band"] = combined["enterprise_value"].apply(market_cap_band)
+    if "source_type" in combined.columns:
+        combined = combined.rename(columns={"source_type": "market_source_type", "data_mode": "market_data_mode"})
+    if "fundamentals_source_type" not in combined.columns:
+        combined["fundamentals_source_type"] = "missing"
+    if "fundamentals_data_mode" not in combined.columns:
+        combined["fundamentals_data_mode"] = "missing"
+    combined["source_type"] = combined.apply(
+        lambda row: "live_public_data"
+        if row.get("market_source_type") == "live_yfinance" and row.get("fundamentals_source_type") == "live_sec_companyfacts"
+        else ("cached_sec_snapshot" if row.get("fundamentals_source_type") == "live_sec_companyfacts" else "sample_fallback"),
+        axis=1,
+    )
     combined["metrics_refresh_timestamp"] = utc_timestamp()
     return combined
 
@@ -141,7 +202,7 @@ def run_feature_engineering(mode: str = "sample") -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build structured screening metrics.")
-    parser.add_argument("--mode", choices=["sample", "online"], default="sample")
+    parser.add_argument("--mode", choices=["sample", "online"], default="online")
     args = parser.parse_args()
     frame = run_feature_engineering(mode=args.mode)
     print(f"screening_universe_rows={len(frame)}")

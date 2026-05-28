@@ -13,7 +13,8 @@ from src.utils import format_money, format_multiple, format_pct, read_csv_if_exi
 def _evidence_reference(row: pd.Series) -> str:
     return (
         f"{row['company_name']} | {row['ticker']} | {row['filing_type']} | "
-        f"{row['filing_date']} | {row['section_label']} | {row['chunk_id']}"
+        f"{row['filing_date']} | {row['section_label']} | {row['chunk_id']} | "
+        f"{row.get('source_type', 'unknown')}"
     )
 
 
@@ -36,7 +37,7 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
     questions = read_csv_if_exists(PROCESSED_DIR / "diligence_questions.csv")
     evidence = read_csv_if_exists(PROCESSED_DIR / "retrieved_evidence.csv")
     if scores.empty or categories.empty or benchmarks.empty:
-        run_pipeline(mode="sample")
+        run_pipeline(mode="online")
         scores = read_csv_if_exists(PROCESSED_DIR / "investment_scores.csv")
         categories = read_csv_if_exists(PROCESSED_DIR / "company_categories.csv")
         benchmarks = read_csv_if_exists(PROCESSED_DIR / "peer_benchmarks.csv")
@@ -55,11 +56,17 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
     lines = [
         f"# Investment Screening Memo: {company['company_name']} ({company['ticker']})",
         "",
+        (
+            f"Data mode: structured data source is {company.get('source_type', 'unknown')}; "
+            "filing evidence rows are labelled by source type."
+        ),
+        "",
         "## 1. Executive Summary",
         (
             f"{company['company_name']} screens as **{category['primary_category']}** with an "
             f"Investment Screening Score of {company['investment_screening_score']:.1f}, "
-            f"Diligence Priority Score of {company['diligence_priority_score']:.1f} and "
+            f"Public-to-Private Feasibility Score of {company.get('public_to_private_feasibility_score', 0):.1f}, "
+            f"Platform Candidate Score of {company['platform_candidate_score']:.1f} and "
             f"Red Flag Score of {company['red_flag_score']:.1f}. This memo frames a public-data "
             "screening view for further diligence and does not provide investment advice."
         ),
@@ -70,11 +77,20 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
         "",
         "## 3. Sector and Peer Context",
         (
-            f"The company is mapped to {company['sector_theme']}. Relative to the cached peer set, "
+            f"The company is mapped to {company['sector_theme']}. Relative to the selected peer set, "
             f"latest revenue growth is {format_pct(company['revenue_growth_yoy'])} versus a peer "
             f"median of {format_pct(peer['revenue_growth_yoy_peer_median'])}; EBIT margin proxy is "
             f"{format_pct(company['operating_margin'])} versus peer median "
             f"{format_pct(peer['operating_margin_peer_median'])}."
+        ),
+        "",
+        "## 3A. Private-Markets Feasibility Classification",
+        (
+            f"Market-cap band: {company.get('market_cap_band', 'n/a')}. Public Quality Score is "
+            f"{company.get('public_quality_score', 0):.1f}, while Public-to-Private Feasibility Score is "
+            f"{company.get('public_to_private_feasibility_score', 0):.1f}. Mega-cap names can be useful "
+            "benchmark quality comps, but the feasibility score penalises enterprise values that are unlikely "
+            "to fit a typical PE platform or public-to-private mandate."
         ),
         "",
         "## 4. Financial Profile",
@@ -103,9 +119,11 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
         "## 7. Investment Screening Scorecard",
         "| Scorecard | Score |",
         "|---|---:|",
+        f"| Public Quality Score | {company.get('public_quality_score', 0):.1f} |",
         f"| Investment Screening Score | {company['investment_screening_score']:.1f} |",
         f"| Diligence Priority Score | {company['diligence_priority_score']:.1f} |",
         f"| Platform Candidate Score | {company['platform_candidate_score']:.1f} |",
+        f"| Public-to-Private Feasibility Score | {company.get('public_to_private_feasibility_score', 0):.1f} |",
         f"| Value Creation Potential Score | {company['value_creation_potential_score']:.1f} |",
         f"| Credit Risk Score | {company['credit_risk_score']:.1f} |",
         f"| Red Flag Score | {company['red_flag_score']:.1f} |",
@@ -144,16 +162,13 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
             ),
             "",
             "## 12. Recommendation for Further Diligence",
-            (
-                "High priority for further diligence based on selected screening criteria."
-                if category["primary_category"] == "High Priority for Further Diligence"
-                else f"Proceed as a {category['primary_category']} screen, with emphasis on validating the public-data signals."
-            ),
+            f"Proceed as a {category['primary_category']} screen, with emphasis on validating the public-data signals.",
             "",
             "## 13. Data and Methodology Limitations",
             (
-                "This memo uses public market data, SEC filing fundamentals, cached sample records and source-backed "
-                "filing retrieval. It is a screening workflow demonstration, not investment advice or a substitute "
+                "This memo uses public market data, SEC filing fundamentals and source-backed filing retrieval. "
+                "Rows labelled sample_fallback are included only where real filing chunks were not available. "
+                "It is a screening workflow demonstration, not investment advice or a substitute "
                 "for confidential diligence, legal review, management meetings or full quality-of-earnings analysis."
             ),
         ]
@@ -168,7 +183,9 @@ def generate_memo(target_ticker: str | None = None) -> tuple[str, pd.DataFrame]:
                 "company_name": company["company_name"],
                 "section": "Investment Screening Memo",
                 "primary_category": category["primary_category"],
+                "public_quality_score": company.get("public_quality_score"),
                 "investment_screening_score": company["investment_screening_score"],
+                "public_to_private_feasibility_score": company.get("public_to_private_feasibility_score"),
                 "citation_coverage": 1.0 if not company_evidence.empty else 0.0,
             }
         ]

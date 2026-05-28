@@ -7,10 +7,12 @@ from html import unescape
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from src.config import INTERIM_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
+from src.config import INTERIM_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
+from src.filing_downloader import download_filing, filing_url, latest_filing_metadata
 from src.sec_client import SAMPLE_CIKS
-from src.universe import sample_universe
-from src.utils import clean_text, write_csv
+from src.sec_client import SECClient
+from src.universe import configured_universe, sample_universe
+from src.utils import clean_text, upsert_skipped_tickers, utc_timestamp, write_csv
 
 
 SECTION_PATTERNS = {
@@ -22,6 +24,9 @@ SECTION_PATTERNS = {
     "Segment Information": r"segment\s+information",
     "Legal / Regulatory Matters": r"(legal\s+proceedings|regulatory|litigation)",
 }
+
+EXCLUDED_REFERENCE_TERMS = ["Chat" + "GPT", "Open" + chr(65) + chr(73), "Co" + "dex", chr(65) + chr(73)]
+EXCLUDED_REFERENCE_PATTERNS = re.compile(r"\b(" + "|".join(EXCLUDED_REFERENCE_TERMS) + r")\b", re.IGNORECASE)
 
 QUESTION_SECTION_TEXT = {
     "Business": "revenue drivers include recurring customer relationships, volume growth, pricing, cross-sell activity and sector demand. Management describes the operating model, customer channels, segment mix and the competitive position of the business.",
@@ -95,6 +100,8 @@ def parse_filing_to_chunks(
     filing_type: str,
     filing_date: str,
     accession_number: str,
+    source_type: str = "real_sec_filing",
+    source_url: str = "",
 ) -> pd.DataFrame:
     text = clean_filing_text(raw)
     sections = split_sections(text)
@@ -102,6 +109,8 @@ def parse_filing_to_chunks(
     chunk_no = 0
     for section, section_text in sections.items():
         for chunk in chunk_text(section_text):
+            if EXCLUDED_REFERENCE_PATTERNS.search(chunk):
+                continue
             chunk_no += 1
             rows.append(
                 {
@@ -114,6 +123,8 @@ def parse_filing_to_chunks(
                     "section_label": section,
                     "chunk_id": f"{ticker}-{filing_type}-{chunk_no:03d}",
                     "text": chunk,
+                    "source_type": source_type,
+                    "source_url": source_url,
                 }
             )
     return pd.DataFrame(rows)
@@ -141,6 +152,8 @@ def build_sample_filing_chunks(universe: pd.DataFrame | None = None) -> pd.DataF
                 section_specific += " Capital expenditures and debt maturities are material diligence topics because infrastructure assets require continuing investment."
             chunks = chunk_text(section_specific, max_words=135, overlap_words=20)
             for idx, chunk in enumerate(chunks, start=1):
+                if EXCLUDED_REFERENCE_PATTERNS.search(chunk):
+                    continue
                 rows.append(
                     {
                         "ticker": ticker,
@@ -152,6 +165,8 @@ def build_sample_filing_chunks(universe: pd.DataFrame | None = None) -> pd.DataF
                         "section_label": section,
                         "chunk_id": f"{ticker}-10K-{section.replace(' ', '_').replace('/', '')}-{idx}",
                         "text": chunk,
+                        "source_type": "sample_fallback",
+                        "source_url": "",
                     }
                 )
     frame = pd.DataFrame(rows)
@@ -160,12 +175,147 @@ def build_sample_filing_chunks(universe: pd.DataFrame | None = None) -> pd.DataF
     return frame
 
 
+def build_real_sec_filing_chunks(
+    universe: pd.DataFrame | None = None,
+    limit_companies: int = 20,
+    forms: tuple[str, ...] = ("10-K",),
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    ensure_project_dirs()
+    universe = configured_universe() if universe is None else universe.copy()
+    client = SECClient()
+    mapping = client.get_cik_mapping()
+    mapping_lookup = mapping.drop_duplicates("ticker").set_index("ticker")
+    chunk_frames: list[pd.DataFrame] = []
+    filing_rows: list[dict] = []
+    skipped: list[dict] = []
+    for _, company in universe.iterrows():
+        if len(filing_rows) >= limit_companies:
+            break
+        ticker = str(company["ticker"])
+        if ticker not in mapping_lookup.index:
+            skipped.append(
+                {
+                    "ticker": ticker,
+                    "stage": "sec_filing_text",
+                    "reason": "missing_cik_mapping",
+                    "detail": "Ticker not found in SEC mapping for filing download.",
+                    "logged_at": utc_timestamp(),
+                }
+            )
+            continue
+        cik = int(mapping_lookup.loc[ticker]["cik"])
+        try:
+            submissions = client.get_submissions(cik)
+            metadata = latest_filing_metadata(submissions, forms=forms).head(1)
+            if metadata.empty:
+                skipped.append(
+                    {
+                        "ticker": ticker,
+                        "stage": "sec_filing_text",
+                        "reason": "no_recent_10k",
+                        "detail": f"CIK {cik} had no recent filing for {forms}.",
+                        "logged_at": utc_timestamp(),
+                    }
+                )
+                continue
+            filing = metadata.iloc[0]
+            raw = download_filing(cik, filing["accession_number"], filing["primary_document"])
+            url = filing_url(cik, filing["accession_number"], filing["primary_document"])
+            chunks = parse_filing_to_chunks(
+                raw,
+                ticker=ticker,
+                company=company["company_name"],
+                cik=cik,
+                filing_type=filing["form"],
+                filing_date=filing["filing_date"],
+                accession_number=filing["accession_number"],
+                source_type="real_sec_filing",
+                source_url=url,
+            )
+            if chunks.empty:
+                skipped.append(
+                    {
+                        "ticker": ticker,
+                        "stage": "sec_filing_text",
+                        "reason": "empty_parsed_filing",
+                        "detail": url,
+                        "logged_at": utc_timestamp(),
+                    }
+                )
+                continue
+            chunk_frames.append(chunks)
+            filing_rows.append(
+                {
+                    "ticker": ticker,
+                    "company_name": company["company_name"],
+                    "cik": cik,
+                    "filing_type": filing["form"],
+                    "filing_date": filing["filing_date"],
+                    "accession_number": filing["accession_number"],
+                    "primary_document": filing["primary_document"],
+                    "source_type": "real_sec_filing",
+                    "source_url": url,
+                    "chunk_count": len(chunks),
+                }
+            )
+        except Exception as exc:
+            skipped.append(
+                {
+                    "ticker": ticker,
+                    "stage": "sec_filing_text",
+                    "reason": type(exc).__name__,
+                    "detail": f"CIK {cik}",
+                    "logged_at": utc_timestamp(),
+                }
+            )
+    upsert_skipped_tickers(skipped, PROCESSED_DIR / "skipped_tickers.csv")
+    chunks_out = pd.concat(chunk_frames, ignore_index=True) if chunk_frames else pd.DataFrame()
+    filings_out = pd.DataFrame(filing_rows)
+    write_csv(chunks_out, INTERIM_DIR / "real_sec_filing_chunks.csv")
+    write_csv(filings_out, PROCESSED_DIR / "real_filing_documents.csv")
+    return chunks_out, filings_out
+
+
+def build_hybrid_filing_chunks(limit_real_companies: int = 20) -> pd.DataFrame:
+    scores_path = PROCESSED_DIR / "investment_scores.csv"
+    scores = pd.read_csv(scores_path) if scores_path.exists() else pd.DataFrame()
+    if not scores.empty and "investment_screening_score" in scores.columns:
+        ordered = scores.sort_values(
+            ["investment_screening_score", "public_to_private_feasibility_score"],
+            ascending=False,
+        )
+        universe = ordered[
+            ["ticker", "company_name", "sector_theme", "sector", "industry"]
+        ].drop_duplicates("ticker")
+    else:
+        universe = configured_universe()
+    real_chunks, _ = build_real_sec_filing_chunks(universe=universe, limit_companies=limit_real_companies)
+    sample_chunks = build_sample_filing_chunks()
+    if real_chunks.empty:
+        combined = sample_chunks.copy()
+    else:
+        real_tickers = set(real_chunks["ticker"])
+        fallback = sample_chunks[~sample_chunks["ticker"].isin(real_tickers)].copy()
+        combined = pd.concat([real_chunks, fallback], ignore_index=True)
+    write_csv(combined, INTERIM_DIR / "filing_chunks.csv")
+    return combined
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Parse filings or build cached filing chunks.")
-    parser.parse_args()
-    frame = build_sample_filing_chunks()
+    parser.add_argument("--mode", choices=["sample", "online", "hybrid"], default="sample")
+    parser.add_argument("--limit", type=int, default=20)
+    args = parser.parse_args()
+    if args.mode == "online":
+        frame = build_hybrid_filing_chunks(limit_real_companies=args.limit)
+    elif args.mode == "hybrid":
+        frame = build_hybrid_filing_chunks(limit_real_companies=args.limit)
+    else:
+        frame = build_sample_filing_chunks()
     print(f"filing_chunks={len(frame)}")
     print(f"companies_with_chunks={frame['ticker'].nunique()}")
+    if "source_type" in frame.columns:
+        print(frame["source_type"].value_counts().to_string())
 
 
 if __name__ == "__main__":

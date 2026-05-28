@@ -1,0 +1,10 @@
+question_id,ticker,expected_no_answer,predicted_no_answer,top_score,hit_at_3,hit_at_5,precision_at_3,precision_at_5,mrr,ndcg_at_5,section_match,section_hit_at_5,chunk_level_hit_at_5,top_source_type,example_type
+MSFT_revenue,MSFT,False,False,0.1471249211639945,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,sample_fallback,strong_retrieval
+MSFT_customer,MSFT,False,False,0.19397934129812797,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,sample_fallback,strong_retrieval
+MSFT_liquidity_debt,MSFT,False,False,0.09074311950561662,1.0,1.0,1.0,0.8,1.0,0.9828920819566879,1.0,1.0,1.0,sample_fallback,strong_retrieval
+MSFT_margin_confuser,MSFT,False,False,0.14440590866702074,1.0,1.0,0.6666666666666666,0.6,1.0,0.9674679834891693,1.0,1.0,1.0,sample_fallback,strong_retrieval
+MSFT_capex_allocation,MSFT,False,False,0.11368422147013421,1.0,1.0,0.6666666666666666,0.8,1.0,0.9047172294870751,1.0,1.0,1.0,sample_fallback,strong_retrieval
+MSFT_competition_regulation,MSFT,False,False,0.18548315825629424,1.0,1.0,1.0,0.8,1.0,0.9828920819566879,1.0,1.0,1.0,sample_fallback,strong_retrieval
+HCA_revenue,HCA,False,True,0.07051899382973935,1.0,1.0,1.0,0.8,1.0,1.0,1.0,1.0,1.0,sample_fallback,strong_retrieval
+HCA_customer,HCA,False,False,0.16019451726400835,1.0,1.0,0.6666666666666666,0.8,1.0,0.9558295932317544,1.0,1.0,1.0,sample_fallback,strong_retrieval
+SOFI_customer,SOFI,False,False,0.08379822038574862,1.0,1.0,0.3333333333333333,0.2,0.5,0.6309297535714575,0.0,0.0,1.0,real_sec_filing,weak_retrieval

@@ -127,7 +127,8 @@ def map_companyfacts(companyfacts: dict[str, Any], ticker: str, company_name: st
                     row["filing_date"] = selected.get("filing_date", "")
             else:
                 row[metric] = np.nan
-        row["total_debt"] = np.nansum([row.get("long_term_debt"), row.get("current_debt")])
+        debt_parts = [row.get("long_term_debt"), row.get("current_debt")]
+        row["total_debt"] = np.nan if all(pd.isna(value) for value in debt_parts) else np.nansum(debt_parts)
         rows.append(row)
     return pd.DataFrame(rows)
 

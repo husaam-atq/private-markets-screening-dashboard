@@ -7,9 +7,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from src.config import INTERIM_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs
+from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs
 from src.universe import configured_universe, sample_universe
-from src.utils import read_csv_if_exists, utc_timestamp, write_csv
+from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
 
 
 MARKET_COLUMNS = [
@@ -28,6 +28,8 @@ MARKET_COLUMNS = [
     "beta",
     "ev_to_sales_yfinance",
     "trailing_pe",
+    "source_type",
+    "data_mode",
     "data_source",
     "market_data_timestamp",
 ]
@@ -73,6 +75,7 @@ TICKER_ADJUSTMENTS = {
     "PYPL": (0.8, -0.04, 0.08),
     "SOFI": (0.25, 0.04, 0.13),
     "COIN": (0.45, 0.05, 0.18),
+    "FIS": (0.8, -0.02, 0.05),
 }
 
 
@@ -116,6 +119,8 @@ def build_sample_market_data(universe: pd.DataFrame | None = None) -> pd.DataFra
                 "beta": beta,
                 "ev_to_sales_yfinance": ev_sales,
                 "trailing_pe": max(5.0, 18 + ev_sales * 2 + growth_bias * 50),
+                "source_type": "sample_fallback",
+                "data_mode": "sample_fallback",
                 "data_source": "cached_sample",
                 "market_data_timestamp": timestamp,
             }
@@ -161,11 +166,19 @@ class YFinanceClient:
                 "beta": info.get("beta"),
                 "ev_to_sales_yfinance": info.get("enterpriseToRevenue"),
                 "trailing_pe": info.get("trailingPE"),
+                "source_type": "live_yfinance",
+                "data_mode": "live_api",
                 "data_source": "yfinance",
                 "market_data_timestamp": utc_timestamp(),
             }
         except Exception as exc:  # pragma: no cover - network instability path
-            return {"ticker": ticker, "data_source": f"yfinance_failed: {type(exc).__name__}"}
+            return {
+                "ticker": ticker,
+                "source_type": "missing_yfinance",
+                "data_mode": "live_api_failed",
+                "data_source": f"yfinance_failed: {type(exc).__name__}",
+                "skip_reason": type(exc).__name__,
+            }
 
     def fetch_universe(self, universe: pd.DataFrame, limit: int | None = None) -> pd.DataFrame:
         rows: list[dict] = []
@@ -187,20 +200,39 @@ def load_market_data(mode: str = "sample", limit: int | None = None) -> pd.DataF
     if mode == "online":
         universe = configured_universe()
         online = YFinanceClient().fetch_universe(universe, limit=limit)
-        valid = online["market_cap"].notna().sum() if "market_cap" in online.columns else 0
-        if valid >= max(5, min(len(online), 20) // 2):
-            write_csv(online, INTERIM_DIR / "market_data_snapshot.csv")
-            return online
+        required = ["market_cap", "enterprise_value", "latest_price", "price_52w_high", "price_52w_low"]
+        valid_mask = online[required].notna().sum(axis=1) >= 3
+        skipped_rows = []
+        for _, row in online[~valid_mask].iterrows():
+            skipped_rows.append(
+                {
+                    "ticker": row["ticker"],
+                    "stage": "yfinance",
+                    "reason": row.get("skip_reason") or "missing_market_fields",
+                    "detail": row.get("data_source", ""),
+                    "logged_at": utc_timestamp(),
+                }
+            )
+        upsert_skipped_tickers(skipped_rows, PROCESSED_DIR / "skipped_tickers.csv")
+        valid = online[valid_mask].copy()
+        minimum_valid = 60 if limit is None or limit >= 100 else max(3, int((limit or len(online)) * 0.60))
+        if len(valid) >= minimum_valid:
+            write_csv(valid, INTERIM_DIR / "market_data_snapshot.csv")
+            return valid
     cached = read_csv_if_exists(sample_path)
-    if cached.empty:
+    expected_tickers = set(sample_universe()["ticker"])
+    cached_tickers = set(cached["ticker"]) if not cached.empty and "ticker" in cached.columns else set()
+    if cached.empty or cached_tickers != expected_tickers:
         cached = build_sample_market_data()
+    cached["data_mode"] = "sample_fallback"
+    cached["source_type"] = "sample_fallback"
     write_csv(cached, INTERIM_DIR / "market_data_snapshot.csv")
     return cached
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch or build market data snapshots.")
-    parser.add_argument("--mode", choices=["sample", "online"], default="sample")
+    parser.add_argument("--mode", choices=["sample", "online"], default="online")
     parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
     frame = load_market_data(mode=args.mode, limit=args.limit)

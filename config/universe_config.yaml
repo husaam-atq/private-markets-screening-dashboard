@@ -1,4 +1,4 @@
-default_mode: sample
+default_mode: online
 online_target_company_count: 96
 sample_target_company_count: 40
 themes:
@@ -7,7 +7,7 @@ themes:
   - name: Healthcare Services
     tickers: [UNH, ELV, CI, HUM, HCA, THC, DVA, CVS, LH, DGX, CNC, MOH]
   - name: Business Services
-    tickers: [ADP, PAYX, FI, GPN, CTAS, ROP, WM, RSG, SPGI, MCO, VRSK, TRI]
+    tickers: [ADP, PAYX, FIS, GPN, CTAS, ROP, WM, RSG, SPGI, MCO, VRSK, TRI]
   - name: Industrials
     tickers: [HON, ETN, EMR, PH, ITW, MMM, GE, CARR, TT, IR, DE, CAT]
   - name: Consumer Services
@@ -33,7 +33,7 @@ sample_tickers:
   - CVS
   - ADP
   - PAYX
-  - FI
+  - FIS
   - GPN
   - CTAS
   - HON

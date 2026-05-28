@@ -28,7 +28,7 @@ def build_target_deep_dive(scores: pd.DataFrame, categories: pd.DataFrame, bench
     return merged
 
 
-def run_pipeline(mode: str = "sample") -> dict[str, pd.DataFrame]:
+def run_pipeline(mode: str = "online") -> dict[str, pd.DataFrame]:
     ensure_project_dirs()
     write_universe_outputs()
     market = load_market_data(mode=mode)
@@ -61,7 +61,7 @@ def load_pipeline_outputs() -> dict[str, pd.DataFrame]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the private markets screening pipeline.")
-    parser.add_argument("--mode", choices=["sample", "online"], default="sample")
+    parser.add_argument("--mode", choices=["sample", "online"], default="online")
     args = parser.parse_args()
     outputs = run_pipeline(mode=args.mode)
     print(f"companies_screened={len(outputs['screening'])}")

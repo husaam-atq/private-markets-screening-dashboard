@@ -21,16 +21,24 @@ metrics:
     realised_volatility: false
     leverage_trend: false
 score_weights:
-  investment_screening_score:
-    revenue_growth_yoy_score: 0.14
-    revenue_cagr_3y_score: 0.10
-    gross_margin_score: 0.10
-    operating_margin_score: 0.14
-    fcf_conversion_score: 0.12
-    debt_to_ebit_proxy_score: 0.12
-    ev_to_sales_score: 0.08
+  public_quality_score:
+    revenue_growth_yoy_score: 0.12
+    revenue_cagr_3y_score: 0.12
+    gross_margin_score: 0.14
+    operating_margin_score: 0.16
+    fcf_conversion_score: 0.16
+    debt_to_ebit_proxy_score: 0.08
     margin_trend_score: 0.08
-    realised_volatility_score: 0.05
+    realised_volatility_score: 0.06
+    market_cap_scale_score: 0.04
+    data_quality_score: 0.04
+  investment_screening_score:
+    public_quality_score: 0.15
+    public_to_private_feasibility_score: 0.30
+    platform_candidate_score: 0.20
+    value_creation_potential_score: 0.15
+    red_flag_inverse_score: 0.10
+    credit_risk_inverse_score: 0.05
     data_quality_score: 0.07
   diligence_priority_score:
     investment_screening_score: 0.55
@@ -38,14 +46,22 @@ score_weights:
     value_creation_potential_score: 0.15
     red_flag_inverse_score: 0.15
   platform_candidate_score:
-    revenue_cagr_3y_score: 0.18
-    gross_margin_score: 0.18
-    operating_margin_score: 0.18
-    fcf_conversion_score: 0.14
-    net_debt_to_ebit_proxy_score: 0.12
-    realised_volatility_score: 0.08
-    market_cap_scale_score: 0.05
+    revenue_cagr_3y_score: 0.13
+    gross_margin_score: 0.12
+    operating_margin_score: 0.14
+    fcf_conversion_score: 0.12
+    net_debt_to_ebit_proxy_score: 0.10
+    platform_size_feasibility_score: 0.32
     data_quality_score: 0.07
+  public_to_private_feasibility_score:
+    public_to_private_size_score: 0.45
+    fcf_conversion_score: 0.11
+    debt_to_ebit_proxy_score: 0.10
+    valuation_discount_to_peer_score: 0.13
+    drawdown_from_52w_high_score: 0.07
+    realised_volatility_score: 0.05
+    red_flag_inverse_score: 0.04
+    data_quality_score: 0.05
   value_creation_potential_score:
     margin_gap_to_peer_score: 0.24
     cash_conversion_gap_to_peer_score: 0.18

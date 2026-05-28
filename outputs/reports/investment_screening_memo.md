@@ -1,50 +1,59 @@
-# Investment Screening Memo: Microsoft Corporation (MSFT)
+# Investment Screening Memo: HubSpot, Inc. (HUBS)
+
+Data mode: structured data source is live_public_data; filing evidence rows are labelled by source type.
 
 ## 1. Executive Summary
-Microsoft Corporation screens as **High Priority for Further Diligence** with an Investment Screening Score of 82.4, Diligence Priority Score of 77.0 and Red Flag Score of 24.8. This memo frames a public-data screening view for further diligence and does not provide investment advice.
+HubSpot, Inc. screens as **Public-to-Private Candidate** with an Investment Screening Score of 71.4, Public-to-Private Feasibility Score of 75.6, Platform Candidate Score of 74.3 and Red Flag Score of 22.1. This memo frames a public-data screening view for further diligence and does not provide investment advice.
 
 ## 2. Why This Company Screened
-Screen is supported by above-peer latest revenue growth, above-peer EBIT margin proxy, strong free cash flow conversion proxy; key caution is no major structured red flag from the cached screen.
-Category rationale: High Priority for Further Diligence: investment score 82.4, platform score 91.8, value creation score 44.5, credit risk 14.8, red flag 24.8. Tags: high structured screen, platform characteristics.
+Screen is supported by strong free cash flow conversion proxy; key caution is material share price drawdown.
+Category rationale: Public-to-Private Candidate: public quality 60.9, investment score 71.4, platform score 74.3, public-to-private feasibility 75.6, value creation score 56.0, credit risk 24.7, red flag 22.1, market-cap band Small/mid-cap platform candidate. Tags: high structured screen, PE platform characteristics, public-to-private feasibility.
 
 ## 3. Sector and Peer Context
-The company is mapped to Software / SaaS. Relative to the cached peer set, latest revenue growth is 19.0% versus a peer median of 17.8%; EBIT margin proxy is 44.8% versus peer median 32.8%.
+The company is mapped to Software / SaaS. Relative to the selected peer set, latest revenue growth is 19.2% versus a peer median of 20.3%; EBIT margin proxy is 2.2% versus peer median 3.0%.
+
+## 3A. Private-Markets Feasibility Classification
+Market-cap band: Small/mid-cap platform candidate. Public Quality Score is 60.9, while Public-to-Private Feasibility Score is 75.6. Mega-cap names can be useful benchmark quality comps, but the feasibility score penalises enterprise values that are unlikely to fit a typical PE platform or public-to-private mandate.
 
 ## 4. Financial Profile
-Latest revenue is $299.8bn, gross margin is 78.0%, EBIT margin proxy is 44.8%, and free cash flow conversion proxy is 99.6%.
+Latest revenue is $3.1bn, gross margin is 83.8%, EBIT margin proxy is 2.2%, and free cash flow conversion proxy is 1171.7%.
 
 ## 5. Valuation Snapshot
-Market capitalization is $2888.6bn; enterprise value is $2946.4bn; EV / sales is 9.8x; EV / EBIT proxy is 21.9x.
+Market capitalization is $10.3bn; enterprise value is $8.8bn; EV / sales is 2.8x; EV / EBIT proxy is 127.2x.
 
 ## 6. Leverage and Cash Conversion
-Debt / EBIT proxy is 0.3x, net debt / EBIT proxy is 0.1x, cash / revenue is 10.8%, and capex intensity is 5.0%.
+Debt / EBIT proxy is n/a, net debt / EBIT proxy is n/a, cash / revenue is 28.3%, and capex intensity is 1.7%.
 
 ## 7. Investment Screening Scorecard
 | Scorecard | Score |
 |---|---:|
-| Investment Screening Score | 82.4 |
-| Diligence Priority Score | 77.0 |
-| Platform Candidate Score | 91.8 |
-| Value Creation Potential Score | 44.5 |
-| Credit Risk Score | 14.8 |
-| Red Flag Score | 24.8 |
-| Data Quality Score | 100.0 |
+| Public Quality Score | 60.9 |
+| Investment Screening Score | 71.4 |
+| Diligence Priority Score | 70.5 |
+| Platform Candidate Score | 74.3 |
+| Public-to-Private Feasibility Score | 75.6 |
+| Value Creation Potential Score | 56.0 |
+| Credit Risk Score | 24.7 |
+| Red Flag Score | 22.1 |
+| Data Quality Score | 87.5 |
 
 ## 8. Key Filing Evidence
 **What are the company's main revenue drivers?**
-- Microsoft Corporation (MSFT) Business. Subscription revenue, renewals, enterprise adoption, cloud migration and net retention are central diligence themes. revenue drivers include recurring customer relationships, volume growth, pricing, cross-sell activity and sector demand. Management describes the operating model, customer channels, segment mix and the competitive position of the business. The company notes that p Source: Microsoft Corporation | MSFT | 10-K | 2025-02-15 | Business | MSFT-10K-Business-1.
+- revenue recognition criteria have been met. Deferred revenue represents amounts billed for which revenue has not yet been recognized. Deferred revenue that will be recognized during the succeeding 12-month period is recorded as current deferred revenue, and the remaining portion is recorded as long-term deferred revenue. The Company recognized $ 802.7 million of revenue in 2025 that was included in deferred revenue a Source: HubSpot, Inc. | HUBS | 10-K | 2026-02-11 | Liquidity and Capital Resources | HUBS-10-K-303 | real_sec_filing.
+- and reorganizes interim reporting guidance to improve navigability, applicability, and consistency without changing the fundamental nature or volume of required interim disclosures. The new standard will be effective for the Company for the interim periods beginning January 1, 2028, with early adoption permitted. The Company is currently evaluating the impact that the adoption of this standard will have on its consol Source: HubSpot, Inc. | HUBS | 10-K | 2026-02-11 | Liquidity and Capital Resources | HUBS-10-K-302 | real_sec_filing.
 
 **What are the main liquidity risks?**
-- Microsoft Corporation (MSFT) Liquidity and Capital Resources. Subscription revenue, renewals, enterprise adoption, cloud migration and net retention are central diligence themes. liquidity discussion covers operating cash flows, free cash flow, revolver availability, working capital, capital allocation and investment needs. Management states that cash flows and borrowing capacity are expected to support near-term obl Source: Microsoft Corporation | MSFT | 10-K | 2025-02-15 | Liquidity and Capital Resources | MSFT-10K-Liquidity_and_Capital_Resources-1.
+- market value of certain securities in our portfolio and investments in some financial instruments could pose risks arising from market liquidity and credit concerns, which could adversely affect our financial results. Economic uncertainty may lead to decreased demand for our products and services and otherwise harm our business and results of operations. Our overall performance depends, in part, on worldwide economic Source: HubSpot, Inc. | HUBS | 10-K | 2026-02-11 | MD&A | HUBS-10-K-083 | real_sec_filing.
+- are not within our control, including the emergence and spread of more transmissible variants and the degree of transmissibility and severity thereof. The extent to which global pandemics, impact our financial condition or results of operations will depend on factors, such as the duration and scope of the pandemic, as well as whether there is a material impact on the businesses or productivity of our customers, partn Source: HubSpot, Inc. | HUBS | 10-K | 2026-02-11 | MD&A | HUBS-10-K-176 | real_sec_filing.
 
 **What risks could pressure margins?**
-- Microsoft Corporation (MSFT) Risk Factors. Subscription revenue, renewals, enterprise adoption, cloud migration and net retention are central diligence themes. risk factors include customer concentration, competition, regulatory change, cyber disruption, reimbursement pressure, labor availability, macro demand, supplier dependence and execution risk. These risks could pressure margins or growth if they intensify. The Source: Microsoft Corporation | MSFT | 10-K | 2025-02-15 | Risk Factors | MSFT-10K-Risk_Factors-1.
+- to our customer platform to mid-sized businesses, but we have sold and will continue to sell to organizations ranging from small businesses to enterprises. Our gross margins can vary depending on numerous factors related to the implementation and use of our customer platform, including the sophistication and intensity of our customers’ use of our platform and the level of professional services and support required by Source: HubSpot, Inc. | HUBS | 10-K | 2026-02-11 | MD&A | HUBS-10-K-063 | real_sec_filing.
 
 **What does management say about debt obligations?**
-- Microsoft Corporation (MSFT) Debt / Contractual Obligations. Subscription revenue, renewals, enterprise adoption, cloud migration and net retention are central diligence themes. debt obligations include senior notes, credit facilities, leases and contractual commitments. Interest expense, maturity schedules and covenant compliance are monitored as part of financing risk. The company notes that public filing informati Source: Microsoft Corporation | MSFT | 10-K | 2025-02-15 | Debt / Contractual Obligations | MSFT-10K-Debt__Contractual_Obligations-1.
+- insufficient filing evidence found
 
 **What does management say about competition?**
-- Microsoft Corporation (MSFT) Risk Factors. Subscription revenue, renewals, enterprise adoption, cloud migration and net retention are central diligence themes. risk factors include customer concentration, competition, regulatory change, cyber disruption, reimbursement pressure, labor availability, macro demand, supplier dependence and execution risk. These risks could pressure margins or growth if they intensify. The Source: Microsoft Corporation | MSFT | 10-K | 2025-02-15 | Risk Factors | MSFT-10K-Risk_Factors-1.
+- matters to the board of directors. As appropriate, the board of directors also receives information regarding cybersecurity incidents as well as ongoing updates regarding mitigation of any such incidents until they have been resolved. Management’s role in assessing and managing cybersecurity risk : Our risk management program for cybersecurity is led by the HubSpot Security & Privacy Committee, which we refer to as t Source: HubSpot, Inc. | HUBS | 10-K | 2026-02-11 | MD&A | HUBS-10-K-185 | real_sec_filing.
 
 ## 9. Diligence Questions
 - What portion of growth is volume, pricing, retention, mix or acquisition-driven?
@@ -54,13 +63,13 @@ Debt / EBIT proxy is 0.3x, net debt / EBIT proxy is 0.1x, cash / revenue is 10.8
 - Which filing risks require specialist legal, regulatory or commercial diligence?
 
 ## 10. Red Flags and Risks
-Structured red flags include a Red Flag Score of 24.8, Credit Risk Score of 14.8, drawdown from 52-week high of 7.6%, and realised volatility of 24.0%.
+Structured red flags include a Red Flag Score of 22.1, Credit Risk Score of 24.7, drawdown from 52-week high of 67.5%, and realised volatility of 58.2%.
 
 ## 11. Value Creation Angles
-Value Creation Potential Score is 44.5. Potential angles should be diligence-tested through peer margin benchmarking, cash conversion normalisation, capex planning and operating KPI review.
+Value Creation Potential Score is 56.0. Potential angles should be diligence-tested through peer margin benchmarking, cash conversion normalisation, capex planning and operating KPI review.
 
 ## 12. Recommendation for Further Diligence
-High priority for further diligence based on selected screening criteria.
+Proceed as a Public-to-Private Candidate screen, with emphasis on validating the public-data signals.
 
 ## 13. Data and Methodology Limitations
-This memo uses public market data, SEC filing fundamentals, cached sample records and source-backed filing retrieval. It is a screening workflow demonstration, not investment advice or a substitute for confidential diligence, legal review, management meetings or full quality-of-earnings analysis.
+This memo uses public market data, SEC filing fundamentals and source-backed filing retrieval. Rows labelled sample_fallback are included only where real filing chunks were not available. It is a screening workflow demonstration, not investment advice or a substitute for confidential diligence, legal review, management meetings or full quality-of-earnings analysis.

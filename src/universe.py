@@ -58,7 +58,7 @@ COMPANY_NAMES = {
     "MOH": "Molina Healthcare, Inc.",
     "ADP": "Automatic Data Processing, Inc.",
     "PAYX": "Paychex, Inc.",
-    "FI": "Fiserv, Inc.",
+    "FIS": "Fidelity National Information Services, Inc.",
     "GPN": "Global Payments Inc.",
     "CTAS": "Cintas Corporation",
     "ROP": "Roper Technologies, Inc.",

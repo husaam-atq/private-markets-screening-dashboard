@@ -7,6 +7,7 @@ import pandas as pd
 
 from src.charts import generate_all_charts
 from src.config import EXCEL_DIR, INTERIM_DIR, PROCESSED_DIR, REPORT_DIR, SAMPLE_DIR, ensure_project_dirs
+from src.feature_engineering import METRIC_COLUMNS
 from src.memo_generator import generate_memo
 from src.retrieval_eval import run_retrieval_evaluation
 from src.screening_pipeline import run_pipeline
@@ -21,7 +22,12 @@ def _metric(eval_results: pd.DataFrame, name: str, default: float = 0.0) -> floa
 def generate_filing_evidence_report() -> str:
     evidence = read_csv_if_exists(PROCESSED_DIR / "retrieved_evidence.csv")
     questions = read_csv_if_exists(PROCESSED_DIR / "diligence_questions.csv")
-    lines = ["# Filing Evidence Report", ""]
+    lines = [
+        "# Filing Evidence Report",
+        "",
+        "Evidence rows are labelled by `source_type`. Real SEC filing chunks are preferred; sample fallback chunks are used only where real filing text was not indexed.",
+        "",
+    ]
     if questions.empty:
         lines.append("No filing questions were generated.")
     for _, question in questions.iterrows():
@@ -36,7 +42,8 @@ def generate_filing_evidence_report() -> str:
             for _, row in subset.head(3).iterrows():
                 lines.append(
                     f"- {str(row['text'])[:360]} Source: {row['company_name']} | {row['filing_type']} | "
-                    f"{row['filing_date']} | {row['section_label']} | {row['chunk_id']}."
+                    f"{row['filing_date']} | {row['section_label']} | {row['chunk_id']} | "
+                    f"{row.get('source_type', 'unknown')}."
                 )
         lines.append("")
     report = "\n".join(lines)
@@ -47,12 +54,13 @@ def generate_filing_evidence_report() -> str:
 def generate_rag_evaluation_report() -> str:
     eval_results = read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv")
     details = read_csv_if_exists(PROCESSED_DIR / "rag_eval_details.csv")
+    examples = read_csv_if_exists(PROCESSED_DIR / "rag_eval_examples.csv")
     if eval_results.empty:
         eval_results, details = run_retrieval_evaluation()
     lines = [
         "# RAG Evaluation Report",
         "",
-        "This report evaluates whether the filing retrieval layer returns source-backed evidence for diligence-style questions.",
+        "This report evaluates whether the filing retrieval layer returns source-backed evidence for diligence-style questions. The gold set includes section-confuser and no-answer questions, so perfect-looking metrics should not be assumed in live refreshes.",
         "",
         "## Summary Metrics",
         "",
@@ -63,10 +71,18 @@ def generate_rag_evaluation_report() -> str:
         value = row["value"]
         formatted = f"{float(value):.1f}" if row["metric"].endswith("questions") or row["metric"] == "questions_evaluated" else format_pct(float(value))
         lines.append(f"| {row['metric']} | {formatted} |")
+    lines.extend(["", "## Strong and Weak Retrieval Examples", ""])
+    if not examples.empty:
+        for _, row in examples.head(12).iterrows():
+            lines.append(
+                f"- {row['example_type']}: {row['ticker']} {row['question_id']} "
+                f"Precision@5 {row.get('precision_at_5', 0):.2f}, top score {row.get('top_score', 0):.3f}, "
+                f"top source {row.get('top_source_type', 'unknown')}."
+            )
     weak = details[(details["expected_no_answer"] == False) & (details["hit_at_5"] == 0)].head(5) if not details.empty else pd.DataFrame()
-    lines.extend(["", "## Weak Retrieval Cases", ""])
+    lines.extend(["", "## Missed Answerable Questions", ""])
     if weak.empty:
-        lines.append("No answerable gold questions missed at top 5 in the cached sample evaluation.")
+        lines.append("No answerable gold questions missed at top 5 in the current evaluation, but Precision@5 still shows that some retrieved chunks are adjacent rather than directly responsive.")
     else:
         for _, row in weak.iterrows():
             lines.append(f"- {row['ticker']} {row['question_id']} missed at top 5; top score {row['top_score']:.3f}.")
@@ -89,11 +105,15 @@ def generate_excel_workbook() -> Path:
         "Filing Evidence": read_csv_if_exists(PROCESSED_DIR / "retrieved_evidence.csv"),
         "Diligence Questions": read_csv_if_exists(PROCESSED_DIR / "diligence_questions.csv"),
         "RAG Evaluation": read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv"),
+        "RAG Eval Details": read_csv_if_exists(PROCESSED_DIR / "rag_eval_details.csv"),
+        "RAG Eval Examples": read_csv_if_exists(PROCESSED_DIR / "rag_eval_examples.csv"),
+        "Skipped Tickers": read_csv_if_exists(PROCESSED_DIR / "skipped_tickers.csv"),
+        "Real Filing Docs": read_csv_if_exists(PROCESSED_DIR / "real_filing_documents.csv"),
         "Methodology": pd.DataFrame(
             [
                 {
                     "item": "Methodology",
-                    "description": "Transparent percentile scorecards using public market data, SEC-style cached sample fundamentals and filing evidence retrieval.",
+                    "description": "Transparent percentile scorecards using public market data, SEC companyfacts where available, source-labelled filing evidence retrieval and explicit fallback warnings.",
                 }
             ]
         ),
@@ -114,14 +134,24 @@ def summary_metrics() -> dict:
     chunks = read_csv_if_exists(INTERIM_DIR / "filing_chunks.csv")
     eval_results = read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv")
     categories = read_csv_if_exists(PROCESSED_DIR / "company_categories.csv")
+    market = read_csv_if_exists(INTERIM_DIR / "market_data_snapshot.csv")
+    skipped = read_csv_if_exists(PROCESSED_DIR / "skipped_tickers.csv")
+    real_filings = read_csv_if_exists(PROCESSED_DIR / "real_filing_documents.csv")
     return {
         "companies_screened": len(screening),
         "sectors_covered": screening["sector_theme"].nunique() if not screening.empty else 0,
-        "metrics_calculated": 22,
+        "metrics_calculated": len(METRIC_COLUMNS),
+        "companies_with_yfinance_data": market["ticker"].nunique() if not market.empty else 0,
         "companies_with_sec_fundamentals": fundamentals["ticker"].nunique() if not fundamentals.empty else 0,
+        "companies_with_usable_sec_fundamentals": screening["revenue"].notna().sum() if not screening.empty and "revenue" in screening else 0,
         "companies_with_filing_chunks": chunks["ticker"].nunique() if not chunks.empty else 0,
+        "real_filing_documents_parsed": real_filings["ticker"].nunique() if not real_filings.empty else 0,
+        "real_filing_chunks": int((chunks["source_type"] == "real_sec_filing").sum()) if not chunks.empty and "source_type" in chunks else 0,
+        "sample_fallback_chunks": int((chunks["source_type"] == "sample_fallback").sum()) if not chunks.empty and "source_type" in chunks else 0,
+        "skipped_ticker_count": len(skipped),
         "average_data_quality_score": scores["data_quality_score"].mean() if not scores.empty else 0,
-        "high_priority_diligence_candidates": int((categories["primary_category"] == "High Priority for Further Diligence").sum()) if not categories.empty else 0,
+        "public_to_private_candidates": int((categories["primary_category"] == "Public-to-Private Candidate").sum()) if not categories.empty else 0,
+        "pe_platform_candidates": int((categories["primary_category"] == "PE Platform Candidate").sum()) if not categories.empty else 0,
         "rag_hit_at_5": _metric(eval_results, "hit_rate_at_5"),
         "rag_precision_at_5": _metric(eval_results, "precision_at_5"),
         "citation_coverage": _metric(eval_results, "citation_coverage"),
@@ -132,7 +162,7 @@ def summary_metrics() -> dict:
 def run_reporting() -> dict[str, Path | str]:
     ensure_project_dirs()
     if read_csv_if_exists(PROCESSED_DIR / "investment_scores.csv").empty:
-        run_pipeline(mode="sample")
+        run_pipeline(mode="online")
     if read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv").empty:
         run_retrieval_evaluation()
     generate_memo()

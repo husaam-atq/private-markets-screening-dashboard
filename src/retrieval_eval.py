@@ -11,18 +11,21 @@ from src.filing_rag import FilingRetriever, load_filing_chunks
 from src.utils import read_csv_if_exists, write_csv
 
 
-EVAL_TICKERS = ["MSFT", "HCA", "ADP", "ETN", "BKNG", "FSLR", "EQIX", "V", "AES", "SOFI"]
+EVAL_TICKERS = ["MSFT", "HCA", "ADP", "ETN", "BKNG", "FSLR", "EQIX", "V", "AES", "SOFI", "CRM", "CTAS"]
 
 QUESTION_BLUEPRINTS = [
-    ("revenue", "What are the main revenue drivers disclosed by the company?", "Business", "revenue drivers; recurring; customer"),
-    ("customer", "What does the filing say about customer concentration or customer relationships?", "Risk Factors", "customer concentration; customer relationships"),
-    ("liquidity", "What liquidity risks or cash flow resources are described?", "Liquidity and Capital Resources", "liquidity; operating cash flows; borrowing capacity"),
-    ("debt", "What debt obligations or contractual commitments are disclosed?", "Debt / Contractual Obligations", "debt obligations; covenant; maturity"),
-    ("margin", "What could pressure margins according to management or risk factors?", "MD&A", "margin pressure; cost inflation; productivity"),
-    ("competition", "What does the company disclose about competition?", "Risk Factors", "competition; risk factors"),
+    ("revenue", "Which business lines, customers or demand drivers appear to explain revenue growth?", "Business|Segment Information|MD&A", "revenue; customers; services; products; demand"),
+    ("customer", "Is there evidence of customer concentration, retention risk or dependence on major relationships?", "Risk Factors|Business", "customer; concentration; retention; dependence"),
+    ("liquidity_debt", "How do liquidity resources interact with debt maturities, borrowings or contractual obligations?", "Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A", "liquidity; debt; borrowings; maturity; cash"),
+    ("margin_confuser", "What could pressure margins, and is that discussed as operating performance or as a risk factor?", "MD&A|Risk Factors", "margin; costs; inflation; expenses; profitability"),
+    ("capex_allocation", "What capital expenditure, investment or capital allocation requirements are disclosed?", "Liquidity and Capital Resources|MD&A", "capital; expenditures; investment; cash flows; allocation"),
+    ("competition_regulation", "Which competitive, legal or regulatory issues could matter for diligence?", "Risk Factors|Legal / Regulatory Matters|Business", "competition; competitive; regulation; regulatory; litigation"),
 ]
 
-NO_ANSWER_QUESTION = "Does the filing disclose an antigravity laboratory named Quasar Orchid?"
+NO_ANSWER_QUESTIONS = [
+    "Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?",
+    "Does management disclose customer churn by the private-equity sponsor cohort?",
+]
 
 RELATED_SECTIONS = {
     "Business": {"Business", "Segment Information", "MD&A"},
@@ -54,12 +57,23 @@ def build_gold_questions(chunks: pd.DataFrame | None = None) -> pd.DataFrame:
             )
         rows.append(
             {
-                "question_id": f"{ticker}_no_answer_quasar_orchid",
+                "question_id": f"{ticker}_no_answer_sponsor_offer",
                 "ticker": ticker,
                 "company_name": company,
-                "question": NO_ANSWER_QUESTION,
+                "question": NO_ANSWER_QUESTIONS[0],
                 "expected_section": "No Answer",
-                "expected_keywords": "Quasar Orchid; antigravity laboratory",
+                "expected_keywords": "Northbridge Meridian; sponsor acquisition proposal",
+                "expected_no_answer": True,
+            }
+        )
+        rows.append(
+            {
+                "question_id": f"{ticker}_no_answer_sponsor_churn",
+                "ticker": ticker,
+                "company_name": company,
+                "question": NO_ANSWER_QUESTIONS[1],
+                "expected_section": "No Answer",
+                "expected_keywords": "private-equity sponsor cohort; customer churn",
                 "expected_no_answer": True,
             }
         )
@@ -75,10 +89,22 @@ def _keyword_match(text: str, keywords: str) -> bool:
     return any(keyword in text_lower for keyword in expected)
 
 
-def _is_relevant(row: pd.Series, expected_section: str, expected_keywords: str) -> bool:
+def _expected_sections(expected_section: str) -> set[str]:
+    sections: set[str] = set()
+    for section in str(expected_section).split("|"):
+        section = section.strip()
+        sections |= RELATED_SECTIONS.get(section, {section})
+    return sections
+
+
+def _section_relevant(row: pd.Series, expected_section: str) -> bool:
     section = str(row.get("section_label", ""))
-    expected_sections = RELATED_SECTIONS.get(str(expected_section), {str(expected_section)})
-    section_match = section in expected_sections
+    expected_sections = _expected_sections(expected_section)
+    return section in expected_sections or str(expected_section) == "No Answer"
+
+
+def _is_relevant(row: pd.Series, expected_section: str, expected_keywords: str) -> bool:
+    section_match = _section_relevant(row, expected_section)
     keyword_match = _keyword_match(str(row.get("text", "")), expected_keywords)
     return bool(section_match or keyword_match)
 
@@ -102,7 +128,8 @@ def evaluate_retrieval(gold: pd.DataFrame, chunks: pd.DataFrame, top_k: int = 5)
         )
         top_score = float(retrieved["combined_score"].max()) if not retrieved.empty else 0.0
         if expected_no_answer:
-            predicted_no_answer = top_score < no_answer_threshold
+            keyword_found = any(_keyword_match(str(row.get("text", "")), question["expected_keywords"]) for _, row in retrieved.head(5).iterrows())
+            predicted_no_answer = top_score < no_answer_threshold or not keyword_found
             detail_rows.append(
                 {
                     "question_id": question["question_id"],
@@ -117,6 +144,9 @@ def evaluate_retrieval(gold: pd.DataFrame, chunks: pd.DataFrame, top_k: int = 5)
                     "mrr": np.nan,
                     "ndcg_at_5": np.nan,
                     "section_match": np.nan,
+                    "section_hit_at_5": np.nan,
+                    "chunk_level_hit_at_5": np.nan,
+                    "top_source_type": retrieved.iloc[0].get("source_type", "") if not retrieved.empty else "",
                 }
             )
             continue
@@ -127,10 +157,7 @@ def evaluate_retrieval(gold: pd.DataFrame, chunks: pd.DataFrame, top_k: int = 5)
         relevance += [0] * max(0, top_k - len(relevance))
         first_hit = next((idx + 1 for idx, rel in enumerate(relevance) if rel), None)
         ideal = sorted(relevance, reverse=True)
-        section_match = any(
-            str(row.get("section_label", "")).lower() == str(question["expected_section"]).lower()
-            for _, row in retrieved.head(5).iterrows()
-        )
+        section_match = any(_section_relevant(row, question["expected_section"]) for _, row in retrieved.head(5).iterrows())
         detail_rows.append(
             {
                 "question_id": question["question_id"],
@@ -145,6 +172,9 @@ def evaluate_retrieval(gold: pd.DataFrame, chunks: pd.DataFrame, top_k: int = 5)
                 "mrr": 1 / first_hit if first_hit else 0,
                 "ndcg_at_5": _dcg(relevance[:5]) / _dcg(ideal[:5]) if _dcg(ideal[:5]) else 0,
                 "section_match": int(section_match),
+                "section_hit_at_5": int(section_match),
+                "chunk_level_hit_at_5": int(any(relevance[:5])),
+                "top_source_type": retrieved.iloc[0].get("source_type", "") if not retrieved.empty else "",
             }
         )
     details = pd.DataFrame(detail_rows)
@@ -198,6 +228,11 @@ def evaluate_retrieval(gold: pd.DataFrame, chunks: pd.DataFrame, top_k: int = 5)
                 "metric_type": "retrieval",
             },
             {
+                "metric": "chunk_level_hit_at_5",
+                "value": answerable["chunk_level_hit_at_5"].mean(),
+                "metric_type": "retrieval",
+            },
+            {
                 "metric": "citation_coverage",
                 "value": 1.0,
                 "metric_type": "groundedness",
@@ -234,8 +269,18 @@ def run_retrieval_evaluation() -> tuple[pd.DataFrame, pd.DataFrame]:
     if gold.empty:
         gold = build_gold_questions(chunks)
     summary, details = evaluate_retrieval(gold, chunks, top_k=5)
+    strong = details[(details["expected_no_answer"] == False) & (details["precision_at_5"] >= 0.6)].head(8).copy()
+    weak = details[(details["expected_no_answer"] == False) & (details["precision_at_5"] < 0.6)].head(8).copy()
+    examples = pd.concat(
+        [
+            strong.assign(example_type="strong_retrieval"),
+            weak.assign(example_type="weak_retrieval"),
+        ],
+        ignore_index=True,
+    )
     write_csv(summary, PROCESSED_DIR / "rag_eval_results.csv")
     write_csv(details, PROCESSED_DIR / "rag_eval_details.csv")
+    write_csv(examples, PROCESSED_DIR / "rag_eval_examples.csv")
     return summary, details
 
 

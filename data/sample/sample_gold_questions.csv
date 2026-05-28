@@ -1,71 +1,97 @@
 question_id,ticker,company_name,question,expected_section,expected_keywords,expected_no_answer
-MSFT_revenue,MSFT,Microsoft Corporation,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-MSFT_customer,MSFT,Microsoft Corporation,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-MSFT_liquidity,MSFT,Microsoft Corporation,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-MSFT_debt,MSFT,Microsoft Corporation,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-MSFT_margin,MSFT,Microsoft Corporation,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-MSFT_competition,MSFT,Microsoft Corporation,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-MSFT_no_answer_quasar_orchid,MSFT,Microsoft Corporation,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-HCA_revenue,HCA,"HCA Healthcare, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-HCA_customer,HCA,"HCA Healthcare, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-HCA_liquidity,HCA,"HCA Healthcare, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-HCA_debt,HCA,"HCA Healthcare, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-HCA_margin,HCA,"HCA Healthcare, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-HCA_competition,HCA,"HCA Healthcare, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-HCA_no_answer_quasar_orchid,HCA,"HCA Healthcare, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-ADP_revenue,ADP,"Automatic Data Processing, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-ADP_customer,ADP,"Automatic Data Processing, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-ADP_liquidity,ADP,"Automatic Data Processing, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-ADP_debt,ADP,"Automatic Data Processing, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-ADP_margin,ADP,"Automatic Data Processing, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-ADP_competition,ADP,"Automatic Data Processing, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-ADP_no_answer_quasar_orchid,ADP,"Automatic Data Processing, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-ETN_revenue,ETN,Eaton Corporation plc,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-ETN_customer,ETN,Eaton Corporation plc,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-ETN_liquidity,ETN,Eaton Corporation plc,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-ETN_debt,ETN,Eaton Corporation plc,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-ETN_margin,ETN,Eaton Corporation plc,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-ETN_competition,ETN,Eaton Corporation plc,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-ETN_no_answer_quasar_orchid,ETN,Eaton Corporation plc,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-BKNG_revenue,BKNG,Booking Holdings Inc.,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-BKNG_customer,BKNG,Booking Holdings Inc.,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-BKNG_liquidity,BKNG,Booking Holdings Inc.,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-BKNG_debt,BKNG,Booking Holdings Inc.,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-BKNG_margin,BKNG,Booking Holdings Inc.,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-BKNG_competition,BKNG,Booking Holdings Inc.,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-BKNG_no_answer_quasar_orchid,BKNG,Booking Holdings Inc.,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-FSLR_revenue,FSLR,"First Solar, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-FSLR_customer,FSLR,"First Solar, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-FSLR_liquidity,FSLR,"First Solar, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-FSLR_debt,FSLR,"First Solar, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-FSLR_margin,FSLR,"First Solar, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-FSLR_competition,FSLR,"First Solar, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-FSLR_no_answer_quasar_orchid,FSLR,"First Solar, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-EQIX_revenue,EQIX,"Equinix, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-EQIX_customer,EQIX,"Equinix, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-EQIX_liquidity,EQIX,"Equinix, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-EQIX_debt,EQIX,"Equinix, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-EQIX_margin,EQIX,"Equinix, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-EQIX_competition,EQIX,"Equinix, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-EQIX_no_answer_quasar_orchid,EQIX,"Equinix, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-V_revenue,V,Visa Inc.,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-V_customer,V,Visa Inc.,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-V_liquidity,V,Visa Inc.,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-V_debt,V,Visa Inc.,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-V_margin,V,Visa Inc.,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-V_competition,V,Visa Inc.,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-V_no_answer_quasar_orchid,V,Visa Inc.,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-AES_revenue,AES,The AES Corporation,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-AES_customer,AES,The AES Corporation,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-AES_liquidity,AES,The AES Corporation,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-AES_debt,AES,The AES Corporation,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-AES_margin,AES,The AES Corporation,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-AES_competition,AES,The AES Corporation,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-AES_no_answer_quasar_orchid,AES,The AES Corporation,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
-SOFI_revenue,SOFI,"SoFi Technologies, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
-SOFI_customer,SOFI,"SoFi Technologies, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
-SOFI_liquidity,SOFI,"SoFi Technologies, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
-SOFI_debt,SOFI,"SoFi Technologies, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
-SOFI_margin,SOFI,"SoFi Technologies, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
-SOFI_competition,SOFI,"SoFi Technologies, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
-SOFI_no_answer_quasar_orchid,SOFI,"SoFi Technologies, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+MSFT_revenue,MSFT,Microsoft Corporation,"Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+MSFT_customer,MSFT,Microsoft Corporation,"Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+MSFT_liquidity_debt,MSFT,Microsoft Corporation,"How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+MSFT_margin_confuser,MSFT,Microsoft Corporation,"What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+MSFT_capex_allocation,MSFT,Microsoft Corporation,"What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+MSFT_competition_regulation,MSFT,Microsoft Corporation,"Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+MSFT_no_answer_sponsor_offer,MSFT,Microsoft Corporation,Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+MSFT_no_answer_sponsor_churn,MSFT,Microsoft Corporation,Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+HCA_revenue,HCA,"HCA Healthcare, Inc.","Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+HCA_customer,HCA,"HCA Healthcare, Inc.","Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+HCA_liquidity_debt,HCA,"HCA Healthcare, Inc.","How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+HCA_margin_confuser,HCA,"HCA Healthcare, Inc.","What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+HCA_capex_allocation,HCA,"HCA Healthcare, Inc.","What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+HCA_competition_regulation,HCA,"HCA Healthcare, Inc.","Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+HCA_no_answer_sponsor_offer,HCA,"HCA Healthcare, Inc.",Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+HCA_no_answer_sponsor_churn,HCA,"HCA Healthcare, Inc.",Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+ADP_revenue,ADP,"Automatic Data Processing, Inc.","Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+ADP_customer,ADP,"Automatic Data Processing, Inc.","Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+ADP_liquidity_debt,ADP,"Automatic Data Processing, Inc.","How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+ADP_margin_confuser,ADP,"Automatic Data Processing, Inc.","What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+ADP_capex_allocation,ADP,"Automatic Data Processing, Inc.","What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+ADP_competition_regulation,ADP,"Automatic Data Processing, Inc.","Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+ADP_no_answer_sponsor_offer,ADP,"Automatic Data Processing, Inc.",Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+ADP_no_answer_sponsor_churn,ADP,"Automatic Data Processing, Inc.",Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+ETN_revenue,ETN,Eaton Corporation plc,"Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+ETN_customer,ETN,Eaton Corporation plc,"Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+ETN_liquidity_debt,ETN,Eaton Corporation plc,"How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+ETN_margin_confuser,ETN,Eaton Corporation plc,"What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+ETN_capex_allocation,ETN,Eaton Corporation plc,"What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+ETN_competition_regulation,ETN,Eaton Corporation plc,"Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+ETN_no_answer_sponsor_offer,ETN,Eaton Corporation plc,Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+ETN_no_answer_sponsor_churn,ETN,Eaton Corporation plc,Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+BKNG_revenue,BKNG,Booking Holdings Inc.,"Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+BKNG_customer,BKNG,Booking Holdings Inc.,"Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+BKNG_liquidity_debt,BKNG,Booking Holdings Inc.,"How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+BKNG_margin_confuser,BKNG,Booking Holdings Inc.,"What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+BKNG_capex_allocation,BKNG,Booking Holdings Inc.,"What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+BKNG_competition_regulation,BKNG,Booking Holdings Inc.,"Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+BKNG_no_answer_sponsor_offer,BKNG,Booking Holdings Inc.,Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+BKNG_no_answer_sponsor_churn,BKNG,Booking Holdings Inc.,Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+FSLR_revenue,FSLR,"First Solar, Inc.","Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+FSLR_customer,FSLR,"First Solar, Inc.","Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+FSLR_liquidity_debt,FSLR,"First Solar, Inc.","How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+FSLR_margin_confuser,FSLR,"First Solar, Inc.","What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+FSLR_capex_allocation,FSLR,"First Solar, Inc.","What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+FSLR_competition_regulation,FSLR,"First Solar, Inc.","Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+FSLR_no_answer_sponsor_offer,FSLR,"First Solar, Inc.",Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+FSLR_no_answer_sponsor_churn,FSLR,"First Solar, Inc.",Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+EQIX_revenue,EQIX,"Equinix, Inc.","Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+EQIX_customer,EQIX,"Equinix, Inc.","Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+EQIX_liquidity_debt,EQIX,"Equinix, Inc.","How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+EQIX_margin_confuser,EQIX,"Equinix, Inc.","What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+EQIX_capex_allocation,EQIX,"Equinix, Inc.","What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+EQIX_competition_regulation,EQIX,"Equinix, Inc.","Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+EQIX_no_answer_sponsor_offer,EQIX,"Equinix, Inc.",Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+EQIX_no_answer_sponsor_churn,EQIX,"Equinix, Inc.",Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+V_revenue,V,Visa Inc.,"Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+V_customer,V,Visa Inc.,"Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+V_liquidity_debt,V,Visa Inc.,"How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+V_margin_confuser,V,Visa Inc.,"What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+V_capex_allocation,V,Visa Inc.,"What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+V_competition_regulation,V,Visa Inc.,"Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+V_no_answer_sponsor_offer,V,Visa Inc.,Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+V_no_answer_sponsor_churn,V,Visa Inc.,Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+AES_revenue,AES,The AES Corporation,"Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+AES_customer,AES,The AES Corporation,"Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+AES_liquidity_debt,AES,The AES Corporation,"How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+AES_margin_confuser,AES,The AES Corporation,"What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+AES_capex_allocation,AES,The AES Corporation,"What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+AES_competition_regulation,AES,The AES Corporation,"Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+AES_no_answer_sponsor_offer,AES,The AES Corporation,Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+AES_no_answer_sponsor_churn,AES,The AES Corporation,Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+SOFI_revenue,SOFI,"SoFi Technologies, Inc.","Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+SOFI_customer,SOFI,"SoFi Technologies, Inc.","Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+SOFI_liquidity_debt,SOFI,"SoFi Technologies, Inc.","How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+SOFI_margin_confuser,SOFI,"SoFi Technologies, Inc.","What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+SOFI_capex_allocation,SOFI,"SoFi Technologies, Inc.","What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+SOFI_competition_regulation,SOFI,"SoFi Technologies, Inc.","Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+SOFI_no_answer_sponsor_offer,SOFI,"SoFi Technologies, Inc.",Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+SOFI_no_answer_sponsor_churn,SOFI,"SoFi Technologies, Inc.",Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+CRM_revenue,CRM,"Salesforce, Inc.","Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+CRM_customer,CRM,"Salesforce, Inc.","Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+CRM_liquidity_debt,CRM,"Salesforce, Inc.","How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+CRM_margin_confuser,CRM,"Salesforce, Inc.","What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+CRM_capex_allocation,CRM,"Salesforce, Inc.","What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+CRM_competition_regulation,CRM,"Salesforce, Inc.","Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+CRM_no_answer_sponsor_offer,CRM,"Salesforce, Inc.",Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+CRM_no_answer_sponsor_churn,CRM,"Salesforce, Inc.",Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True
+CTAS_revenue,CTAS,Cintas Corporation,"Which business lines, customers or demand drivers appear to explain revenue growth?",Business|Segment Information|MD&A,revenue; customers; services; products; demand,False
+CTAS_customer,CTAS,Cintas Corporation,"Is there evidence of customer concentration, retention risk or dependence on major relationships?",Risk Factors|Business,customer; concentration; retention; dependence,False
+CTAS_liquidity_debt,CTAS,Cintas Corporation,"How do liquidity resources interact with debt maturities, borrowings or contractual obligations?",Liquidity and Capital Resources|Debt / Contractual Obligations|MD&A,liquidity; debt; borrowings; maturity; cash,False
+CTAS_margin_confuser,CTAS,Cintas Corporation,"What could pressure margins, and is that discussed as operating performance or as a risk factor?",MD&A|Risk Factors,margin; costs; inflation; expenses; profitability,False
+CTAS_capex_allocation,CTAS,Cintas Corporation,"What capital expenditure, investment or capital allocation requirements are disclosed?",Liquidity and Capital Resources|MD&A,capital; expenditures; investment; cash flows; allocation,False
+CTAS_competition_regulation,CTAS,Cintas Corporation,"Which competitive, legal or regulatory issues could matter for diligence?",Risk Factors|Legal / Regulatory Matters|Business,competition; competitive; regulation; regulatory; litigation,False
+CTAS_no_answer_sponsor_offer,CTAS,Cintas Corporation,Does the filing disclose a signed sponsor acquisition proposal named Northbridge Meridian?,No Answer,Northbridge Meridian; sponsor acquisition proposal,True
+CTAS_no_answer_sponsor_churn,CTAS,Cintas Corporation,Does management disclose customer churn by the private-equity sponsor cohort?,No Answer,private-equity sponsor cohort; customer churn,True

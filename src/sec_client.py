@@ -10,10 +10,10 @@ import numpy as np
 import pandas as pd
 import requests
 
-from src.config import INTERIM_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs, load_config, sec_user_agent
+from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs, load_config, sec_user_agent
 from src.sec_xbrl_mapper import normalize_companyfacts_payload
 from src.universe import configured_universe, sample_universe
-from src.utils import read_csv_if_exists, utc_timestamp, write_csv
+from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
 from src.yfinance_client import build_sample_market_data
 
 
@@ -30,7 +30,7 @@ SAMPLE_CIKS = {
     "CVS": 64803,
     "ADP": 8670,
     "PAYX": 723531,
-    "FI": 798354,
+    "FIS": 1136893,
     "GPN": 1123360,
     "CTAS": 723254,
     "HON": 773840,
@@ -160,6 +160,8 @@ def build_sample_sec_fundamentals(universe: pd.DataFrame | None = None) -> pd.Da
                     "shares_outstanding": max(20_000_000, float(market_row["market_cap"]) / float(market_row["latest_price"])),
                     "depreciation_amortization": abs(capex) * 0.65,
                     "interest_expense": total_debt * 0.045,
+                    "source_type": "sample_fallback",
+                    "data_mode": "sample_fallback",
                     "data_source": "cached_sec_xbrl_sample",
                     "fundamentals_refresh_timestamp": utc_timestamp(),
                 }
@@ -176,7 +178,6 @@ class SECClient:
         self.headers = {
             "User-Agent": sec_user_agent(),
             "Accept-Encoding": "gzip, deflate",
-            "Host": "data.sec.gov",
         }
         self.timeout = int(self.config.get("request_timeout_seconds", 20))
         self.sleep_seconds = float(self.config.get("request_sleep_seconds", 0.12))
@@ -234,10 +235,20 @@ class SECClient:
         mapping = self.get_cik_mapping()
         mapping_lookup = mapping.drop_duplicates("ticker").set_index("ticker")
         rows: list[pd.DataFrame] = []
+        skipped: list[dict[str, Any]] = []
         frame = universe.head(limit) if limit else universe
         for _, company in frame.iterrows():
             ticker = str(company["ticker"])
             if ticker not in mapping_lookup.index:
+                skipped.append(
+                    {
+                        "ticker": ticker,
+                        "stage": "sec_companyfacts",
+                        "reason": "missing_cik_mapping",
+                        "detail": "Ticker not found in SEC company_tickers mapping.",
+                        "logged_at": utc_timestamp(),
+                    }
+                )
                 continue
             cik = int(mapping_lookup.loc[ticker]["cik"])
             try:
@@ -245,9 +256,32 @@ class SECClient:
                 normalized = normalize_companyfacts_payload(payload, ticker, company["company_name"], cik)
                 if not normalized.empty:
                     normalized["sector_theme"] = company["sector_theme"]
+                    normalized["source_type"] = "live_sec_companyfacts"
+                    normalized["data_mode"] = "live_api"
+                    normalized["fundamentals_refresh_timestamp"] = utc_timestamp()
                     rows.append(normalized)
+                else:
+                    skipped.append(
+                        {
+                            "ticker": ticker,
+                            "stage": "sec_companyfacts",
+                            "reason": "no_mappable_xbrl_facts",
+                            "detail": f"CIK {cik} returned no mappable annual companyfacts.",
+                            "logged_at": utc_timestamp(),
+                        }
+                    )
             except Exception:
+                skipped.append(
+                    {
+                        "ticker": ticker,
+                        "stage": "sec_companyfacts",
+                        "reason": "companyfacts_request_failed",
+                        "detail": f"CIK {cik}",
+                        "logged_at": utc_timestamp(),
+                    }
+                )
                 continue
+        upsert_skipped_tickers(skipped, PROCESSED_DIR / "skipped_tickers.csv")
         return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
 
 
@@ -260,15 +294,21 @@ def load_sec_fundamentals(mode: str = "sample", limit: int | None = None) -> pd.
             write_csv(online, INTERIM_DIR / "normalized_fundamentals.csv")
             return online
     cached = read_csv_if_exists(sample_path)
-    if cached.empty:
+    expected_tickers = set(sample_universe()["ticker"])
+    cached_tickers = set(cached["ticker"]) if not cached.empty and "ticker" in cached.columns else set()
+    if cached.empty or cached_tickers != expected_tickers:
         cached = build_sample_sec_fundamentals()
+    if "source_type" not in cached.columns:
+        cached["source_type"] = "sample_fallback"
+    if "data_mode" not in cached.columns:
+        cached["data_mode"] = "sample_fallback"
     write_csv(cached, INTERIM_DIR / "normalized_fundamentals.csv")
     return cached
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch or build SEC fundamentals snapshots.")
-    parser.add_argument("--mode", choices=["sample", "online"], default="sample")
+    parser.add_argument("--mode", choices=["sample", "online"], default="online")
     parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
     frame = load_sec_fundamentals(mode=args.mode, limit=args.limit)

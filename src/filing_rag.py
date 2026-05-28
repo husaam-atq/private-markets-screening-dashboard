@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from src.config import INTERIM_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
 from src.filing_parser import build_sample_filing_chunks
-from src.utils import clean_text, read_csv_if_exists, utc_timestamp, write_csv
+from src.utils import clean_text, read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
 
 
 @dataclass
@@ -63,6 +63,10 @@ def load_filing_chunks() -> pd.DataFrame:
         chunks = read_csv_if_exists(SAMPLE_DIR / "sample_filing_chunks.csv")
     if chunks.empty:
         chunks = build_sample_filing_chunks()
+    if "source_type" not in chunks.columns:
+        chunks["source_type"] = "sample_fallback"
+    if "source_url" not in chunks.columns:
+        chunks["source_url"] = ""
     write_csv(chunks, INTERIM_DIR / "filing_chunks.csv")
     return chunks
 
@@ -79,6 +83,22 @@ def run_retrieval_for_companies(tickers: list[str] | None = None, top_k: int = 5
     if tickers is None:
         scores = read_csv_if_exists(PROCESSED_DIR / "investment_scores.csv")
         tickers = scores.sort_values("investment_screening_score", ascending=False).head(8)["ticker"].tolist() if not scores.empty else chunks["ticker"].drop_duplicates().head(8).tolist()
+    available_tickers = set(chunks["ticker"].dropna().astype(str))
+    skipped = [
+        {
+            "ticker": ticker,
+            "stage": "filing_rag",
+            "reason": "no_filing_chunks",
+            "detail": "No real or fallback filing chunks were available for selected company.",
+            "logged_at": utc_timestamp(),
+        }
+        for ticker in tickers
+        if ticker not in available_tickers
+    ]
+    upsert_skipped_tickers(skipped, PROCESSED_DIR / "skipped_tickers.csv")
+    tickers = [ticker for ticker in tickers if ticker in available_tickers]
+    if not tickers:
+        tickers = chunks["ticker"].drop_duplicates().head(8).tolist()
     question_frame = diligence_questions()
     evidence_rows: list[pd.DataFrame] = []
     question_rows: list[dict] = []

@@ -12,14 +12,26 @@ from src.utils import clip_score, percentile_score, read_csv_if_exists, safe_div
 
 
 SCORE_COLUMNS = [
+    "public_quality_score",
     "investment_screening_score",
     "diligence_priority_score",
     "platform_candidate_score",
+    "public_to_private_feasibility_score",
     "value_creation_potential_score",
     "credit_risk_score",
     "red_flag_score",
     "data_quality_score",
 ]
+
+
+def _sweet_spot_score(value: float | int | None, bands: list[tuple[float, float, float]]) -> float:
+    if value is None or pd.isna(value):
+        return 0.0
+    value = float(value)
+    for lower, upper, score in bands:
+        if lower <= value < upper:
+            return score
+    return 0.0
 
 
 def _base_metric_scores(frame: pd.DataFrame) -> pd.DataFrame:
@@ -32,7 +44,35 @@ def _base_metric_scores(frame: pd.DataFrame) -> pd.DataFrame:
         if metric in scored:
             scored[f"{metric}_score"] = percentile_score(scored[metric], False)
     scored["market_cap_scale_score"] = percentile_score(np.log1p(pd.to_numeric(scored["market_cap"], errors="coerce")), True)
-    scored["data_quality_score"] = (pd.to_numeric(scored["data_completeness_ratio"], errors="coerce").fillna(0) * 100).clip(0, 100)
+    ev = pd.to_numeric(scored["enterprise_value"], errors="coerce")
+    scored["platform_size_feasibility_score"] = ev.apply(
+        lambda value: _sweet_spot_score(
+            value,
+            [
+                (0, 1_000_000_000, 35),
+                (1_000_000_000, 5_000_000_000, 85),
+                (5_000_000_000, 20_000_000_000, 100),
+                (20_000_000_000, 50_000_000_000, 65),
+                (50_000_000_000, 150_000_000_000, 20),
+                (150_000_000_000, float("inf"), 5),
+            ],
+        )
+    )
+    scored["public_to_private_size_score"] = ev.apply(
+        lambda value: _sweet_spot_score(
+            value,
+            [
+                (0, 1_000_000_000, 20),
+                (1_000_000_000, 5_000_000_000, 60),
+                (5_000_000_000, 25_000_000_000, 100),
+                (25_000_000_000, 50_000_000_000, 75),
+                (50_000_000_000, 100_000_000_000, 35),
+                (100_000_000_000, 150_000_000_000, 15),
+                (150_000_000_000, float("inf"), 3),
+            ],
+        )
+    )
+    scored["data_quality_score"] = 0.0
     return scored
 
 
@@ -63,6 +103,12 @@ def _peer_adjustment_scores(scored: pd.DataFrame, benchmarks: pd.DataFrame) -> p
         benchmarks[
             [
                 "ticker",
+                "peer_count",
+                "revenue_growth_yoy_peer_median",
+                "operating_margin_peer_median",
+                "fcf_conversion_peer_median",
+                "debt_to_ebit_proxy_peer_median",
+                "ev_to_sales_peer_median",
                 "operating_margin_gap_to_median",
                 "fcf_conversion_gap_to_median",
                 "ev_to_sales_premium_discount_to_median",
@@ -78,6 +124,51 @@ def _peer_adjustment_scores(scored: pd.DataFrame, benchmarks: pd.DataFrame) -> p
     merged["cash_conversion_gap_to_peer_score"] = percentile_score(cash_gap, True)
     merged["valuation_discount_to_peer_score"] = percentile_score(valuation_discount, True)
     return merged
+
+
+def _data_quality_scores(scored: pd.DataFrame) -> pd.DataFrame:
+    scored = scored.copy()
+    yfin = pd.to_numeric(scored.get("yfinance_field_completeness_ratio", 0), errors="coerce").fillna(0)
+    sec = pd.to_numeric(scored.get("sec_field_completeness_ratio", 0), errors="coerce").fillna(0)
+    days = pd.to_numeric(scored.get("filing_staleness_days", np.nan), errors="coerce")
+    staleness = np.where(days.isna(), 45, np.where(days <= 540, 100, np.where(days <= 900, 75, 45)))
+    peer = pd.to_numeric(scored.get("peer_count", 0), errors="coerce").fillna(0)
+    peer_score = np.where(peer >= 5, 100, np.where(peer >= 3, 75, 45))
+    source = scored.get("source_type", pd.Series("missing", index=scored.index)).fillna("missing")
+    source_score = np.select(
+        [
+            source.eq("live_public_data"),
+            source.eq("cached_sec_snapshot"),
+            source.eq("sample_fallback"),
+        ],
+        [100, 88, 78],
+        default=55,
+    )
+    proxy_penalty = pd.to_numeric(scored.get("proxy_usage_penalty", 0), errors="coerce").fillna(0)
+    missing_cik_penalty = np.where(pd.to_numeric(scored.get("cik", np.nan), errors="coerce").isna(), 12, 0)
+    quality = (
+        yfin * 100 * 0.24
+        + sec * 100 * 0.34
+        + staleness * 0.14
+        + peer_score * 0.10
+        + source_score * 0.10
+        + 100 * 0.08
+        - proxy_penalty
+        - missing_cik_penalty
+    )
+    scored["data_quality_score"] = pd.Series(quality, index=scored.index).clip(0, 100)
+    scored["data_gap_risk_score"] = 100 - scored["data_quality_score"]
+    scored["data_quality_explanation"] = scored.apply(
+        lambda row: (
+            f"Market fields {row.get('yfinance_field_completeness_ratio', 0):.0%}; "
+            f"SEC fields {row.get('sec_field_completeness_ratio', 0):.0%}; "
+            f"filing age {row.get('filing_staleness_days', np.nan):.0f} days; "
+            f"peer count {row.get('peer_count', 0)}; source {row.get('source_type', 'unknown')}; "
+            "EBIT proxy used instead of EBITDA."
+        ),
+        axis=1,
+    )
+    return scored
 
 
 def _score_explanation(row: pd.Series) -> str:
@@ -105,12 +196,16 @@ def calculate_scores(screening: pd.DataFrame, benchmarks: pd.DataFrame | None = 
     if benchmarks is None:
         benchmarks = build_peer_benchmarks(screening)
     scored = _base_metric_scores(screening)
-    scored = _risk_scores(scored)
     scored = _peer_adjustment_scores(scored, benchmarks)
+    scored = _data_quality_scores(scored)
+    scored = _risk_scores(scored)
     scored["credit_risk_score"] = weighted_sum(scored, cfg["credit_risk_score"])
+    scored["credit_risk_inverse_score"] = 100 - scored["credit_risk_score"]
     scored["red_flag_score"] = weighted_sum(scored, cfg["red_flag_score"])
     scored["red_flag_inverse_score"] = 100 - scored["red_flag_score"]
+    scored["public_quality_score"] = weighted_sum(scored, cfg["public_quality_score"])
     scored["platform_candidate_score"] = weighted_sum(scored, cfg["platform_candidate_score"])
+    scored["public_to_private_feasibility_score"] = weighted_sum(scored, cfg["public_to_private_feasibility_score"])
     scored["value_creation_potential_score"] = weighted_sum(scored, cfg["value_creation_potential_score"])
     scored["investment_screening_score"] = weighted_sum(scored, cfg["investment_screening_score"])
     scored["diligence_priority_score"] = weighted_sum(scored, cfg["diligence_priority_score"])

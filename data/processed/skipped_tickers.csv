@@ -1,0 +1,5 @@
+ticker,stage,reason,detail,logged_at
+FYBR,sec_companyfacts,missing_cik_mapping,Ticker not found in SEC company_tickers mapping.,2026-05-28T12:07:54+00:00
+TRI,sec_companyfacts,no_mappable_xbrl_facts,CIK 1075124 returned no mappable annual companyfacts.,2026-05-28T12:07:54+00:00
+TRI,sec_filing_text,no_recent_10k,"CIK 1075124 had no recent filing for ('10-K',).",2026-05-28T11:55:30+00:00
+FYBR,yfinance,missing_market_fields,yfinance_failed: ValueError,2026-05-28T12:07:53+00:00

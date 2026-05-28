@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.config import CHART_DIR, PROCESSED_DIR, REPORT_DIR, SAMPLE_DIR
+from src.config import CHART_DIR, INTERIM_DIR, PROCESSED_DIR, REPORT_DIR, SAMPLE_DIR
 from src.filing_rag import FilingRetriever, load_filing_chunks
 from src.reporting import summary_metrics
 from src.screening_pipeline import run_pipeline
@@ -40,6 +40,9 @@ def load_data() -> dict[str, pd.DataFrame]:
         "eval": read_csv_if_exists(PROCESSED_DIR / "rag_eval_results.csv"),
         "target": read_csv_if_exists(PROCESSED_DIR / "target_deep_dive.csv"),
         "sample_universe": read_csv_if_exists(SAMPLE_DIR / "sample_universe.csv"),
+        "chunks": read_csv_if_exists(INTERIM_DIR / "filing_chunks.csv"),
+        "skipped": read_csv_if_exists(PROCESSED_DIR / "skipped_tickers.csv"),
+        "real_filings": read_csv_if_exists(PROCESSED_DIR / "real_filing_documents.csv"),
     }
 
 
@@ -55,6 +58,9 @@ benchmarks = data["benchmarks"]
 evidence = data["evidence"]
 questions = data["questions"]
 eval_results = data["eval"]
+chunks_cached = data["chunks"]
+skipped = data["skipped"]
+real_filings = data["real_filings"]
 
 st.title("Private Markets Investment Screening & Filing Intelligence Dashboard")
 st.caption(
@@ -64,7 +70,7 @@ st.caption(
 
 with st.sidebar:
     st.header("Controls")
-    data_mode = st.radio("Data mode", ["cached sample", "online API"], index=0)
+    data_mode = st.radio("Data mode", ["cached snapshot", "sample fallback", "online API refresh"], index=0)
     sector_options = ["All"] + sorted(scores["sector_theme"].dropna().unique().tolist())
     sector = st.selectbox("Sector / theme", sector_options)
     min_market_cap = st.number_input("Minimum market cap ($bn)", min_value=0.0, value=0.0, step=1.0)
@@ -84,13 +90,17 @@ with st.sidebar:
         run_pipeline(mode="sample")
         st.cache_data.clear()
         st.rerun()
+    if st.button("Refresh online snapshot"):
+        run_pipeline(mode="online")
+        st.cache_data.clear()
+        st.rerun()
 
 filtered = scores.copy()
 if sector != "All":
     filtered = filtered[filtered["sector_theme"] == sector]
 filtered = filtered[
     (filtered["market_cap"] >= min_market_cap * 1_000_000_000)
-    & (filtered["debt_to_ebit_proxy"] <= max_leverage)
+    & (filtered["debt_to_ebit_proxy"].isna() | (filtered["debt_to_ebit_proxy"] <= max_leverage))
     & (filtered["revenue_growth_yoy"] >= min_growth)
     & (filtered["ev_to_sales"].between(valuation_range[0], valuation_range[1]))
 ]
@@ -99,6 +109,10 @@ if strategy != "All" and not categories.empty:
     filtered = filtered[filtered["ticker"].isin(keep)]
 
 summary = summary_metrics()
+live_rows = int((scores.get("source_type", pd.Series(index=scores.index, dtype=str)) == "live_public_data").sum())
+real_chunk_count = int((chunks_cached.get("source_type", pd.Series(dtype=str)) == "real_sec_filing").sum()) if not chunks_cached.empty else 0
+fallback_chunk_count = int((chunks_cached.get("source_type", pd.Series(dtype=str)) == "sample_fallback").sum()) if not chunks_cached.empty else 0
+data_badge = "Live/Cached Public Snapshot" if live_rows > len(scores) * 0.5 else "Sample Fallback"
 kpis = [
     ("Companies screened", summary["companies_screened"]),
     ("Sectors covered", summary["sectors_covered"]),
@@ -125,6 +139,13 @@ overview, sector_tab, rankings, peer_tab, deep_dive, rag_tab, memo_tab, eval_tab
 )
 
 with overview:
+    st.info(
+        f"Data mode: {data_badge}. Live structured rows: {live_rows}. "
+        f"Real SEC filing chunks: {real_chunk_count:,}. Sample fallback chunks: {fallback_chunk_count:,}. "
+        f"Skipped ticker records: {len(skipped)}."
+    )
+    if fallback_chunk_count:
+        st.warning("Some filing evidence rows are sample fallback chunks. Use the source_type column before relying on a passage.")
     cols = st.columns(4)
     for idx, (label, value) in enumerate(kpis[:4]):
         cols[idx % 4].metric(label, value)
@@ -137,6 +158,14 @@ with overview:
     with c2:
         if not categories.empty:
             st.plotly_chart(px.bar(categories["primary_category"].value_counts().reset_index(), x="count", y="primary_category", orientation="h"), use_container_width=True)
+    st.subheader("Coverage")
+    coverage_cols = st.columns(4)
+    coverage_cols[0].metric("yfinance rows", summary.get("companies_with_yfinance_data", 0))
+    coverage_cols[1].metric("SEC fundamentals", summary.get("companies_with_sec_fundamentals", 0))
+    coverage_cols[2].metric("Real filings", summary.get("real_filing_documents_parsed", 0))
+    coverage_cols[3].metric("Skipped records", summary.get("skipped_ticker_count", 0))
+    if not skipped.empty:
+        st.dataframe(skipped, use_container_width=True)
 
 with sector_tab:
     st.dataframe(
@@ -145,12 +174,14 @@ with sector_tab:
                 "ticker",
                 "company_name",
                 "sector_theme",
+                "market_cap_band",
                 "market_cap",
                 "revenue_growth_yoy",
                 "operating_margin",
                 "ev_to_sales",
                 "debt_to_ebit_proxy",
                 "investment_screening_score",
+                "public_to_private_feasibility_score",
                 "red_flag_score",
             ]
         ],
@@ -165,9 +196,12 @@ with rankings:
                 "ticker",
                 "company_name",
                 "sector_theme",
+                "market_cap_band",
+                "public_quality_score",
                 "investment_screening_score",
                 "diligence_priority_score",
                 "platform_candidate_score",
+                "public_to_private_feasibility_score",
                 "value_creation_potential_score",
                 "credit_risk_score",
                 "red_flag_score",
@@ -196,13 +230,44 @@ with peer_tab:
 
 with deep_dive:
     company = scores[scores["ticker"] == selected_company].iloc[0]
+    selected_category = categories[categories["ticker"] == selected_company].iloc[0] if not categories.empty and selected_company in set(categories["ticker"]) else None
     st.subheader(f"{company['company_name']} ({company['ticker']})")
-    cols = st.columns(4)
-    cols[0].metric("Investment score", f"{company['investment_screening_score']:.1f}")
-    cols[1].metric("Platform score", f"{company['platform_candidate_score']:.1f}")
-    cols[2].metric("Value creation", f"{company['value_creation_potential_score']:.1f}")
-    cols[3].metric("Red flag", f"{company['red_flag_score']:.1f}")
+    cols = st.columns(5)
+    cols[0].metric("Public quality", f"{company.get('public_quality_score', 0):.1f}")
+    cols[1].metric("Investment screen", f"{company['investment_screening_score']:.1f}")
+    cols[2].metric("PE platform", f"{company['platform_candidate_score']:.1f}")
+    cols[3].metric("Public-to-private", f"{company.get('public_to_private_feasibility_score', 0):.1f}")
+    cols[4].metric("Red flag", f"{company['red_flag_score']:.1f}")
+    st.caption(f"Market-cap band: {company.get('market_cap_band', 'n/a')}")
+    if selected_category is not None:
+        st.info(selected_category["why_this_category"])
     st.write(company["investment_screening_explanation"])
+    st.subheader("Why this company screened here")
+    decomposition = pd.DataFrame(
+        {
+            "score": [
+                "Public Quality",
+                "Platform Candidate",
+                "Public-to-Private",
+                "Value Creation",
+                "Credit Risk",
+                "Red Flag",
+                "Data Quality",
+            ],
+            "value": [
+                company.get("public_quality_score", 0),
+                company.get("platform_candidate_score", 0),
+                company.get("public_to_private_feasibility_score", 0),
+                company.get("value_creation_potential_score", 0),
+                company.get("credit_risk_score", 0),
+                company.get("red_flag_score", 0),
+                company.get("data_quality_score", 0),
+            ],
+        }
+    )
+    st.plotly_chart(px.bar(decomposition, x="score", y="value", range_y=[0, 100]), use_container_width=True)
+    if "data_quality_explanation" in company:
+        st.caption(company["data_quality_explanation"])
     chart_path = CHART_DIR / "red_flag_breakdown.png"
     if chart_path.exists():
         st.image(str(chart_path))
@@ -220,7 +285,7 @@ with rag_tab:
         if "rank" not in display_result.columns:
             display_result["rank"] = range(1, len(display_result) + 1)
         st.dataframe(
-            display_result[["rank", "section_label", "combined_score", "filing_type", "filing_date", "chunk_id", "text"]],
+            display_result[["rank", "source_type", "section_label", "combined_score", "filing_type", "filing_date", "chunk_id", "text"]],
             use_container_width=True,
         )
     if not evidence.empty:
@@ -235,6 +300,7 @@ with memo_tab:
         st.info("Run python -m src.reporting to generate the memo preview.")
 
 with eval_tab:
+    st.caption("Evaluation includes harder section-confuser and no-answer questions. High hit rates should be read together with Precision@5 and weak retrieval examples.")
     st.dataframe(eval_results, use_container_width=True)
     if not eval_results.empty:
         st.plotly_chart(px.bar(eval_results, x="metric", y="value", color="metric_type"), use_container_width=True)
@@ -243,8 +309,8 @@ with methodology:
     st.markdown(
         """
 The structured scorecards are deterministic percentile-based screens using public market data,
-SEC-style fundamentals and peer-relative metrics. The filing evidence layer retrieves source
-passages and metadata from cached SEC filing chunks. Missing evidence is handled as insufficient
+SEC companyfacts and peer-relative metrics. The filing evidence layer retrieves source
+passages and metadata from real SEC filing chunks where available, with sample fallback rows clearly labelled. Missing evidence is handled as insufficient
 filing evidence found.
 
 yfinance is an unofficial open-source library using Yahoo Finance publicly available interfaces
@@ -254,5 +320,5 @@ for screening workflow demonstration and is not investment advice.
 """
     )
 
-if data_mode == "online API":
-    st.sidebar.info("Online mode is implemented in the CLI refresh commands. The dashboard defaults to cached sample outputs for reliability.")
+if data_mode == "online API refresh":
+    st.sidebar.info("Online refresh can take several minutes and depends on Yahoo Finance and SEC availability. Existing cached outputs remain usable if a refresh is incomplete.")

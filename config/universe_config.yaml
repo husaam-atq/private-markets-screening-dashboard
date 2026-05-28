@@ -1,0 +1,63 @@
+default_mode: sample
+online_target_company_count: 96
+sample_target_company_count: 40
+themes:
+  - name: Software / SaaS
+    tickers: [MSFT, CRM, ADBE, NOW, INTU, SNOW, DDOG, ZS, MDB, TEAM, NET, HUBS]
+  - name: Healthcare Services
+    tickers: [UNH, ELV, CI, HUM, HCA, THC, DVA, CVS, LH, DGX, CNC, MOH]
+  - name: Business Services
+    tickers: [ADP, PAYX, FI, GPN, CTAS, ROP, WM, RSG, SPGI, MCO, VRSK, TRI]
+  - name: Industrials
+    tickers: [HON, ETN, EMR, PH, ITW, MMM, GE, CARR, TT, IR, DE, CAT]
+  - name: Consumer Services
+    tickers: [MCD, SBUX, BKNG, MAR, HLT, CMG, YUM, RCL, CCL, LYV, DPZ, ROST]
+  - name: Energy Transition
+    tickers: [NEE, ENPH, FSLR, SEDG, BE, PLUG, TSLA, AES, RUN, CSIQ, ALB, ORA]
+  - name: Digital Infrastructure / Telecom Infrastructure
+    tickers: [AMT, CCI, EQIX, DLR, SBAC, VZ, T, TMUS, LUMN, FYBR, UNIT, IRM]
+  - name: Financial Technology
+    tickers: [V, MA, PYPL, XYZ, AXP, COF, AFRM, SOFI, HOOD, COIN, MQ, UPST]
+  - name: Infrastructure / Utilities-Like Assets
+    tickers: [DUK, SO, AEP, EXC, XEL, SRE, PEG, WEC, AWK, CNP, NRG, ETR]
+sample_tickers:
+  - MSFT
+  - CRM
+  - ADBE
+  - NOW
+  - INTU
+  - UNH
+  - ELV
+  - HCA
+  - DVA
+  - CVS
+  - ADP
+  - PAYX
+  - FI
+  - GPN
+  - CTAS
+  - HON
+  - ETN
+  - PH
+  - CARR
+  - CAT
+  - MCD
+  - SBUX
+  - BKNG
+  - MAR
+  - HLT
+  - NEE
+  - FSLR
+  - AES
+  - TSLA
+  - ALB
+  - AMT
+  - EQIX
+  - DLR
+  - VZ
+  - TMUS
+  - V
+  - MA
+  - PYPL
+  - SOFI
+  - COIN

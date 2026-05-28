@@ -1,0 +1,12 @@
+pandas>=2.1
+numpy>=1.26
+pyyaml>=6.0
+requests>=2.31
+yfinance>=0.2.40
+scikit-learn>=1.4
+matplotlib>=3.8
+openpyxl>=3.1
+streamlit>=1.35
+plotly>=5.22
+pytest>=8.0
+beautifulsoup4>=4.12

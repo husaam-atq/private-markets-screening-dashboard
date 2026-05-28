@@ -1,0 +1,83 @@
+metrics:
+  higher_is_better:
+    revenue_growth_yoy: true
+    revenue_cagr_3y: true
+    gross_margin: true
+    operating_margin: true
+    net_margin: true
+    operating_cash_flow_conversion: true
+    fcf_conversion: true
+    cash_to_revenue: true
+    margin_trend: true
+    revenue_trend: true
+    data_completeness_ratio: true
+  lower_is_better:
+    capex_intensity: false
+    debt_to_ebit_proxy: false
+    net_debt_to_ebit_proxy: false
+    ev_to_sales: false
+    ev_to_ebit_proxy: false
+    drawdown_from_52w_high: false
+    realised_volatility: false
+    leverage_trend: false
+score_weights:
+  investment_screening_score:
+    revenue_growth_yoy_score: 0.14
+    revenue_cagr_3y_score: 0.10
+    gross_margin_score: 0.10
+    operating_margin_score: 0.14
+    fcf_conversion_score: 0.12
+    debt_to_ebit_proxy_score: 0.12
+    ev_to_sales_score: 0.08
+    margin_trend_score: 0.08
+    realised_volatility_score: 0.05
+    data_quality_score: 0.07
+  diligence_priority_score:
+    investment_screening_score: 0.55
+    platform_candidate_score: 0.15
+    value_creation_potential_score: 0.15
+    red_flag_inverse_score: 0.15
+  platform_candidate_score:
+    revenue_cagr_3y_score: 0.18
+    gross_margin_score: 0.18
+    operating_margin_score: 0.18
+    fcf_conversion_score: 0.14
+    net_debt_to_ebit_proxy_score: 0.12
+    realised_volatility_score: 0.08
+    market_cap_scale_score: 0.05
+    data_quality_score: 0.07
+  value_creation_potential_score:
+    margin_gap_to_peer_score: 0.24
+    cash_conversion_gap_to_peer_score: 0.18
+    valuation_discount_to_peer_score: 0.18
+    revenue_growth_yoy_score: 0.12
+    capex_intensity_score: 0.08
+    drawdown_from_52w_high_score: 0.08
+    red_flag_inverse_score: 0.12
+  credit_risk_score:
+    debt_to_ebit_risk_score: 0.26
+    net_debt_to_ebit_risk_score: 0.18
+    fcf_conversion_risk_score: 0.16
+    cash_to_revenue_risk_score: 0.12
+    margin_trend_risk_score: 0.10
+    drawdown_risk_score: 0.10
+    volatility_risk_score: 0.08
+  red_flag_score:
+    negative_growth_risk_score: 0.16
+    margin_deterioration_risk_score: 0.14
+    weak_fcf_risk_score: 0.16
+    leverage_risk_score: 0.18
+    liquidity_risk_score: 0.10
+    valuation_without_growth_risk_score: 0.10
+    volatility_risk_score: 0.08
+    data_gap_risk_score: 0.08
+thresholds:
+  high_priority_min_investment_score: 74
+  high_priority_max_red_flag_score: 52
+  platform_min_score: 70
+  quality_min_score: 75
+  value_creation_min_score: 68
+  credit_watch_min_score: 64
+  distressed_min_red_flag_score: 75
+  low_priority_max_investment_score: 43
+  insufficient_data_quality_score: 45

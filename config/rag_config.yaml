@@ -1,0 +1,28 @@
+retrieval:
+  default_top_k: 5
+  min_keyword_score: 0.08
+  keyword_weight: 0.75
+  semantic_weight: 0.25
+  max_chunk_words: 180
+  overlap_words: 35
+diligence_questions:
+  - question_id: revenue_drivers
+    question: "What are the company's main revenue drivers?"
+  - question_id: customer_concentration
+    question: "What does the company say about customer concentration?"
+  - question_id: liquidity_risks
+    question: "What are the main liquidity risks?"
+  - question_id: debt_obligations
+    question: "What does management say about debt obligations?"
+  - question_id: margin_pressure
+    question: "What risks could pressure margins?"
+  - question_id: capex_requirements
+    question: "What capex or investment requirements are disclosed?"
+  - question_id: competition
+    question: "What does management say about competition?"
+  - question_id: regulatory_litigation
+    question: "Are there regulatory or litigation risks?"
+  - question_id: key_risk_factors
+    question: "What are the key risk factors?"
+  - question_id: cash_flows_capital_allocation
+    question: "What does management say about cash flows and capital allocation?"

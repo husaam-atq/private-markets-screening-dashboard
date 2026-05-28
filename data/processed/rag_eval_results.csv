@@ -1,0 +1,15 @@
+metric,value,metric_type
+questions_evaluated,70.0,coverage
+answerable_questions,60.0,coverage
+hit_rate_at_3,1.0,retrieval
+hit_rate_at_5,1.0,retrieval
+precision_at_3,0.788888888888889,retrieval
+precision_at_5,0.7133333333333333,retrieval
+mrr,1.0,retrieval
+ndcg_at_5,0.9588807657770864,retrieval
+section_match_rate,1.0,retrieval
+citation_coverage,1.0,groundedness
+unsupported_claim_rate,0.0,groundedness
+no_answer_accuracy,1.0,groundedness
+evidence_strength_score,0.24396364081334898,groundedness
+numeric_consistency_checks,1.0,groundedness

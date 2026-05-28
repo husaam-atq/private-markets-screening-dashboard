@@ -1,0 +1,81 @@
+ticker,company_name,question_id,question,evidence_strength,no_answer_flag,summary_answer
+MSFT,Microsoft Corporation,revenue_drivers,What are the company's main revenue drivers?,0.20243472184636732,False,Retrieved filing passages discuss business themes relevant to the question.
+MSFT,Microsoft Corporation,customer_concentration,What does the company say about customer concentration?,0.16809394739080172,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MSFT,Microsoft Corporation,liquidity_risks,What are the main liquidity risks?,0.12354144862854219,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+MSFT,Microsoft Corporation,debt_obligations,What does management say about debt obligations?,0.24492507372132374,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+MSFT,Microsoft Corporation,margin_pressure,What risks could pressure margins?,0.24699222229208634,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MSFT,Microsoft Corporation,capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+MSFT,Microsoft Corporation,competition,What does management say about competition?,0.08646667848196057,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MSFT,Microsoft Corporation,regulatory_litigation,Are there regulatory or litigation risks?,0.13340868861511707,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+MSFT,Microsoft Corporation,key_risk_factors,What are the key risk factors?,0.36623140710073887,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MSFT,Microsoft Corporation,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.4245504100116638,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+NOW,"ServiceNow, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.20160217118467283,False,Retrieved filing passages discuss business themes relevant to the question.
+NOW,"ServiceNow, Inc.",customer_concentration,What does the company say about customer concentration?,0.1754865706168795,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+NOW,"ServiceNow, Inc.",liquidity_risks,What are the main liquidity risks?,0.12819428681795292,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+NOW,"ServiceNow, Inc.",debt_obligations,What does management say about debt obligations?,0.25762230666218044,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+NOW,"ServiceNow, Inc.",margin_pressure,What risks could pressure margins?,0.25785472190923175,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+NOW,"ServiceNow, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+NOW,"ServiceNow, Inc.",competition,What does management say about competition?,0.09026940657270753,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+NOW,"ServiceNow, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.14019256504152383,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+NOW,"ServiceNow, Inc.",key_risk_factors,What are the key risk factors?,0.38233794066888466,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+NOW,"ServiceNow, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.4405398968030294,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+INTU,Intuit Inc.,revenue_drivers,What are the company's main revenue drivers?,0.19558933698138353,False,Retrieved filing passages discuss business themes relevant to the question.
+INTU,Intuit Inc.,customer_concentration,What does the company say about customer concentration?,0.17082593833329393,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+INTU,Intuit Inc.,liquidity_risks,What are the main liquidity risks?,0.1252707980891219,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+INTU,Intuit Inc.,debt_obligations,What does management say about debt obligations?,0.2495842416646616,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+INTU,Intuit Inc.,margin_pressure,What risks could pressure margins?,0.2510065281290431,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+INTU,Intuit Inc.,capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+INTU,Intuit Inc.,competition,What does management say about competition?,0.08787200083952827,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+INTU,Intuit Inc.,regulatory_litigation,Are there regulatory or litigation risks?,0.13590021193669968,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+INTU,Intuit Inc.,key_risk_factors,What are the key risk factors?,0.3721836790450061,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+INTU,Intuit Inc.,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.4304933225377271,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+MA,Mastercard Incorporated,revenue_drivers,What are the company's main revenue drivers?,0.18382146187972973,False,Retrieved filing passages discuss business themes relevant to the question.
+MA,Mastercard Incorporated,customer_concentration,What does the company say about customer concentration?,0.16649164860107685,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MA,Mastercard Incorporated,liquidity_risks,What are the main liquidity risks?,0.12252184305451203,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+MA,Mastercard Incorporated,debt_obligations,What does management say about debt obligations?,0.23950292804832005,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+MA,Mastercard Incorporated,margin_pressure,What risks could pressure margins?,0.2446378523400857,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MA,Mastercard Incorporated,capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+MA,Mastercard Incorporated,competition,What does management say about competition?,0.08564246406833226,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MA,Mastercard Incorporated,regulatory_litigation,Are there regulatory or litigation risks?,0.13150259404048767,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+MA,Mastercard Incorporated,key_risk_factors,What are the key risk factors?,0.36274042988552435,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+MA,Mastercard Incorporated,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.4210465336259641,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+CRM,"Salesforce, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.19558933698138353,False,Retrieved filing passages discuss business themes relevant to the question.
+CRM,"Salesforce, Inc.",customer_concentration,What does the company say about customer concentration?,0.17082593833329393,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CRM,"Salesforce, Inc.",liquidity_risks,What are the main liquidity risks?,0.1252707980891219,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+CRM,"Salesforce, Inc.",debt_obligations,What does management say about debt obligations?,0.2495842416646616,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+CRM,"Salesforce, Inc.",margin_pressure,What risks could pressure margins?,0.2510065281290431,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CRM,"Salesforce, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+CRM,"Salesforce, Inc.",competition,What does management say about competition?,0.08787200083952827,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CRM,"Salesforce, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.13590021193669968,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+CRM,"Salesforce, Inc.",key_risk_factors,What are the key risk factors?,0.3721836790450061,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CRM,"Salesforce, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.4304933225377271,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+ADBE,Adobe Inc.,revenue_drivers,What are the company's main revenue drivers?,0.19558933698138353,False,Retrieved filing passages discuss business themes relevant to the question.
+ADBE,Adobe Inc.,customer_concentration,What does the company say about customer concentration?,0.17082593833329393,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+ADBE,Adobe Inc.,liquidity_risks,What are the main liquidity risks?,0.1252707980891219,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+ADBE,Adobe Inc.,debt_obligations,What does management say about debt obligations?,0.24958424166466167,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+ADBE,Adobe Inc.,margin_pressure,What risks could pressure margins?,0.2510065281290431,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+ADBE,Adobe Inc.,capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+ADBE,Adobe Inc.,competition,What does management say about competition?,0.08787200083952827,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+ADBE,Adobe Inc.,regulatory_litigation,Are there regulatory or litigation risks?,0.13590021193669968,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+ADBE,Adobe Inc.,key_risk_factors,What are the key risk factors?,0.3721836790450061,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+ADBE,Adobe Inc.,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.4304933225377271,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+PAYX,"Paychex, Inc.",revenue_drivers,What are the company's main revenue drivers?,0.17157217013995896,False,Retrieved filing passages discuss business themes relevant to the question.
+PAYX,"Paychex, Inc.",customer_concentration,What does the company say about customer concentration?,0.17100422086535647,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+PAYX,"Paychex, Inc.",liquidity_risks,What are the main liquidity risks?,0.12509069870733272,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+PAYX,"Paychex, Inc.",debt_obligations,What does management say about debt obligations?,0.248960705882223,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+PAYX,"Paychex, Inc.",margin_pressure,What risks could pressure margins?,0.25126849115313465,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+PAYX,"Paychex, Inc.",capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+PAYX,"Paychex, Inc.",competition,What does management say about competition?,0.08796370847456261,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+PAYX,"Paychex, Inc.",regulatory_litigation,Are there regulatory or litigation risks?,0.13556691956426772,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+PAYX,"Paychex, Inc.",key_risk_factors,What are the key risk factors?,0.37257210863210444,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+PAYX,"Paychex, Inc.",cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.42987441068886784,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+CTAS,Cintas Corporation,revenue_drivers,What are the company's main revenue drivers?,0.18364119010191218,False,Retrieved filing passages discuss business themes relevant to the question.
+CTAS,Cintas Corporation,customer_concentration,What does the company say about customer concentration?,0.1682638038228773,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CTAS,Cintas Corporation,liquidity_risks,What are the main liquidity risks?,0.12336869529909834,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.
+CTAS,Cintas Corporation,debt_obligations,What does management say about debt obligations?,0.2443357284669877,False,Retrieved filing passages discuss debt / contractual obligations themes relevant to the question.
+CTAS,Cintas Corporation,margin_pressure,What risks could pressure margins?,0.24724180425669695,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CTAS,Cintas Corporation,capex_requirements,What capex or investment requirements are disclosed?,0.0,True,insufficient filing evidence found
+CTAS,Cintas Corporation,competition,What does management say about competition?,0.08655405177367242,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CTAS,Cintas Corporation,regulatory_litigation,Are there regulatory or litigation risks?,0.133093351333642,False,Retrieved filing passages discuss legal / regulatory matters themes relevant to the question.
+CTAS,Cintas Corporation,key_risk_factors,What are the key risk factors?,0.36660147848694724,False,Retrieved filing passages discuss risk factors themes relevant to the question.
+CTAS,Cintas Corporation,cash_flows_capital_allocation,What does management say about cash flows and capital allocation?,0.42395674288487806,False,Retrieved filing passages discuss liquidity and capital resources themes relevant to the question.

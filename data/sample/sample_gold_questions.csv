@@ -1,0 +1,71 @@
+question_id,ticker,company_name,question,expected_section,expected_keywords,expected_no_answer
+MSFT_revenue,MSFT,Microsoft Corporation,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+MSFT_customer,MSFT,Microsoft Corporation,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+MSFT_liquidity,MSFT,Microsoft Corporation,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+MSFT_debt,MSFT,Microsoft Corporation,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+MSFT_margin,MSFT,Microsoft Corporation,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+MSFT_competition,MSFT,Microsoft Corporation,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+MSFT_no_answer_quasar_orchid,MSFT,Microsoft Corporation,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+HCA_revenue,HCA,"HCA Healthcare, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+HCA_customer,HCA,"HCA Healthcare, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+HCA_liquidity,HCA,"HCA Healthcare, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+HCA_debt,HCA,"HCA Healthcare, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+HCA_margin,HCA,"HCA Healthcare, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+HCA_competition,HCA,"HCA Healthcare, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+HCA_no_answer_quasar_orchid,HCA,"HCA Healthcare, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+ADP_revenue,ADP,"Automatic Data Processing, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+ADP_customer,ADP,"Automatic Data Processing, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+ADP_liquidity,ADP,"Automatic Data Processing, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+ADP_debt,ADP,"Automatic Data Processing, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+ADP_margin,ADP,"Automatic Data Processing, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+ADP_competition,ADP,"Automatic Data Processing, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+ADP_no_answer_quasar_orchid,ADP,"Automatic Data Processing, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+ETN_revenue,ETN,Eaton Corporation plc,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+ETN_customer,ETN,Eaton Corporation plc,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+ETN_liquidity,ETN,Eaton Corporation plc,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+ETN_debt,ETN,Eaton Corporation plc,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+ETN_margin,ETN,Eaton Corporation plc,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+ETN_competition,ETN,Eaton Corporation plc,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+ETN_no_answer_quasar_orchid,ETN,Eaton Corporation plc,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+BKNG_revenue,BKNG,Booking Holdings Inc.,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+BKNG_customer,BKNG,Booking Holdings Inc.,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+BKNG_liquidity,BKNG,Booking Holdings Inc.,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+BKNG_debt,BKNG,Booking Holdings Inc.,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+BKNG_margin,BKNG,Booking Holdings Inc.,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+BKNG_competition,BKNG,Booking Holdings Inc.,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+BKNG_no_answer_quasar_orchid,BKNG,Booking Holdings Inc.,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+FSLR_revenue,FSLR,"First Solar, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+FSLR_customer,FSLR,"First Solar, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+FSLR_liquidity,FSLR,"First Solar, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+FSLR_debt,FSLR,"First Solar, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+FSLR_margin,FSLR,"First Solar, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+FSLR_competition,FSLR,"First Solar, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+FSLR_no_answer_quasar_orchid,FSLR,"First Solar, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+EQIX_revenue,EQIX,"Equinix, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+EQIX_customer,EQIX,"Equinix, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+EQIX_liquidity,EQIX,"Equinix, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+EQIX_debt,EQIX,"Equinix, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+EQIX_margin,EQIX,"Equinix, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+EQIX_competition,EQIX,"Equinix, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+EQIX_no_answer_quasar_orchid,EQIX,"Equinix, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+V_revenue,V,Visa Inc.,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+V_customer,V,Visa Inc.,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+V_liquidity,V,Visa Inc.,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+V_debt,V,Visa Inc.,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+V_margin,V,Visa Inc.,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+V_competition,V,Visa Inc.,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+V_no_answer_quasar_orchid,V,Visa Inc.,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+AES_revenue,AES,The AES Corporation,What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+AES_customer,AES,The AES Corporation,What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+AES_liquidity,AES,The AES Corporation,What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+AES_debt,AES,The AES Corporation,What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+AES_margin,AES,The AES Corporation,What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+AES_competition,AES,The AES Corporation,What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+AES_no_answer_quasar_orchid,AES,The AES Corporation,Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True
+SOFI_revenue,SOFI,"SoFi Technologies, Inc.",What are the main revenue drivers disclosed by the company?,Business,revenue drivers; recurring; customer,False
+SOFI_customer,SOFI,"SoFi Technologies, Inc.",What does the filing say about customer concentration or customer relationships?,Risk Factors,customer concentration; customer relationships,False
+SOFI_liquidity,SOFI,"SoFi Technologies, Inc.",What liquidity risks or cash flow resources are described?,Liquidity and Capital Resources,liquidity; operating cash flows; borrowing capacity,False
+SOFI_debt,SOFI,"SoFi Technologies, Inc.",What debt obligations or contractual commitments are disclosed?,Debt / Contractual Obligations,debt obligations; covenant; maturity,False
+SOFI_margin,SOFI,"SoFi Technologies, Inc.",What could pressure margins according to management or risk factors?,MD&A,margin pressure; cost inflation; productivity,False
+SOFI_competition,SOFI,"SoFi Technologies, Inc.",What does the company disclose about competition?,Risk Factors,competition; risk factors,False
+SOFI_no_answer_quasar_orchid,SOFI,"SoFi Technologies, Inc.",Does the filing disclose an antigravity laboratory named Quasar Orchid?,No Answer,Quasar Orchid; antigravity laboratory,True

@@ -1,5 +1,7 @@
 # Private Markets Investment Screening & Filing Intelligence Dashboard
 
+***In Progress***
+
 ## Overview
 
 This project is a public-data investment screening and SEC filing intelligence workflow for private-markets-style diligence. It screens listed-company comparables across configurable sectors, calculates transparent scorecards, benchmarks companies against peers, retrieves source-backed filing evidence, and produces a recruiter-facing Streamlit dashboard, Excel workbook, charts and diligence-style reports.
@@ -278,8 +280,3 @@ This project is not a stock-picking system, buy/sell engine, price-target model 
 - Add historical refresh tracking and sector-specific scoring presets.
 - Add richer evidence-level labelling for gold retrieval examples.
 
-## CV Bullet
-
-Private Markets Investment Screening & Filing Intelligence Dashboard | Python, SEC EDGAR, yfinance, Streamlit, RAG
-
-- Built a Python/Streamlit public-data investment screening and SEC filing intelligence dashboard, screening 283 listed companies across 12 sectors using yfinance market data, SEC fundamentals and 15,965 filing chunks. Created explainable investment screening, platform candidate, public-to-private feasibility, value creation, credit risk and red-flag scorecards, with peer benchmarking, target categorisation, source-backed SEC filing retrieval and optional local-LLM RAG summaries evaluated for 100.0% citation coverage and 0.0% unsupported-claim rate.

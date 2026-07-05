@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import logging
 import os
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+logger = logging.getLogger(__name__)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -22,8 +25,16 @@ EVAL_DIR = PROJECT_ROOT / "eval"
 
 
 def load_yaml(path: str | Path) -> dict[str, Any]:
-    with Path(path).open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle) or {}
+    resolved = Path(path)
+    if not resolved.exists():
+        logger.error("Config file not found: %s", resolved)
+        raise FileNotFoundError(f"Config file not found: {resolved}")
+    try:
+        with resolved.open("r", encoding="utf-8") as handle:
+            data = yaml.safe_load(handle) or {}
+    except yaml.YAMLError as exc:
+        logger.error("Failed to parse YAML config %s: %s", resolved, exc)
+        raise ValueError(f"Invalid YAML in {resolved}: {exc}") from exc
     return data
 
 

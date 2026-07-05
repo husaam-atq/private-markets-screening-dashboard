@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -12,6 +13,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from src.config import INTERIM_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
 from src.filing_parser import build_sample_filing_chunks
 from src.utils import clean_text, read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass

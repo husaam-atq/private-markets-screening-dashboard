@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import hashlib
+import hmac
 import sys
+from html import escape as html_escape
 from pathlib import Path
 
 import pandas as pd
@@ -17,6 +20,35 @@ from src.rag_generator import RAGAnswerGenerator
 from src.reporting import summary_metrics
 from src.screening_pipeline import run_pipeline
 from src.utils import format_pct, read_csv_if_exists
+
+
+def _check_password() -> bool:
+    """Gate the dashboard behind a password when configured in Streamlit secrets.
+
+    To enable: add ``[dashboard]`` and ``password = "your-password"`` to
+    ``.streamlit/secrets.toml`` (which is git-ignored). When no password is
+    configured the dashboard is accessible without authentication.
+    """
+    try:
+        expected = st.secrets["dashboard"]["password"]
+    except (KeyError, FileNotFoundError):
+        return True
+
+    if st.session_state.get("authenticated"):
+        return True
+
+    password = st.text_input("Dashboard password", type="password")
+    if not password:
+        st.info("Enter the dashboard password to continue.")
+        return False
+    if hmac.compare_digest(
+        hashlib.sha256(password.encode()).digest(),
+        hashlib.sha256(expected.encode()).digest(),
+    ):
+        st.session_state["authenticated"] = True
+        return True
+    st.error("Incorrect password.")
+    return False
 
 
 st.set_page_config(
@@ -60,6 +92,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+if not _check_password():
+    st.stop()
+
 
 @st.cache_data(show_spinner=False)
 def load_data() -> dict[str, pd.DataFrame]:
@@ -98,7 +133,7 @@ def compact_money(value: float | int | None) -> str:
 def score_bar(label: str, value: float) -> None:
     st.caption(label)
     st.progress(max(0, min(100, int(round(float(value or 0))))))
-    st.markdown(f"<span class='muted'>{float(value or 0):.1f} / 100</span>", unsafe_allow_html=True)
+    st.markdown(f"<span class='muted'>{float(value or 0):.1f} / 100</span>", unsafe_allow_html=True)  # numeric only — safe
 
 
 def evidence_cards(frame: pd.DataFrame, limit: int = 5) -> None:
@@ -111,14 +146,14 @@ def evidence_cards(frame: pd.DataFrame, limit: int = 5) -> None:
             f"""
 <div class="evidence-card">
   <div>
-    <span class="badge {source_badge}">{row.get('source_type', 'unknown')}</span>
-    <span class="badge">{row.get('filing_type', '')} | {row.get('filing_date', '')}</span>
-    <span class="badge">{row.get('section_label', '')}</span>
-    <span class="badge">{row.get('chunk_id', '')}</span>
+    <span class="badge {source_badge}">{html_escape(str(row.get('source_type', 'unknown')))}</span>
+    <span class="badge">{html_escape(str(row.get('filing_type', '')))} | {html_escape(str(row.get('filing_date', '')))}</span>
+    <span class="badge">{html_escape(str(row.get('section_label', '')))}</span>
+    <span class="badge">{html_escape(str(row.get('chunk_id', '')))}</span>
   </div>
   <div class="muted">rank {int(row.get('rank', 0) or 0)} | keyword {float(row.get('keyword_score', 0) or 0):.3f}
   | section boost {float(row.get('section_boost', 0) or 0):.3f} | combined {float(row.get('combined_score', 0) or 0):.3f}</div>
-  <p>{str(row.get('evidence_snippet', row.get('text', '')))[:900]}</p>
+  <p>{html_escape(str(row.get('evidence_snippet', row.get('text', '')))[:900])}</p>
 </div>
 """,
             unsafe_allow_html=True,
@@ -147,14 +182,14 @@ data_badge = "Live/Cached Snapshot" if live_rows > len(scores) * 0.5 else "Sampl
 st.markdown("### Private Markets Investment Screening & Filing Intelligence Dashboard")
 st.markdown(
     "<span class='muted'>Public-data screening, peer benchmarking and source-backed filing intelligence for further diligence workflows. Not investment advice.</span>",
-    unsafe_allow_html=True,
+    unsafe_allow_html=True,  # static text — safe
 )
 badge_class = "badge-live" if data_badge != "Sample Fallback" else "badge-warn"
 st.markdown(
     f"""
 <div style="margin-top: .55rem;">
-  <span class="badge {badge_class}">{data_badge}</span>
-  <span class="badge">Refresh: {latest_refresh}</span>
+  <span class="badge {badge_class}">{html_escape(str(data_badge))}</span>
+  <span class="badge">Refresh: {html_escape(str(latest_refresh))}</span>
   <span class="badge">Coverage: {len(scores)} companies | {summary.get('sectors_covered', 0)} sectors</span>
   <span class="badge">Real SEC chunks: {real_chunk_count:,}</span>
 </div>
@@ -281,7 +316,7 @@ with target:
     company = scores[scores["ticker"] == selected_company].iloc[0]
     category = categories[categories["ticker"] == selected_company].iloc[0] if not categories.empty and selected_company in set(categories["ticker"]) else None
     st.markdown(f"## {company['company_name']} ({company['ticker']})")
-    st.markdown(f"<span class='badge'>{company.get('sector_theme', '')}</span><span class='badge'>{company.get('market_cap_band', '')}</span><span class='badge'>{compact_money(company.get('market_cap'))} market cap</span>", unsafe_allow_html=True)
+    st.markdown(f"<span class='badge'>{html_escape(str(company.get('sector_theme', '')))}</span><span class='badge'>{html_escape(str(company.get('market_cap_band', '')))}</span><span class='badge'>{compact_money(company.get('market_cap'))} market cap</span>", unsafe_allow_html=True)
     score_cols = st.columns(4)
     with score_cols[0]:
         score_bar("Public Quality", company.get("public_quality_score", 0))

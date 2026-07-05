@@ -13,14 +13,7 @@ from src.memo_generator import generate_memo
 from src.rag_generator import run_generation
 from src.retrieval_eval import run_retrieval_evaluation
 from src.screening_pipeline import run_pipeline
-from src.utils import format_pct, read_csv_if_exists
-
-
-def _metric(eval_results: pd.DataFrame, name: str, default: float = 0.0) -> float:
-    if eval_results.empty or "metric" not in eval_results.columns or "value" not in eval_results.columns:
-        return default
-    row = eval_results[eval_results["metric"] == name]
-    return float(row["value"].iloc[0]) if not row.empty else default
+from src.utils import format_pct, metric_value, read_csv_if_exists
 
 
 def generate_filing_evidence_report() -> str:
@@ -191,12 +184,12 @@ def summary_metrics() -> dict:
         "average_data_quality_score": scores["data_quality_score"].mean() if not scores.empty else 0,
         "public_to_private_candidates": int((categories["primary_category"] == "Public-to-Private Candidate").sum()) if not categories.empty else 0,
         "pe_platform_candidates": int((categories["primary_category"] == "PE Platform Candidate").sum()) if not categories.empty else 0,
-        "rag_hit_at_5": _metric(eval_results, "hit_rate_at_5"),
-        "rag_precision_at_5": _metric(eval_results, "precision_at_5"),
-        "citation_coverage": _metric(eval_results, "citation_coverage"),
-        "unsupported_claim_rate": _metric(eval_results, "unsupported_claim_rate"),
-        "grounded_generation_score": _metric(grounded, "groundedness_score"),
-        "grounded_generation_citation_coverage": _metric(grounded, "citation_coverage"),
+        "rag_hit_at_5": metric_value(eval_results, "hit_rate_at_5"),
+        "rag_precision_at_5": metric_value(eval_results, "precision_at_5"),
+        "citation_coverage": metric_value(eval_results, "citation_coverage"),
+        "unsupported_claim_rate": metric_value(eval_results, "unsupported_claim_rate"),
+        "grounded_generation_score": metric_value(grounded, "groundedness_score"),
+        "grounded_generation_citation_coverage": metric_value(grounded, "citation_coverage"),
     }
 
 

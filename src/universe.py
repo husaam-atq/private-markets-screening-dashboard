@@ -158,6 +158,14 @@ def runtime_mode_config(runtime_mode: str | None = None) -> dict:
     return {"name": mode} | runtime_modes.get(mode, runtime_modes.get("portfolio", {}))
 
 
+def runtime_limit(runtime_mode: str | None, explicit_limit: int | None) -> int | None:
+    if explicit_limit is not None:
+        return explicit_limit
+    config = runtime_mode_config(runtime_mode)
+    max_companies = config.get("max_companies")
+    return int(max_companies) if max_companies else None
+
+
 def configured_universe() -> pd.DataFrame:
     cfg = load_universe_config()
     rows: list[dict[str, str]] = []

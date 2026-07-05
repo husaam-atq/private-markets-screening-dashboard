@@ -12,7 +12,7 @@ from src.filing_downloader import download_filing, filing_url, latest_filing_met
 from src.sec_client import SAMPLE_CIKS
 from src.sec_client import SECClient
 from src.universe import configured_universe, runtime_mode_config, sample_universe
-from src.utils import clean_text, upsert_skipped_tickers, utc_timestamp, write_csv
+from src.utils import clean_text, skipped_ticker_row, upsert_skipped_tickers, write_csv
 
 
 SECTION_PATTERNS = {
@@ -198,18 +198,14 @@ def build_real_sec_filing_chunks(
         ticker = str(company["ticker"])
         if ticker not in mapping_lookup.index:
             skipped.append(
-                    {
-                        "ticker": ticker,
-                        "company_name": company.get("company_name", ""),
-                        "stage": "sec_filing_text",
-                        "stage_failed": "sec_filing_text",
-                        "reason": "missing_cik_mapping",
-                        "reason_skipped": "missing_cik_mapping",
-                        "detail": "Ticker not found in SEC mapping for filing download.",
-                        "logged_at": utc_timestamp(),
-                        "timestamp": utc_timestamp(),
-                    }
+                skipped_ticker_row(
+                    ticker=ticker,
+                    company_name=company.get("company_name", ""),
+                    stage="sec_filing_text",
+                    reason="missing_cik_mapping",
+                    detail="Ticker not found in SEC mapping for filing download.",
                 )
+            )
             continue
         cik = int(mapping_lookup.loc[ticker]["cik"])
         try:
@@ -217,18 +213,14 @@ def build_real_sec_filing_chunks(
             metadata = latest_filing_metadata(submissions, forms=forms).head(1)
             if metadata.empty:
                 skipped.append(
-                        {
-                            "ticker": ticker,
-                            "company_name": company.get("company_name", ""),
-                            "stage": "sec_filing_text",
-                            "stage_failed": "sec_filing_text",
-                            "reason": "no_recent_10k",
-                            "reason_skipped": "no_recent_10k",
-                            "detail": f"CIK {cik} had no recent filing for {forms}.",
-                            "logged_at": utc_timestamp(),
-                            "timestamp": utc_timestamp(),
-                        }
+                    skipped_ticker_row(
+                        ticker=ticker,
+                        company_name=company.get("company_name", ""),
+                        stage="sec_filing_text",
+                        reason="no_recent_10k",
+                        detail=f"CIK {cik} had no recent filing for {forms}.",
                     )
+                )
                 continue
             filing = metadata.iloc[0]
             raw = download_filing(cik, filing["accession_number"], filing["primary_document"])
@@ -246,17 +238,13 @@ def build_real_sec_filing_chunks(
             )
             if chunks.empty:
                 skipped.append(
-                    {
-                        "ticker": ticker,
-                        "company_name": company.get("company_name", ""),
-                        "stage": "sec_filing_text",
-                        "stage_failed": "sec_filing_text",
-                        "reason": "empty_parsed_filing",
-                        "reason_skipped": "empty_parsed_filing",
-                        "detail": url,
-                        "logged_at": utc_timestamp(),
-                        "timestamp": utc_timestamp(),
-                    }
+                    skipped_ticker_row(
+                        ticker=ticker,
+                        company_name=company.get("company_name", ""),
+                        stage="sec_filing_text",
+                        reason="empty_parsed_filing",
+                        detail=url,
+                    )
                 )
                 continue
             chunk_frames.append(chunks)
@@ -276,17 +264,13 @@ def build_real_sec_filing_chunks(
             )
         except Exception as exc:
             skipped.append(
-                {
-                    "ticker": ticker,
-                    "company_name": company.get("company_name", ""),
-                    "stage": "sec_filing_text",
-                    "stage_failed": "sec_filing_text",
-                    "reason": type(exc).__name__,
-                    "reason_skipped": type(exc).__name__,
-                    "detail": f"CIK {cik}",
-                    "logged_at": utc_timestamp(),
-                    "timestamp": utc_timestamp(),
-                }
+                skipped_ticker_row(
+                    ticker=ticker,
+                    company_name=company.get("company_name", ""),
+                    stage="sec_filing_text",
+                    reason=type(exc).__name__,
+                    detail=f"CIK {cik}",
+                )
             )
     upsert_skipped_tickers(skipped, PROCESSED_DIR / "skipped_tickers.csv")
     chunks_out = pd.concat(chunk_frames, ignore_index=True) if chunk_frames else pd.DataFrame()

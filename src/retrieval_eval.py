@@ -8,7 +8,7 @@ import pandas as pd
 
 from src.config import EVAL_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_dirs, load_yaml
 from src.filing_rag import FilingRetriever, load_filing_chunks
-from src.utils import read_csv_if_exists, write_csv
+from src.utils import metric_value, read_csv_if_exists, write_csv
 
 
 EVAL_TICKERS = ["MSFT", "HCA", "ADP", "ETN", "BKNG", "FSLR", "EQIX", "V", "AES", "SOFI", "CRM", "CTAS"]
@@ -289,10 +289,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate filing retrieval quality.")
     parser.parse_args()
     summary, details = run_retrieval_evaluation()
-    print(f"questions_evaluated={int(summary.loc[summary['metric'] == 'questions_evaluated', 'value'].iloc[0])}")
-    print(f"hit_rate_at_5={summary.loc[summary['metric'] == 'hit_rate_at_5', 'value'].iloc[0]:.3f}")
-    print(f"precision_at_5={summary.loc[summary['metric'] == 'precision_at_5', 'value'].iloc[0]:.3f}")
-    print(f"no_answer_accuracy={summary.loc[summary['metric'] == 'no_answer_accuracy', 'value'].iloc[0]:.3f}")
+    print(f"questions_evaluated={int(metric_value(summary, 'questions_evaluated'))}")
+    print(f"hit_rate_at_5={metric_value(summary, 'hit_rate_at_5'):.3f}")
+    print(f"precision_at_5={metric_value(summary, 'precision_at_5'):.3f}")
+    print(f"no_answer_accuracy={metric_value(summary, 'no_answer_accuracy'):.3f}")
 
 
 if __name__ == "__main__":

@@ -16,11 +16,34 @@ from src.utils import read_csv_if_exists
 plt.style.use("seaborn-v0_8-whitegrid")
 
 
-def _save(fig: plt.Figure, name: str) -> None:
+def save_figure(fig: plt.Figure, name: str) -> None:
     CHART_DIR.mkdir(parents=True, exist_ok=True)
     fig.tight_layout()
     fig.savefig(CHART_DIR / name, dpi=180, bbox_inches="tight")
     plt.close(fig)
+
+
+def metric_bar_chart(
+    frame: pd.DataFrame,
+    wanted: list[str],
+    name: str,
+    title: str,
+    ylabel: str,
+    base_color: str = "#5a6f9a",
+    highlight_metric: str | None = None,
+    highlight_color: str = "#9a4d41",
+    figsize: tuple[float, float] = (8, 4.8),
+) -> None:
+    subset = frame[frame["metric"].isin(wanted)].copy()
+    if subset.empty:
+        return
+    fig, ax = plt.subplots(figsize=figsize)
+    colors = [highlight_color if metric == highlight_metric else base_color for metric in subset["metric"]]
+    ax.bar(subset["metric"].str.replace("_", "\n"), subset["value"].astype(float), color=colors)
+    ax.set_ylim(0, 1.05)
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
+    save_figure(fig, name)
 
 
 def sector_score_distribution(scores: pd.DataFrame) -> None:
@@ -29,7 +52,7 @@ def sector_score_distribution(scores: pd.DataFrame) -> None:
     ax.set_title("Investment Screening Score by Sector Theme")
     ax.set_ylabel("Score")
     fig.suptitle("")
-    _save(fig, "sector_score_distribution.png")
+    save_figure(fig, "sector_score_distribution.png")
 
 
 def top_screened_companies(scores: pd.DataFrame) -> None:
@@ -38,7 +61,7 @@ def top_screened_companies(scores: pd.DataFrame) -> None:
     ax.barh(top["ticker"], top["investment_screening_score"], color="#2f6f8f")
     ax.set_xlabel("Investment Screening Score")
     ax.set_title("Top Screened Companies")
-    _save(fig, "top_screened_companies.png")
+    save_figure(fig, "top_screened_companies.png")
 
 
 def scatter_chart(scores: pd.DataFrame, x: str, y: str, name: str, title: str, xlabel: str, ylabel: str) -> None:
@@ -50,7 +73,7 @@ def scatter_chart(scores: pd.DataFrame, x: str, y: str, name: str, title: str, x
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-    _save(fig, name)
+    save_figure(fig, name)
 
 
 def peer_percentile_radar(scores: pd.DataFrame, benchmarks: pd.DataFrame) -> None:
@@ -75,7 +98,7 @@ def peer_percentile_radar(scores: pd.DataFrame, benchmarks: pd.DataFrame) -> Non
     ax.set_xticklabels(labels)
     ax.set_ylim(0, 100)
     ax.set_title(f"Peer Percentile Radar: {top_ticker}")
-    _save(fig, "peer_percentile_radar.png")
+    save_figure(fig, "peer_percentile_radar.png")
 
 
 def red_flag_breakdown(scores: pd.DataFrame) -> None:
@@ -91,7 +114,7 @@ def red_flag_breakdown(scores: pd.DataFrame) -> None:
     ax.barh(means.index.str.replace("_", " ").str.title(), means.values, color="#9a4d41")
     ax.set_xlabel("Average Score")
     ax.set_title("Red Flag Component Breakdown")
-    _save(fig, "red_flag_breakdown.png")
+    save_figure(fig, "red_flag_breakdown.png")
 
 
 def category_mix(categories: pd.DataFrame) -> None:
@@ -100,18 +123,18 @@ def category_mix(categories: pd.DataFrame) -> None:
     ax.barh(counts.index, counts.values, color="#4f7f52")
     ax.set_xlabel("Companies")
     ax.set_title("Company Category Mix")
-    _save(fig, "category_mix.png")
+    save_figure(fig, "category_mix.png")
 
 
 def rag_eval_summary(eval_results: pd.DataFrame) -> None:
     wanted = ["hit_rate_at_3", "hit_rate_at_5", "precision_at_3", "precision_at_5", "citation_coverage", "no_answer_accuracy"]
-    subset = eval_results[eval_results["metric"].isin(wanted)].copy()
-    fig, ax = plt.subplots(figsize=(8, 4.8))
-    ax.bar(subset["metric"].str.replace("_", "\n"), subset["value"].astype(float), color="#5a6f9a")
-    ax.set_ylim(0, 1.05)
-    ax.set_ylabel("Rate")
-    ax.set_title("RAG Evaluation Summary")
-    _save(fig, "rag_eval_summary.png")
+    metric_bar_chart(
+        eval_results,
+        wanted,
+        name="rag_eval_summary.png",
+        title="RAG Evaluation Summary",
+        ylabel="Rate",
+    )
 
 
 def generate_all_charts() -> None:

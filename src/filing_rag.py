@@ -11,7 +11,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from src.config import INTERIM_DIR, PROCESSED_DIR, SAMPLE_DIR, ensure_project_dirs, load_config
 from src.filing_parser import build_sample_filing_chunks
-from src.utils import clean_text, read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
+from src.utils import (
+    clean_text,
+    read_csv_if_exists,
+    skipped_ticker_row,
+    upsert_skipped_tickers,
+    utc_timestamp,
+    write_csv,
+)
 
 
 @dataclass
@@ -156,13 +163,12 @@ def run_retrieval_for_companies(tickers: list[str] | None = None, top_k: int = 5
         tickers = scores.sort_values("investment_screening_score", ascending=False).head(8)["ticker"].tolist() if not scores.empty else chunks["ticker"].drop_duplicates().head(8).tolist()
     available_tickers = set(chunks["ticker"].dropna().astype(str))
     skipped = [
-        {
-            "ticker": ticker,
-            "stage": "filing_rag",
-            "reason": "no_filing_chunks",
-            "detail": "No real or fallback filing chunks were available for selected company.",
-            "logged_at": utc_timestamp(),
-        }
+        skipped_ticker_row(
+            ticker=ticker,
+            stage="filing_rag",
+            reason="no_filing_chunks",
+            detail="No real or fallback filing chunks were available for selected company.",
+        )
         for ticker in tickers
         if ticker not in available_tickers
     ]

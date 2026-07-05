@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import argparse
-import ast
 import json
 import re
 from typing import Any
 
-import numpy as np
 import pandas as pd
 
 from src.config import PROCESSED_DIR, ensure_project_dirs, get_env, load_config
@@ -63,12 +61,8 @@ def _safe_json_parse(text: str) -> dict[str, Any] | None:
         try:
             parsed = json.loads(candidate)
             return parsed if isinstance(parsed, dict) else None
-        except json.JSONDecodeError:
-            try:
-                parsed = ast.literal_eval(candidate)
-                return parsed if isinstance(parsed, dict) else None
-            except (SyntaxError, ValueError):
-                continue
+        except (json.JSONDecodeError, ValueError):
+            continue
     return None
 
 

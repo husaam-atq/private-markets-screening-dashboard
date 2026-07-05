@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import logging
 import os
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+logger = logging.getLogger(__name__)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -35,11 +38,19 @@ def get_env(name: str, default: str | None = None) -> str | None:
     return os.environ.get(name, default)
 
 
+_SEC_PLACEHOLDER_AGENT = "private-markets-screening-dashboard contact@example.com"
+
+
 def sec_user_agent() -> str:
     cfg = load_config("sec_config.yaml")
     configured = get_env("SEC_USER_AGENT") or cfg.get("sec_user_agent")
     if not configured or "example.com" in configured:
-        return "private-markets-screening-dashboard contact@example.com"
+        logger.warning(
+            "SEC_USER_AGENT is not configured. SEC EDGAR requires a valid contact "
+            "email in the User-Agent header. Set SEC_USER_AGENT in your environment "
+            "or config/sec_config.yaml to comply with SEC fair-access policy."
+        )
+        return _SEC_PLACEHOLDER_AGENT
     return str(configured)
 
 

@@ -1,11 +1,32 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from typing import Any
+from urllib.parse import urlparse
 
 import requests
 
 from src.config import get_env, load_config
+
+logger = logging.getLogger(__name__)
+
+_ALLOWED_OLLAMA_HOSTS = {"localhost", "127.0.0.1", "::1"}
+
+
+def _validate_ollama_url(url: str) -> str:
+    """Restrict the Ollama base URL to localhost to prevent SSRF."""
+    parsed = urlparse(url)
+    hostname = (parsed.hostname or "").lower()
+    if hostname not in _ALLOWED_OLLAMA_HOSTS:
+        logger.warning(
+            "Ollama base URL '%s' is not a localhost address. "
+            "Falling back to http://localhost:11434 to prevent SSRF. "
+            "Override _ALLOWED_OLLAMA_HOSTS if you need a remote Ollama server.",
+            url,
+        )
+        return "http://localhost:11434"
+    return url
 
 
 @dataclass
@@ -28,7 +49,8 @@ class OllamaClient:
         timeout_seconds: int | None = None,
     ) -> None:
         cfg = _generation_config()
-        self.base_url = (base_url or get_env("OLLAMA_BASE_URL") or cfg.get("ollama_base_url") or "http://localhost:11434").rstrip("/")
+        raw_url = (base_url or get_env("OLLAMA_BASE_URL") or cfg.get("ollama_base_url") or "http://localhost:11434").rstrip("/")
+        self.base_url = _validate_ollama_url(raw_url)
         self.model_name = model_name or get_env("OLLAMA_MODEL") or cfg.get("ollama_model", "qwen3")
         self.timeout_seconds = int(timeout_seconds or cfg.get("request_timeout_seconds", 45))
 

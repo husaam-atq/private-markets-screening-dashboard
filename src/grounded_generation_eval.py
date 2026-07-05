@@ -2,16 +2,13 @@ from __future__ import annotations
 
 import argparse
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from src.config import CHART_DIR, PROCESSED_DIR, REPORT_DIR, ensure_project_dirs
+from src.charts import metric_bar_chart
+from src.config import PROCESSED_DIR, REPORT_DIR, ensure_project_dirs
 from src.rag_generator import run_generation
-from src.utils import format_pct, read_csv_if_exists, write_csv
+from src.utils import format_pct, metric_value, read_csv_if_exists, write_csv
 
 
 def evaluate_generated_answers(answers: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -62,17 +59,16 @@ def generate_groundedness_chart(summary: pd.DataFrame) -> None:
         "numeric_consistency_pass_rate",
         "groundedness_score",
     ]
-    subset = summary[summary["metric"].isin(wanted)].copy()
-    fig, ax = plt.subplots(figsize=(9, 4.8))
-    colors = ["#2f6f8f" if metric != "unsupported_claim_rate" else "#9a4d41" for metric in subset["metric"]]
-    ax.bar(subset["metric"].str.replace("_", "\n"), subset["value"].astype(float), color=colors)
-    ax.set_ylim(0, 1.05)
-    ax.set_ylabel("Rate / Score")
-    ax.set_title("Grounded Generation Evaluation")
-    CHART_DIR.mkdir(parents=True, exist_ok=True)
-    fig.tight_layout()
-    fig.savefig(CHART_DIR / "grounded_generation_eval_summary.png", dpi=180, bbox_inches="tight")
-    plt.close(fig)
+    metric_bar_chart(
+        summary,
+        wanted,
+        name="grounded_generation_eval_summary.png",
+        title="Grounded Generation Evaluation",
+        ylabel="Rate / Score",
+        base_color="#2f6f8f",
+        highlight_metric="unsupported_claim_rate",
+        figsize=(9, 4.8),
+    )
 
 
 def generate_groundedness_report(summary: pd.DataFrame, details: pd.DataFrame) -> str:
@@ -130,8 +126,8 @@ def main() -> None:
     if summary.empty:
         print("grounded_answers_evaluated=0")
     else:
-        print(f"grounded_answers_evaluated={int(summary.loc[summary['metric'] == 'answers_evaluated', 'value'].iloc[0])}")
-        print(f"groundedness_score={summary.loc[summary['metric'] == 'groundedness_score', 'value'].iloc[0]:.3f}")
+        print(f"grounded_answers_evaluated={int(metric_value(summary, 'answers_evaluated'))}")
+        print(f"groundedness_score={metric_value(summary, 'groundedness_score'):.3f}")
 
 
 if __name__ == "__main__":

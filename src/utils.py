@@ -113,6 +113,34 @@ def upsert_skipped_tickers(rows: list[dict], path: Path) -> pd.DataFrame:
     return combined
 
 
+def skipped_ticker_row(
+    ticker: str,
+    company_name: str = "",
+    stage: str = "",
+    reason: str = "",
+    detail: str = "",
+) -> dict:
+    timestamp = utc_timestamp()
+    return {
+        "ticker": ticker,
+        "company_name": company_name,
+        "stage": stage,
+        "stage_failed": stage,
+        "reason": reason,
+        "reason_skipped": reason,
+        "detail": detail,
+        "logged_at": timestamp,
+        "timestamp": timestamp,
+    }
+
+
+def metric_value(frame: pd.DataFrame, metric: str, default: float = 0.0) -> float:
+    if frame.empty or "metric" not in frame.columns or "value" not in frame.columns:
+        return default
+    row = frame[frame["metric"] == metric]
+    return float(row["value"].iloc[0]) if not row.empty else default
+
+
 def reset_skipped_tickers(path: Path) -> pd.DataFrame:
     columns = [
         "ticker",

@@ -12,8 +12,14 @@ import requests
 
 from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs, load_config, sec_user_agent
 from src.sec_xbrl_mapper import normalize_companyfacts_payload
-from src.universe import configured_universe, runtime_mode_config, sample_universe
-from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
+from src.universe import configured_universe, runtime_limit, sample_universe
+from src.utils import (
+    read_csv_if_exists,
+    skipped_ticker_row,
+    upsert_skipped_tickers,
+    utc_timestamp,
+    write_csv,
+)
 from src.yfinance_client import build_sample_market_data
 
 
@@ -248,17 +254,13 @@ class SECClient:
             ticker = str(company["ticker"])
             if ticker not in mapping_lookup.index:
                 skipped.append(
-                    {
-                        "ticker": ticker,
-                        "company_name": company.get("company_name", ""),
-                        "stage": "sec_companyfacts",
-                        "stage_failed": "sec_companyfacts",
-                        "reason": "missing_cik_mapping",
-                        "reason_skipped": "missing_cik_mapping",
-                        "detail": "Ticker not found in SEC company_tickers mapping.",
-                        "logged_at": utc_timestamp(),
-                        "timestamp": utc_timestamp(),
-                    }
+                    skipped_ticker_row(
+                        ticker=ticker,
+                        company_name=company.get("company_name", ""),
+                        stage="sec_companyfacts",
+                        reason="missing_cik_mapping",
+                        detail="Ticker not found in SEC company_tickers mapping.",
+                    )
                 )
                 continue
             cik = int(mapping_lookup.loc[ticker]["cik"])
@@ -273,50 +275,34 @@ class SECClient:
                     rows.append(normalized)
                 else:
                     skipped.append(
-                        {
-                            "ticker": ticker,
-                            "company_name": company.get("company_name", ""),
-                            "stage": "sec_companyfacts",
-                            "stage_failed": "sec_companyfacts",
-                            "reason": "no_mappable_xbrl_facts",
-                            "reason_skipped": "no_mappable_xbrl_facts",
-                            "detail": f"CIK {cik} returned no mappable annual companyfacts.",
-                            "logged_at": utc_timestamp(),
-                            "timestamp": utc_timestamp(),
-                        }
+                        skipped_ticker_row(
+                            ticker=ticker,
+                            company_name=company.get("company_name", ""),
+                            stage="sec_companyfacts",
+                            reason="no_mappable_xbrl_facts",
+                            detail=f"CIK {cik} returned no mappable annual companyfacts.",
+                        )
                     )
             except Exception:
                 skipped.append(
-                    {
-                        "ticker": ticker,
-                        "company_name": company.get("company_name", ""),
-                        "stage": "sec_companyfacts",
-                        "stage_failed": "sec_companyfacts",
-                        "reason": "companyfacts_request_failed",
-                        "reason_skipped": "companyfacts_request_failed",
-                        "detail": f"CIK {cik}",
-                        "logged_at": utc_timestamp(),
-                        "timestamp": utc_timestamp(),
-                    }
+                    skipped_ticker_row(
+                        ticker=ticker,
+                        company_name=company.get("company_name", ""),
+                        stage="sec_companyfacts",
+                        reason="companyfacts_request_failed",
+                        detail=f"CIK {cik}",
+                    )
                 )
                 continue
         upsert_skipped_tickers(skipped, PROCESSED_DIR / "skipped_tickers.csv")
         return pd.concat(rows, ignore_index=True) if rows else pd.DataFrame()
 
 
-def _runtime_limit(runtime_mode: str | None, explicit_limit: int | None) -> int | None:
-    if explicit_limit is not None:
-        return explicit_limit
-    config = runtime_mode_config(runtime_mode)
-    max_companies = config.get("max_companies")
-    return int(max_companies) if max_companies else None
-
-
 def load_sec_fundamentals(mode: str = "sample", limit: int | None = None, runtime_mode: str | None = None) -> pd.DataFrame:
     ensure_project_dirs()
     sample_path = SAMPLE_DIR / "sample_sec_fundamentals.csv"
     if mode == "online":
-        limit = _runtime_limit(runtime_mode, limit)
+        limit = runtime_limit(runtime_mode, limit)
         online = SECClient().fetch_fundamentals(configured_universe(), limit=limit)
         if not online.empty and online["ticker"].nunique() >= 5:
             write_csv(online, INTERIM_DIR / "normalized_fundamentals.csv")

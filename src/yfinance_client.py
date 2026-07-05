@@ -8,8 +8,14 @@ import numpy as np
 import pandas as pd
 
 from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs
-from src.universe import configured_universe, runtime_mode_config, sample_universe
-from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
+from src.universe import configured_universe, runtime_limit, sample_universe
+from src.utils import (
+    read_csv_if_exists,
+    skipped_ticker_row,
+    upsert_skipped_tickers,
+    utc_timestamp,
+    write_csv,
+)
 
 
 MARKET_COLUMNS = [
@@ -198,37 +204,25 @@ class YFinanceClient:
         return result[MARKET_COLUMNS]
 
 
-def _runtime_limit(runtime_mode: str | None, explicit_limit: int | None) -> int | None:
-    if explicit_limit is not None:
-        return explicit_limit
-    config = runtime_mode_config(runtime_mode)
-    max_companies = config.get("max_companies")
-    return int(max_companies) if max_companies else None
-
-
 def load_market_data(mode: str = "sample", limit: int | None = None, runtime_mode: str | None = None) -> pd.DataFrame:
     ensure_project_dirs()
     sample_path = SAMPLE_DIR / "sample_market_data.csv"
     if mode == "online":
         universe = configured_universe()
-        limit = _runtime_limit(runtime_mode, limit)
+        limit = runtime_limit(runtime_mode, limit)
         online = YFinanceClient().fetch_universe(universe, limit=limit)
         required = ["market_cap", "enterprise_value", "latest_price", "price_52w_high", "price_52w_low"]
         valid_mask = online[required].notna().sum(axis=1) >= 3
         skipped_rows = []
         for _, row in online[~valid_mask].iterrows():
             skipped_rows.append(
-                {
-                    "ticker": row["ticker"],
-                    "company_name": row.get("company_name", ""),
-                    "stage": "yfinance",
-                    "stage_failed": "yfinance",
-                    "reason": row.get("skip_reason") or "missing_market_fields",
-                    "reason_skipped": row.get("skip_reason") or "missing_market_fields",
-                    "detail": row.get("data_source", ""),
-                    "logged_at": utc_timestamp(),
-                    "timestamp": utc_timestamp(),
-                }
+                skipped_ticker_row(
+                    ticker=row["ticker"],
+                    company_name=row.get("company_name", ""),
+                    stage="yfinance",
+                    reason=row.get("skip_reason") or "missing_market_fields",
+                    detail=row.get("data_source", ""),
+                )
             )
         upsert_skipped_tickers(skipped_rows, PROCESSED_DIR / "skipped_tickers.csv")
         valid = online[valid_mask].copy()

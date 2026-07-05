@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from typing import Any
 
 import requests
 
 from src.config import get_env, load_config
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -36,7 +39,8 @@ class OllamaClient:
         try:
             response = requests.get(f"{self.base_url}/api/tags", timeout=min(self.timeout_seconds, 5))
             return response.ok
-        except requests.RequestException:
+        except requests.RequestException as exc:
+            logger.info("Ollama not available at %s: %s", self.base_url, exc)
             return False
 
     def available_models(self) -> list[str]:
@@ -45,7 +49,8 @@ class OllamaClient:
             response.raise_for_status()
             payload = response.json()
             return [str(item.get("name", "")) for item in payload.get("models", [])]
-        except (requests.RequestException, ValueError):
+        except (requests.RequestException, ValueError) as exc:
+            logger.warning("Failed to list Ollama models at %s: %s", self.base_url, exc)
             return []
 
     def resolve_model_name(self, model_name: str | None = None) -> str | None:

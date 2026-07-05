@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import time
 from pathlib import Path
 
@@ -10,6 +11,8 @@ import pandas as pd
 from src.config import INTERIM_DIR, PROCESSED_DIR, RAW_DIR, SAMPLE_DIR, ensure_project_dirs
 from src.universe import configured_universe, runtime_mode_config, sample_universe
 from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
+
+logger = logging.getLogger(__name__)
 
 
 MARKET_COLUMNS = [
@@ -176,12 +179,18 @@ class YFinanceClient:
                 "market_data_timestamp": utc_timestamp(),
             }
         except Exception as exc:  # pragma: no cover - network instability path
+            logger.warning(
+                "yfinance fetch failed for %s: %s: %s",
+                ticker,
+                type(exc).__name__,
+                exc,
+            )
             return {
                 "ticker": ticker,
                 "source_type": "missing_yfinance",
                 "data_mode": "live_api_failed",
-                "data_source": f"yfinance_failed: {type(exc).__name__}",
-                "skip_reason": type(exc).__name__,
+                "data_source": f"yfinance_failed: {type(exc).__name__}: {exc}",
+                "skip_reason": f"{type(exc).__name__}: {exc}",
             }
 
     def fetch_universe(self, universe: pd.DataFrame, limit: int | None = None) -> pd.DataFrame:

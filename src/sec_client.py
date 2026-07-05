@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import time
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,8 @@ from src.sec_xbrl_mapper import normalize_companyfacts_payload
 from src.universe import configured_universe, runtime_mode_config, sample_universe
 from src.utils import read_csv_if_exists, upsert_skipped_tickers, utc_timestamp, write_csv
 from src.yfinance_client import build_sample_market_data
+
+logger = logging.getLogger(__name__)
 
 
 SAMPLE_CIKS = {
@@ -218,7 +221,12 @@ class SECClient:
                 for item in payload.values()
             ]
             return pd.DataFrame(rows)
-        except Exception:  # pragma: no cover - network fallback
+        except Exception as exc:  # pragma: no cover - network fallback
+            logger.warning(
+                "CIK mapping request failed (%s: %s); falling back to sample CIKs",
+                type(exc).__name__,
+                exc,
+            )
             return pd.DataFrame(
                 [
                     {"ticker": ticker, "company_name": ticker, "cik": cik}
@@ -285,7 +293,14 @@ class SECClient:
                             "timestamp": utc_timestamp(),
                         }
                     )
-            except Exception:
+            except Exception as exc:
+                logger.warning(
+                    "SEC companyfacts fetch failed for %s (CIK %s): %s: %s",
+                    ticker,
+                    cik,
+                    type(exc).__name__,
+                    exc,
+                )
                 skipped.append(
                     {
                         "ticker": ticker,
@@ -294,7 +309,7 @@ class SECClient:
                         "stage_failed": "sec_companyfacts",
                         "reason": "companyfacts_request_failed",
                         "reason_skipped": "companyfacts_request_failed",
-                        "detail": f"CIK {cik}",
+                        "detail": f"CIK {cik}: {type(exc).__name__}: {exc}",
                         "logged_at": utc_timestamp(),
                         "timestamp": utc_timestamp(),
                     }

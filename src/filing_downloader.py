@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 from pathlib import Path
 
 import pandas as pd
@@ -9,6 +10,8 @@ import requests
 from src.config import RAW_DIR, ensure_project_dirs, load_config, sec_user_agent
 from src.sec_client import SECClient
 from src.utils import normalise_accession
+
+logger = logging.getLogger(__name__)
 
 
 def latest_filing_metadata(submissions: dict, forms: tuple[str, ...] = ("10-K", "10-Q")) -> pd.DataFrame:
@@ -41,8 +44,12 @@ def download_filing(cik: int | str, accession_number: str, primary_document: str
     cache_path = RAW_DIR / "filings" / str(cik) / f"{normalise_accession(accession_number)}_{primary_document}"
     if cache_path.exists():
         return cache_path.read_text(encoding="utf-8", errors="ignore")
-    response = requests.get(url, headers={"User-Agent": sec_user_agent()}, timeout=25)
-    response.raise_for_status()
+    try:
+        response = requests.get(url, headers={"User-Agent": sec_user_agent()}, timeout=25)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        logger.error("Filing download failed for CIK %s (accession %s): %s", cik, accession_number, exc)
+        raise
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     cache_path.write_text(response.text, encoding="utf-8")
     return response.text

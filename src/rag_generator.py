@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import logging
 import re
 from typing import Any
 
@@ -14,6 +15,8 @@ from src.filing_rag import run_retrieval_for_companies
 from src.llm_client import OllamaClient, is_llm_enabled
 from src.prompt_templates import diligence_answer_prompt, insufficient_evidence_response
 from src.utils import clean_text, read_csv_if_exists, utc_timestamp, write_csv
+
+logger = logging.getLogger(__name__)
 
 
 BANNED_RECOMMENDATION_PATTERNS = [
@@ -63,11 +66,17 @@ def _safe_json_parse(text: str) -> dict[str, Any] | None:
         try:
             parsed = json.loads(candidate)
             return parsed if isinstance(parsed, dict) else None
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as json_exc:
             try:
                 parsed = ast.literal_eval(candidate)
                 return parsed if isinstance(parsed, dict) else None
-            except (SyntaxError, ValueError):
+            except (SyntaxError, ValueError) as ast_exc:
+                logger.debug(
+                    "LLM response parse failed (json: %s, ast: %s) for: %.100s",
+                    json_exc,
+                    ast_exc,
+                    candidate,
+                )
                 continue
     return None
 

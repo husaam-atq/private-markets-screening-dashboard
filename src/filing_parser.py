@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import re
 from html import unescape
 
@@ -13,6 +14,8 @@ from src.sec_client import SAMPLE_CIKS
 from src.sec_client import SECClient
 from src.universe import configured_universe, runtime_mode_config, sample_universe
 from src.utils import clean_text, upsert_skipped_tickers, utc_timestamp, write_csv
+
+logger = logging.getLogger(__name__)
 
 
 SECTION_PATTERNS = {
@@ -275,6 +278,13 @@ def build_real_sec_filing_chunks(
                 }
             )
         except Exception as exc:
+            logger.warning(
+                "Filing download/parse failed for %s (CIK %s): %s: %s",
+                ticker,
+                cik,
+                type(exc).__name__,
+                exc,
+            )
             skipped.append(
                 {
                     "ticker": ticker,
@@ -283,7 +293,7 @@ def build_real_sec_filing_chunks(
                     "stage_failed": "sec_filing_text",
                     "reason": type(exc).__name__,
                     "reason_skipped": type(exc).__name__,
-                    "detail": f"CIK {cik}",
+                    "detail": f"CIK {cik}: {type(exc).__name__}: {exc}",
                     "logged_at": utc_timestamp(),
                     "timestamp": utc_timestamp(),
                 }
